@@ -1,6 +1,6 @@
-import type { NextPage } from 'next'
 
-const footer: NextPage = () => {
+
+const footer = () => {
     return (
         <div>footer</div>
     );
