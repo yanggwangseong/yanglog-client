@@ -1,8 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import Author from "../_child/author";
+
 const section1 = () => {
+
+    const bg = {
+        background: "url('/images/banner.jpg')no-repeat",
+        backgroundPosition:"right",
+    }
     return (
-        <section className="py-16">
+        <section className="py-16" style={bg}>
             <div className="container mx-auto md:px-20">
                 <h1 className="font-bold text-4xl pb-12 text-center">Trending</h1>
 
@@ -19,20 +26,20 @@ const Slide = () => {
             <div className="image">
                 <Link href={"/"}><a><Image src={"/images/img1.jpg"} width={600} height={600}></Image></a></Link>
             </div>
-            <div className="info ml-10 flex justify-center flex-col">
+            <div className="info flex justify-center flex-col sm:ml-10">
                 <div className="cat">
                     <Link href={"/"}><a className=" text-orange-600 hover:text-orange-800">Business, Travel</a></Link>
                     <Link href={"/"}><a className=" text-gray-800 hover:text-gray-600">- July 3, 2022</a></Link>
                 </div>
                 <div className="title">
-                    <Link href={"/"}><a className=" text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600">Your most unhappy customers are your greatest source of learning</a></Link>
+                    <Link href={"/"}><a className=" text-3xl md:text-4xl lg:text-6xl font-bold text-gray-800 hover:text-gray-600">Your most unhappy customers are your greatest source of learning</a></Link>
                 </div>
                 <p className=" text-gray-500 py-3">
                     Even the all-powerful poining has no control about the blind texts it is an almost
                     unorthographic life One day however a small line of blind text by the name of Lorem
                     lpsum decided to leave for the far World of Grammar.
                 </p>
-                <h1>author</h1>
+                <Author></Author>
             </div>
         </div>
     )
