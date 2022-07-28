@@ -9,14 +9,12 @@ import Section3 from '../components/section/section3'
 import Section4 from '../components/section/section4'
 const Home: NextPage = () => {
   return (
-    <div>
-      <Format>
-        <Section1></Section1>
-        <Section2></Section2>
-        <Section3></Section3>
-        <Section4></Section4>
-      </Format>
-    </div>
+    <Format>
+      <Section1></Section1>
+      <Section2></Section2>
+      <Section3></Section3>
+      <Section4></Section4>
+    </Format>
   )
 }
 
