@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Image from 'next/image';
 import Format from '../../layout/format';
 import Author from '../../components/_child/author';
+import Ralated from "../../components/_child/ralated"
 
 const page: NextPage = () => {
     return (
@@ -28,6 +29,7 @@ const page: NextPage = () => {
                   </p>
                 </div>
             </div>
+            <Ralated></Ralated>
           </section>
         </Format>
     );
