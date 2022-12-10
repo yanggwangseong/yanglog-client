@@ -1,18 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import Author from "../_child/author";
+
+import useSWR from 'swr';
 const section2 = () => {
+    
+    const baseURL = "http://localhost:3000/";
+    const response = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
+    const { data, error } = useSWR(`${baseURL}api/posts`,response);
+    console.log(data);
+
     return(
         <div className="container mx-auto md:px-20 py-10">
             <h1 className="font-bold text-4xl py-12 text-center">최신 게시물</h1>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-14">
-                {Post()}
-                {Post()}
-                {Post()}
-                {Post()}
-                {Post()}
-                {Post()}
-                {Post()}
+               
             </div>
         </div>
     )
