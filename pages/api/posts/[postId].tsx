@@ -1,7 +1,7 @@
 import data from '../data';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-
+// api/posts/1
 const handler = (
     req: NextApiRequest,
     res: NextApiResponse
