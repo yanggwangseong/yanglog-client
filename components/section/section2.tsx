@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import Author from "../_child/author";
-
+import Spinner from "../_child/spinner";
+import Error from "../_child/error";
 import useSWR from 'swr';
 
 interface PostsProps {
@@ -25,8 +26,8 @@ const section2 = () => {
     const response = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
     const { data, isLoading, error } = useSWR<PostsProps[],Error>(`${baseURL}api/posts`,response);
     
-    if(isLoading) return <div>Loading...</div>
-    if(error) return <div>Error</div>
+    if(isLoading) return <Spinner></Spinner>;
+    if(error) return <Error></Error>
 
     return(
         <div className="container mx-auto md:px-20 py-10">
