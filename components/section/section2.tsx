@@ -46,7 +46,7 @@ const section2 = () => {
 
 const Post = ({data}:{data:PostsProps}) =>{
     
-    const {id, title, subtitle, category, img, published, author } = data;
+    const {id, title, subtitle, description, category, img, published, author } = data;
     
     return (
         <div className="item">
