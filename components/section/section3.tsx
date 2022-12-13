@@ -36,10 +36,11 @@ const section3 = () => {
         <div className="container mx-auto md:px-20 py-10">
             <h1 className="font-bold text-4xl py-12 text-left">인기 게시물</h1>
             <Swiper
-                slidesPerView={2}
-                loop={true}
-                autoplay={{
-                    delay:2000
+                breakpoints={{
+                    640:{
+                        slidesPerView:2,
+                        spaceBetween: 30
+                    }
                 }}
                 >
                 {/* <SwiperSlide>{Post()}</SwiperSlide>

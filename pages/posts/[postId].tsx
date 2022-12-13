@@ -1,4 +1,4 @@
-import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
+import type { GetServerSideProps, GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import Image from 'next/image';
 import Format from '../../layout/format';
 import Author from '../../components/_child/author';
@@ -21,7 +21,7 @@ interface PostsProps {
     }
 }
 
-const page = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const page = ({ posts }: {posts:PostsProps}) => {
     
     const {id, title, subtitle, description, category, img, published, author } = posts;
     
@@ -53,9 +53,8 @@ interface IParams extends ParsedUrlQuery {
     postId: string
 }
 
-export const getStaticProps: GetStaticProps<{ posts: PostsProps }> = async (context) => {
-// export async function getStaticProps: GetStaticProps<{posts:PostsProps[]}>(){
-    
+export const getServerSideProps: GetServerSideProps = async (context) => {
+
     const baseURL = "http://localhost:3000/api/posts/";
     const { postId } = context.params as IParams;
     const res = await fetch(`${baseURL}${postId}`);
@@ -68,22 +67,37 @@ export const getStaticProps: GetStaticProps<{ posts: PostsProps }> = async (cont
     }
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const baseURL = "http://localhost:3000/api/posts/";
-
-    const res = await fetch(`${baseURL}`);
-    const posts: PostsProps[] = await res.json();
+// export const getStaticProps: GetStaticProps<{ posts: PostsProps }> = async (context) => {
+// // export async function getStaticProps: GetStaticProps<{posts:PostsProps[]}>(){
     
-    const paths = posts.map((value)=>{
-        return{
-            params:{
-                postId: value.id.toString()
-            }
-        }
-    })
+//     const baseURL = "http://localhost:3000/api/posts/";
+//     const { postId } = context.params as IParams;
+//     const res = await fetch(`${baseURL}${postId}`);
+//     const posts: PostsProps = await res.json();
+    
+//     return{
+//         props: {
+//             posts
+//         }
+//     }
+// }
 
-    return {
-        paths,
-        fallback:false,
-    };
-} 
+// export const getStaticPaths: GetStaticPaths = async () => {
+//     const baseURL = "http://localhost:3000/api/posts/";
+
+//     const res = await fetch(`${baseURL}`);
+//     const posts: PostsProps[] = await res.json();
+    
+//     const paths = posts.map((value)=>{
+//         return{
+//             params:{
+//                 postId: value.id.toString()
+//             }
+//         }
+//     })
+
+//     return {
+//         paths,
+//         fallback:false,
+//     };
+// } 
