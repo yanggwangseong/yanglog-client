@@ -3,7 +3,7 @@ import Link from "next/link";
 import Author from "../_child/author";
 import Spinner from "../_child/spinner";
 import Error from "../_child/error";
-import useSWR from 'swr';
+import fetcher from "../../lib/fetcher";
 
 
 interface PostsProps {
@@ -22,16 +22,12 @@ interface PostsProps {
 }
 
 const section4 = () => {
-    
 
-    const baseURL = "http://localhost:3000/";
-    const response = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
-    const { data, isLoading, error } = useSWR<PostsProps[],Error>(`${baseURL}api/popular`,response);
-    
+    const { data, isLoading, error } = fetcher("api/popular");
     if(isLoading) return <Spinner></Spinner>;
     if(error) return <Error></Error>
 
-    console.log(data);
+    
     return(
         <section className="container mx-auto md:px-20 py-16">
             <div className="grid lg:grid-cols-2">
@@ -39,18 +35,18 @@ const section4 = () => {
                     <h1 className="font-bold text-4xl py-12 text-center">Business</h1>
                     <div className="flex flex-col gap-6">
                         {/* { Post() } */}
+                        { data && data[0] ? <Post data={data[0]}></Post> : null}
                         { data && data[1] ? <Post data={data[1]}></Post> : null}
                         { data && data[2] ? <Post data={data[2]}></Post> : null}
-                        { data && data[3] ? <Post data={data[3]}></Post> : null}
                     </div>
                 </div>
                 <div className="item">
                     <h1 className="font-bold text-4xl py-12 text-center">Travel</h1>
                     <div className="flex flex-col gap-6">
                         {/* { Post() } */}
+                        { data && data[3] ? <Post data={data[3]}></Post> : null}
                         { data && data[4] ? <Post data={data[4]}></Post> : null}
                         { data && data[5] ? <Post data={data[5]}></Post> : null}
-                        { data && data[6] ? <Post data={data[6]}></Post> : null}
                     </div>
                 </div>
             </div>

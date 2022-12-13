@@ -6,7 +6,8 @@ import SwiperCore, { Autoplay } from 'swiper';
 import 'swiper/css';
 import Spinner from "../_child/spinner";
 import Error from "../_child/error";
-import useSWR from 'swr';
+import fetcher from "../../lib/fetcher";
+
 
 
 interface PostsProps {
@@ -27,10 +28,7 @@ interface PostsProps {
 const section3 = () => {
     SwiperCore.use([Autoplay]);
 
-    const baseURL = "http://localhost:3000/";
-    const response = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
-    const { data, isLoading, error } = useSWR<PostsProps[],Error>(`${baseURL}api/popular`,response);
-    
+    const { data, isLoading, error } = fetcher("api/popular");
     if(isLoading) return <Spinner></Spinner>;
     if(error) return <Error></Error>
 

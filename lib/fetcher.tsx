@@ -1,17 +1,32 @@
 import useSWR from 'swr';
 
-
+interface PostsProps {
+    id:Number;
+    title:string;
+    subtitle:string;
+    category:string;
+    img:string;
+    description:string;
+    published:string;
+    author:{
+        name:string;
+        img:string;
+        designation:string;
+    }
+}
 
 const baseURL = "http://localhost:3000/";
 
-const response = (...args: Parameters<typeof fetch>) => 
-    fetch(...args).then((res) => res.json());
+const response = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
 
-const fetcher = async(endpoint:string) => {
-    const { data, error } = useSWR(`${baseURL}${endpoint}`,response);
+const fetcher = (endpoint:string) => {
+
+    const { data, isLoading, error } = useSWR<PostsProps[],Error>(`${baseURL}${endpoint}`,response);
     
     return {
-        data
+        data: data,
+        isLoading: isLoading,
+        error : error
     }
 }
 
