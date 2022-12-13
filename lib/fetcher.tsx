@@ -17,7 +17,7 @@ interface PostsProps {
 
 const baseURL = "http://localhost:3000/";
 
-const response = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
+const response = async(...args: Parameters<typeof fetch>) => await fetch(...args).then(async(res) => await res.json());
 
 const fetcher = (endpoint:string) => {
 

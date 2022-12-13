@@ -60,15 +60,15 @@ const Post = ({data}:{data:PostsProps}) =>{
     return (
         <div className="flex gap-5">
             <div className="image flex flex-col justify-start">
-                <Link href={"/"}><a><Image src={img || "/"} className="rounded" width={300} height={250}></Image></a></Link>
+                <Link href={`/posts/${id}`}><a><Image src={img || "/"} className="rounded" width={300} height={250}></Image></a></Link>
             </div>
             <div className="info flex justify-center flex-col">
                 <div className="cat">
-                    <Link href={"/"}><a className=" text-orange-600 hover:text-orange-800">{category || null}</a></Link>
-                    <Link href={"/"}><a className=" text-gray-800 hover:text-gray-600">- {published || null}</a></Link>
+                    <Link href={`/posts/${id}`}><a className=" text-orange-600 hover:text-orange-800">{category || null}</a></Link>
+                    <Link href={`/posts/${id}`}><a className=" text-gray-800 hover:text-gray-600">- {published || null}</a></Link>
                 </div>
                 <div className="title">
-                    <Link href={"/"}><a className=" text-xl font-bold text-gray-800 hover:text-gray-600">{title || null}</a></Link>
+                    <Link href={`/posts/${id}`}><a className=" text-xl font-bold text-gray-800 hover:text-gray-600">{title || null}</a></Link>
                 </div>
                 { author ? <Author></Author> : null }
             </div>

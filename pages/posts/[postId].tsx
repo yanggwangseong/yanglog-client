@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Format from '../../layout/format';
 import Author from '../../components/_child/author';
 import Ralated from "../../components/_child/ralated"
-import getPost from '../../lib/helper';
 import { ParsedUrlQuery } from 'querystring';
 
 

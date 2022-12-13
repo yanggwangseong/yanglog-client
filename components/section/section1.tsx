@@ -71,15 +71,15 @@ const Slide = ({data}:{data:PostsProps}) => {
     return(
         <div className="grid md:grid-cols-2">
             <div className="image">
-                <Link href={"/"}><a><Image src={img || "/"} width={600} height={600}></Image></a></Link>
+                <Link href={`/posts/${id}`}><a><Image src={img || "/"} width={600} height={600}></Image></a></Link>
             </div>
             <div className="info flex justify-center flex-col sm:ml-10">
                 <div className="cat">
-                    <Link href={"/"}><a className=" text-orange-600 hover:text-orange-800">{category || null}</a></Link>
-                    <Link href={"/"}><a className=" text-gray-800 hover:text-gray-600">- {published || null}</a></Link>
+                    <Link href={`/posts/${id}`}><a className=" text-orange-600 hover:text-orange-800">{category || null}</a></Link>
+                    <Link href={`/posts/${id}`}><a className=" text-gray-800 hover:text-gray-600">- {published || null}</a></Link>
                 </div>
                 <div className="title">
-                    <Link href={"/"}><a className=" text-3xl md:text-4xl lg:text-6xl font-bold text-gray-800 hover:text-gray-600">{title || null}</a></Link>
+                    <Link href={`/posts/${id}`}><a className=" text-3xl md:text-4xl lg:text-6xl font-bold text-gray-800 hover:text-gray-600">{title || null}</a></Link>
                 </div>
                 <p className=" text-gray-500 py-3">
                     {description || null}
