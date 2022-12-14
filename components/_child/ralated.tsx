@@ -2,33 +2,66 @@ import Image from "next/image";
 import Link from 'next/link'
 import React from 'react'
 import Author from "./author";
+import fetcher from "../../lib/fetcher";
+import Spinner from "./spinner";
+import Error from "./error";
 
-const ralated = () => {
-  return (
-    <section className="pt-20">
-        <h1 className="font-bold text-3xl py-10">Related</h1>
-        <div className="flex flex-col gap-10">
-          {Post()}
-        </div>
-    </section>
-  )
+
+
+interface PostsProps {
+    id:Number;
+    title:string;
+    subtitle:string;
+    category:string;
+    img:string;
+    description:string;
+    published:string;
+    author:{
+        name:string;
+        img:string;
+        designation:string;
+    }
 }
 
-function Post(){
+const ralated = () => {
+
+    const { data, isLoading, error } = fetcher("api/posts");
+    if(isLoading) return <Spinner></Spinner>;
+    if(error) return <Error></Error>
+    
+    return (
+        <section className="pt-20">
+            <h1 className="font-bold text-3xl py-10">Related</h1>
+            <div className="flex flex-col gap-10">
+                {
+                    data&&
+                    data.map((value:PostsProps,index:number) =>(
+                        <Post data={value} key={index}></Post>
+                    ))
+                }
+            </div>
+        </section>
+    )
+}
+
+function Post({data}:{data:PostsProps}){
+
+    const {id, title, subtitle, description, category, img, published, author } = data;
+
     return(
         <div className="flex gap-5">
             <div className="image flex flex-col justify-start">
-                <Link href={"/"}><a><Image src={"/images/img1.jpg"} className="rounded" width={300} height={200}></Image></a></Link>
+                <Link href={`/posts/${id}`}><a><Image src={img || "/"} className="rounded" width={300} height={200}></Image></a></Link>
             </div>
             <div className="info flex justify-center flex-col">
                 <div className="cat">
-                    <Link href={"/"}><a className=" text-orange-600 hover:text-orange-800">Business, Travel</a></Link>
-                    <Link href={"/"}><a className=" text-gray-800 hover:text-gray-600">- July 3, 2022</a></Link>
+                    <Link href={`/posts/${id}`}><a className=" text-orange-600 hover:text-orange-800">{category || null}</a></Link>
+                    <Link href={`/posts/${id}`}><a className=" text-gray-800 hover:text-gray-600">- {published || null}</a></Link>
                 </div>
                 <div className="title">
-                    <Link href={"/"}><a className=" text-xl font-bold text-gray-800 hover:text-gray-600">Your most unhappy customers are your greatest source of learning</a></Link>
+                    <Link href={`/posts/${id}`}><a className=" text-xl font-bold text-gray-800 hover:text-gray-600">{title || null}</a></Link>
                 </div>
-                <Author></Author>
+                { author ? <Author author={author}></Author> : null }
             </div>
         </div>
     )

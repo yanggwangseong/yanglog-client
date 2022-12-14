@@ -70,7 +70,7 @@ const Post = ({data}:{data:PostsProps}) =>{
                 <div className="title">
                     <Link href={`/posts/${id}`}><a className=" text-xl font-bold text-gray-800 hover:text-gray-600">{title || null}</a></Link>
                 </div>
-                { author ? <Author></Author> : null }
+                { author ? <Author author={author}></Author> : null }
             </div>
         </div>
     )

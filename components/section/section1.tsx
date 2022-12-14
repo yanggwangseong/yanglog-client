@@ -84,7 +84,7 @@ const Slide = ({data}:{data:PostsProps}) => {
                 <p className=" text-gray-500 py-3">
                     {description || null}
                 </p>
-                { author ? <Author></Author> : null }
+                { author ? <Author author={author}></Author> : null }
             </div>
         </div>
     )
