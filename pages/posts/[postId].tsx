@@ -27,7 +27,7 @@ const page = ({ posts }: {posts:PostsProps}) => {
     
     return (
         <Format>
-          <section className=" container mx-auto md:px-2 py-16 w-1/2">
+          <section className=" container mx-auto md:px-2 py-16 lg:w-1/2">
             <div className=" flex justify-center ">
                 { author ? <Author author={author}></Author> : null }
             </div>

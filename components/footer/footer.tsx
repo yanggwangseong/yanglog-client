@@ -4,28 +4,28 @@ import Newslatter from "../_child/newslatter";
 const footer = () => {
 
     const bg = {
-        backgroundImage : "url('/images/footer.png')",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "bottom left",
+        // backgroundImage : "url('/images/footer.png')",
+        // backgroundRepeat: "no-repeat",
+        // backgroundPosition: "bottom left",
     }
     return (
-        <footer className="bg-gray-50" style={bg}>
+        <footer className="bg-violet-600" style={bg}>
             <Newslatter></Newslatter>
             <div className="container mx-auto flex justify-center py-12">
                 <div className="py-5">
                     <div className="flex gap-6 justify-center">
                         <Link href={"/"}>
-                            <a><ImFacebook color="#888888"/></a>
+                            <a><ImFacebook color="#ffffff"/></a>
                         </Link>
                         <Link href={"/"}>
-                            <a><ImTwitter color="#888888"/></a>
+                            <a><ImTwitter color="#ffffff"/></a>
                         </Link>
                         <Link href={"/"}>
-                            <a><ImYoutube color="#888888"/></a>
+                            <a><ImYoutube color="#ffffff"/></a>
                         </Link>
                     </div>
-                    <p className="py-5 text-gray-400">Copyright ©2022 All rights reserved | This template is made with  by Daily Tuition</p>
-                    <p className="text-gray-400 text-center">Terms & Condition</p>
+                    <p className="py-5 text-white">Copyright ©2022 All rights reserved | This template is made with  by Daily Tuition</p>
+                    <p className="text-white text-center">Terms & Condition</p>
                 </div>
             </div>
         </footer>
