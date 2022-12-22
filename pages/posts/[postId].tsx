@@ -4,6 +4,8 @@ import Format from '../../layout/format';
 import Author from '../../components/_child/author';
 import Ralated from "../../components/_child/ralated"
 import { ParsedUrlQuery } from 'querystring';
+import { dehydrate, QueryClient, useQuery } from 'react-query';
+import { useRouter } from 'next/router';
 
 
 interface PostsProps {
@@ -21,24 +23,31 @@ interface PostsProps {
     }
 }
 
-const page = ({ posts }: {posts:PostsProps}) => {
+const page = () => {
+    const router = useRouter();
+    const { postId } = router.query;
+    const { data, isLoading, isFetching } = useQuery<PostsProps>(["post", postId], () => getPost(postId ? postId : 1));
+
+    //const {id, title, subtitle, description, category, img, published, author } = posts;
     
-    const {id, title, subtitle, description, category, img, published, author } = posts;
+    
+    
+    
     
     return (
         <Format>
           <section className=" container mx-auto md:px-2 py-16 lg:w-1/2">
             <div className=" flex justify-center ">
-                { author ? <Author author={author}></Author> : null }
+                { data?.author ? <Author author={data?.author}></Author> : null }
             </div>
             <div className="post py-10">
-                <h1 className=" font-bold text-4xl text-center pb-5">{title || null}</h1>
-                <p className=" text-gray-500 text-xl text-center">{subtitle || null}</p>
+                <h1 className=" font-bold text-4xl text-center pb-5">{data?.title || null}</h1>
+                <p className=" text-gray-500 text-xl text-center">{data?.subtitle || null}</p>
                 <div className="py-10">
-                  <Image src={img || "/"} width={900} height = {600}></Image>
+                  <Image src={data?.img || "/"} width={900} height = {600}></Image>
                 </div>
                 <div className="content text-gray-600 text-lg flex flex-col gap-4">
-                  {description || null}
+                  {data?.description || null}
                 </div>
             </div>
             <Ralated></Ralated>
@@ -53,20 +62,72 @@ interface IParams extends ParsedUrlQuery {
     postId: string
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+const getPost = async (postId:string | string[] | number) => await (await fetch(`http://localhost:3000/api/posts/${postId}`)).json();
 
-    const baseURL = "http://localhost:3000/api/posts/";
-    const { postId } = context.params as IParams;
-    const res = await fetch(`${baseURL}${postId}`);
-    const posts: PostsProps = await res.json();
+// export const getServerSideProps: GetServerSideProps = async (context) => {
     
-    return{
+//     const queryClient = new QueryClient();
+//     const { postId } = context.params as IParams;
+
+//     await queryClient.prefetchQuery<PostsProps>(["post", postId], () => getPost(postId ? postId : 1));
+    
+    
+//     return {
+//         props: {
+//             dehydratedState: dehydrate(queryClient),
+//         }
+//     }
+// }
+
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+    
+//     const baseURL = "http://localhost:3000/api/posts/";
+//     const { postId } = context.params as IParams;
+//     const res = await fetch(`${baseURL}${postId}`);
+//     const posts: PostsProps = await res.json();
+
+//     return{
+//         props: {
+//             posts
+//         }
+//     }
+// }
+
+export const getStaticProps: GetStaticProps = async (context) => {
+    const queryClient = new QueryClient();
+    const { postId } = context.params as IParams;
+
+    await queryClient.prefetchQuery<PostsProps>(["post"], ()=> getPost(postId ? postId : 1));
+    
+    
+    return {
         props: {
-            posts
+            dehydratedState: dehydrate(queryClient),
+            
         }
     }
 }
 
+export const getStaticPaths: GetStaticPaths = async () => {
+    const baseURL = "http://localhost:3000/api/posts/";
+
+    const res = await fetch(`${baseURL}`);
+    const posts: PostsProps[] = await res.json();
+    
+    const paths = posts.map((value)=>{
+        return{
+            params:{
+                postId: value.id.toString()
+            }
+        }
+    })
+
+    return {
+        paths,
+        fallback:false,
+    };
+} 
+ 
 // export const getStaticProps: GetStaticProps<{ posts: PostsProps }> = async (context) => {
 // // export async function getStaticProps: GetStaticProps<{posts:PostsProps[]}>(){
     
