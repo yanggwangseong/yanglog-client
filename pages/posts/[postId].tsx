@@ -6,7 +6,8 @@ import Ralated from "../../components/_child/ralated"
 import { ParsedUrlQuery } from 'querystring';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-
+import Error from '../../components/_child/error';
+import Spinner from '../../components/_child/spinner';
 
 interface PostsProps {
     id:Number;
@@ -24,19 +25,26 @@ interface PostsProps {
 }
 
 const page = () => {
+    
     const router = useRouter();
     const { postId } = router.query;
-    const { data, isLoading, isFetching } = useQuery<PostsProps>(["post", postId], () => getPost(postId ? postId : 1));
+    //const { data, isLoading, isError } = useQuery(["post"], () => getPost(postId ? postId : 1));
+    const { data, isLoading, isError } = useQuery<PostsProps>(["post"], () => getPost(postId ? postId : 1));
 
     //const {id, title, subtitle, description, category, img, published, author } = posts;
     
+    if (isLoading) {
+        return <Spinner></Spinner>;
+    }
+    if (isError) {
+        return <Error></Error>;
+    }
     
-    
-    
-    
+    //const {id, title, subtitle, description, category, img, published, author } = data;
+    //const {id, title, subtitle, description, category, img, published, author }:PostsProps = data;
     return (
         <Format>
-          <section className=" container mx-auto md:px-2 py-16 lg:w-1/2">
+        <section className=" container mx-auto md:px-2 py-16 lg:w-1/2">
             <div className=" flex justify-center ">
                 { data?.author ? <Author author={data?.author}></Author> : null }
             </div>
@@ -44,16 +52,17 @@ const page = () => {
                 <h1 className=" font-bold text-4xl text-center pb-5">{data?.title || null}</h1>
                 <p className=" text-gray-500 text-xl text-center">{data?.subtitle || null}</p>
                 <div className="py-10">
-                  <Image src={data?.img || "/"} width={900} height = {600}></Image>
+                <Image src={data?.img || "/"} width={900} height = {600}></Image>
                 </div>
                 <div className="content text-gray-600 text-lg flex flex-col gap-4">
-                  {data?.description || null}
+                {data?.description || null}
                 </div>
             </div>
             <Ralated></Ralated>
-          </section>
+        </section>
         </Format>
     );
+    
 }
 
 export default page;
