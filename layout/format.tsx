@@ -4,13 +4,15 @@ import Head from "next/head";
 
 type AppLayoutProps = {
     children: React.ReactNode;
+    title:string | undefined;
 };
 
-const format = ({children}:AppLayoutProps) => {
+const format = ({children,title}:AppLayoutProps) => {
+    
     return (
         <>
             <Head>
-                <title>yanglog</title>
+                <title>{(title) ? title : "YangLog"}</title>
                 <meta name="description" content="yanglog" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>

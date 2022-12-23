@@ -45,7 +45,7 @@ const section1 = () => {
                     slidesPerView={1}
                     loop={true}
                     autoplay={{
-                        delay:2000
+                        delay:3000
                     }}
                     >
                     {/* <SwiperSlide>{Slide()}</SwiperSlide>

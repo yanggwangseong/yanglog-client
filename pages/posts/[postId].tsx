@@ -42,20 +42,28 @@ const page = () => {
     
     //const {id, title, subtitle, description, category, img, published, author } = data;
     //const {id, title, subtitle, description, category, img, published, author }:PostsProps = data;
+    const title = data?.title;
+    const author = data?.author;
+    const subtitle = data?.subtitle;
+    const img = data?.img;
+    const description = data?.description;
+    
     return (
-        <Format>
+        <Format 
+            title={title}
+        >
         <section className=" container mx-auto md:px-2 py-16 lg:w-1/2">
             <div className=" flex justify-center ">
-                { data?.author ? <Author author={data?.author}></Author> : null }
+                { author ? <Author author={author}></Author> : null }
             </div>
             <div className="post py-10">
-                <h1 className=" font-bold text-4xl text-center pb-5">{data?.title || null}</h1>
-                <p className=" text-gray-500 text-xl text-center">{data?.subtitle || null}</p>
+                <h1 className=" font-bold text-4xl text-center pb-5">{title || null}</h1>
+                <p className=" text-gray-500 text-xl text-center">{subtitle || null}</p>
                 <div className="py-10">
-                <Image src={data?.img || "/"} width={900} height = {600}></Image>
+                <Image src={img || "/"} width={900} height = {600}></Image>
                 </div>
                 <div className="content text-gray-600 text-lg flex flex-col gap-4">
-                {data?.description || null}
+                {description || null}
                 </div>
             </div>
             <Ralated></Ralated>
