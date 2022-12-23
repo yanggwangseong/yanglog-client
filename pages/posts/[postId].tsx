@@ -8,29 +8,18 @@ import { dehydrate, QueryClient, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import Error from '../../components/_child/error';
 import Spinner from '../../components/_child/spinner';
+import { getPostById, getPostAll } from '../../api/postService';
+import { Post } from '../../interfaces/post';
 
-interface PostsProps {
-    id:Number;
-    title:string;
-    subtitle:string;
-    category:string;
-    img:string;
-    description:string;
-    published:string;
-    author:{
-        name:string;
-        img:string;
-        designation:string;
-    }
-}
+
 
 const page = () => {
     
     const router = useRouter();
     const { postId } = router.query;
     //const { data, isLoading, isError } = useQuery(["post"], () => getPost(postId ? postId : 1));
-    const { data, isLoading, isError } = useQuery<PostsProps>(["post"], () => getPost(postId ? postId : 1));
-
+    const { data, isLoading, isError } = useQuery<Post>(["post"], () => getPostById(postId ? postId : 1));
+    
     //const {id, title, subtitle, description, category, img, published, author } = posts;
     
     if (isLoading) {
@@ -41,13 +30,13 @@ const page = () => {
     }
     
     //const {id, title, subtitle, description, category, img, published, author } = data;
-    //const {id, title, subtitle, description, category, img, published, author }:PostsProps = data;
+    //const {id, title, subtitle, description, category, img, published, author }:Post = data;
     const title = data?.title;
     const author = data?.author;
     const subtitle = data?.subtitle;
     const img = data?.img;
     const description = data?.description;
-    
+
     return (
         <Format 
             title={title}
@@ -79,6 +68,7 @@ interface IParams extends ParsedUrlQuery {
     postId: string
 }
 
+
 const getPost = async (postId:string | string[] | number) => await (await fetch(`http://localhost:3000/api/posts/${postId}`)).json();
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -86,7 +76,7 @@ const getPost = async (postId:string | string[] | number) => await (await fetch(
 //     const queryClient = new QueryClient();
 //     const { postId } = context.params as IParams;
 
-//     await queryClient.prefetchQuery<PostsProps>(["post", postId], () => getPost(postId ? postId : 1));
+//     await queryClient.prefetchQuery<Post>(["post", postId], () => getPost(postId ? postId : 1));
     
     
 //     return {
@@ -101,7 +91,7 @@ const getPost = async (postId:string | string[] | number) => await (await fetch(
 //     const baseURL = "http://localhost:3000/api/posts/";
 //     const { postId } = context.params as IParams;
 //     const res = await fetch(`${baseURL}${postId}`);
-//     const posts: PostsProps = await res.json();
+//     const posts: Post = await res.json();
 
 //     return{
 //         props: {
@@ -114,7 +104,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const queryClient = new QueryClient();
     const { postId } = context.params as IParams;
 
-    await queryClient.prefetchQuery<PostsProps>(["post"], ()=> getPost(postId ? postId : 1));
+    await queryClient.prefetchQuery<Post>(["post"], ()=> getPostById(postId ? postId : 1));
     
     
     return {
@@ -126,10 +116,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const baseURL = "http://localhost:3000/api/posts/";
+    //const baseURL = process.env.NEXT_PUBLIC_API_URL+"/posts";
 
-    const res = await fetch(`${baseURL}`);
-    const posts: PostsProps[] = await res.json();
+    //const res = await fetch(`${baseURL}`);
+    //const posts: Post[] = await res.json();
+    const posts: Post[] = await getPostAll();
     
     const paths = posts.map((value)=>{
         return{
@@ -145,13 +136,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 } 
  
-// export const getStaticProps: GetStaticProps<{ posts: PostsProps }> = async (context) => {
-// // export async function getStaticProps: GetStaticProps<{posts:PostsProps[]}>(){
+// export const getStaticProps: GetStaticProps<{ posts: Post }> = async (context) => {
+// // export async function getStaticProps: GetStaticProps<{posts:Post[]}>(){
     
 //     const baseURL = "http://localhost:3000/api/posts/";
 //     const { postId } = context.params as IParams;
 //     const res = await fetch(`${baseURL}${postId}`);
-//     const posts: PostsProps = await res.json();
+//     const posts: Post = await res.json();
     
 //     return{
 //         props: {
@@ -164,7 +155,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 //     const baseURL = "http://localhost:3000/api/posts/";
 
 //     const res = await fetch(`${baseURL}`);
-//     const posts: PostsProps[] = await res.json();
+//     const posts: Post[] = await res.json();
     
 //     const paths = posts.map((value)=>{
 //         return{
