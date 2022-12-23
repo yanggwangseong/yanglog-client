@@ -1,9 +1,5 @@
 import axios from 'axios';
-
-export interface User{
-    email : String;
-    password: String;
-}
+import { User } from '../interfaces/user';
 
 export const apiClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,

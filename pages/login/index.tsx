@@ -2,11 +2,8 @@ import type { NextPage } from 'next'
 import React,{ useState } from 'react';
 import { useMutation } from 'react-query';
 import { loginUser } from '../../api/userService';
+import { User } from '../../interfaces/user';
 
-interface User {
-  email: string;
-  password: string;
-}
 
 const Login: NextPage = () => {
 
