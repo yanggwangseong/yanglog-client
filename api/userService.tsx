@@ -1,12 +1,16 @@
 import axios from 'axios';
-import { User } from '../interfaces/user';
+import { LoginToken, User } from '../interfaces/user';
 
 export const apiClient = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: "http://localhost:3001",
     headers: {
         'Content-type': 'application/json',
     },
-    
+    transformRequest:[
+        (data) => {
+            return JSON.stringify(data);
+        },
+    ],
     transformResponse: [
         (data) => {
             return JSON.parse(data);
@@ -15,7 +19,7 @@ export const apiClient = axios.create({
 });
 
 export const loginUser = async ({email, password}:User) => {
-    const response = await apiClient.post<User>(`/user/signin`, {
+    const response = await apiClient.post<LoginToken>(`/users/login`, {
         email,
         password
     });

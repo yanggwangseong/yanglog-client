@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
 import Format from '../layout/format'
 
 //components
@@ -7,8 +6,8 @@ import Section1 from '../components/section/section1'
 import Section2 from '../components/section/section2'
 import Section3 from '../components/section/section3'
 import Section4 from '../components/section/section4'
-const Home: NextPage = () => {
 
+const Home: NextPage = () => {
   
   return (
     <Format title="YangLog">

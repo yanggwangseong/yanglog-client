@@ -1,4 +1,4 @@
-export interface Post{
+interface Post{
     id:Number;
     title:string;
     subtitle:string;
@@ -12,3 +12,5 @@ export interface Post{
         designation:string;
     }
 }
+
+export type { Post };

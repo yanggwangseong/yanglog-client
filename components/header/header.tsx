@@ -1,7 +1,8 @@
 import { ImFacebook, ImTwitter, ImYoutube } from "react-icons/im";
 import Link from 'next/link';
 import React,{ Dispatch, SetStateAction, useState } from "react";
-
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { loginAtom } from '../../atoms/loginAtom'
 
 interface AboutProps {
     setOpen: Dispatch<SetStateAction<boolean>>;
@@ -27,6 +28,7 @@ const MobileNav:React.FunctionComponent<AboutProps> = ({open, setOpen}) => {
 const header = () => {
 
     const [open, setOpen] = useState(false);
+    
     
     return (
         <header className="bg-violet-600 ">
@@ -61,12 +63,16 @@ const header = () => {
                         <Link href={"/"}>
                             <a><ImYoutube color="#ffffff"/></a>
                         </Link> */}
-                        <Link href={"/login"}>
-                            <a className="text-white">로그인</a>
-                        </Link>
-                        <Link href={"/signup"}>
-                            <a className="text-white">회원가입</a>
-                        </Link>
+                       
+                            <Link href={"/login"}>
+                                <a className="text-white">로그인</a>
+                            </Link>
+                            <Link href={"/signup"}>
+                                <a className="text-white">회원가입</a>
+                            </Link>
+                            <button type="button" className="text-white" >글쓰기</button>
+                            <button type="button" className="text-white" >로그아웃</button>
+                        
                     </div>
                 </div>
             </div>

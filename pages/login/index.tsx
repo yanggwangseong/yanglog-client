@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
-import React,{ useState } from 'react';
+import { useRouter } from 'next/router';
+import React from 'react';
 import { useMutation } from 'react-query';
 import { loginUser } from '../../api/userService';
 import { User } from '../../interfaces/user';
@@ -7,6 +8,7 @@ import { User } from '../../interfaces/user';
 
 const Login: NextPage = () => {
 
+    const router = useRouter();
     const [inputs, setInputs] = React.useState<User>({
       email: '',
       password:'',
@@ -20,7 +22,6 @@ const Login: NextPage = () => {
         ...inputs,
         [name]: value
       });
-      
     };
 
     const loginMutation = useMutation(({email,password}:User)=>loginUser({email,password}),{
@@ -29,7 +30,10 @@ const Login: NextPage = () => {
         // variable : {loginId: 'xxx', password; 'xxx'}
       },
       onSuccess: (data) => {
-        console.log(data);
+        console.log("onsuccess",data);
+        // 로그인 성공 했을때 토큰은 로컬 스토리지에 저장.
+        localStorage.setItem("accessToken",data.accessToken);
+        router.push("/");
       },
       onError: (error) => {
         console.log(error);
