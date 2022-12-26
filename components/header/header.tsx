@@ -4,16 +4,16 @@ import React,{ Dispatch, SetStateAction, useState } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { loginAtom } from '../../atoms/loginAtom'
 
-interface AboutProps {
+interface MobileNavProps {
     setOpen: Dispatch<SetStateAction<boolean>>;
     open: boolean;
 }
 
-const MobileNav:React.FunctionComponent<AboutProps> = ({open, setOpen}) => {
+const MobileNav:React.FunctionComponent<MobileNavProps> = ({open, setOpen}) => {
 
     return (
         <div className={`fixed top-0 left-0 h-screen w-screen z-50 bg-white transform ${open ? "-translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out filter drop-shadow-md `}>
-            <div className="flex items-center justify-center filter drop-shadow-md bg-white h-20"> {/*logo container*/}
+            <div className="flex items-center justify-center filter drop-shadow-md bg-white h-20">
                 <a className="text-xl font-semibold" href="/">LOGO</a>
             </div>
             <div className="flex flex-col ml-4">
