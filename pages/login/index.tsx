@@ -2,13 +2,16 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useMutation } from 'react-query';
-import { checkUser, loginUser, refreshToken } from '../../api/userService';
+import { useRecoilState } from 'recoil';
+import { checkUser, loginUser, refreshToken, saveToStorage } from '../../api/userService';
+import { loginAtom } from '../../atoms/loginAtom';
 import { User } from '../../interfaces/user';
 
 
 const Login: NextPage = () => {
 
     const router = useRouter();
+    const [loginState, setLoginState] = useRecoilState(loginAtom);
     const [inputs, setInputs] = React.useState<User>({
       email: '',
       password:'',
@@ -31,13 +34,14 @@ const Login: NextPage = () => {
       },
       onSuccess: (data) => {
         //console.log("onsuccess",data);
-        if(typeof window !== 'undefined') {
-            return window.localStorage.setItem("accessToken",data.accessToken);
-        }
+        //if(typeof window !== 'undefined') {
+        //    return window.localStorage.setItem("accessToken",data.accessToken);
+        //}
         // 로그인 성공 했을때 토큰은 로컬 스토리지에 저장.
-        
+        saveToStorage("accessToken",data.accessToken);
+        setLoginState({loginState:true,accessToken:data.accessToken});
         // accessToken으로 해당 회원 조회해서 recoil에 담자.
-        checkUser();
+        
         router.push("/");
       },
       onError: (error) => {

@@ -1,3 +1,4 @@
+import type { GetStaticProps} from 'next'
 import { ImFacebook, ImTwitter, ImYoutube } from "react-icons/im";
 import Link from 'next/link';
 import React,{ Dispatch, SetStateAction, useState } from "react";
@@ -10,7 +11,7 @@ interface MobileNavProps {
 }
 
 const MobileNav:React.FunctionComponent<MobileNavProps> = ({open, setOpen}) => {
-
+    
     return (
         <div className={`fixed top-0 left-0 h-screen w-screen z-50 bg-white transform ${open ? "-translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out filter drop-shadow-md `}>
             <div className="flex items-center justify-center filter drop-shadow-md bg-white h-20">
@@ -28,7 +29,7 @@ const MobileNav:React.FunctionComponent<MobileNavProps> = ({open, setOpen}) => {
 const header = () => {
 
     const [open, setOpen] = useState(false);
-    
+    const data = useRecoilValue(loginAtom);
     
     return (
         <header className="bg-violet-600 ">
@@ -63,15 +64,23 @@ const header = () => {
                         <Link href={"/"}>
                             <a><ImYoutube color="#ffffff"/></a>
                         </Link> */}
-                       
-                            <Link href={"/login"}>
-                                <a className="text-white">로그인</a>
-                            </Link>
-                            <Link href={"/signup"}>
-                                <a className="text-white">회원가입</a>
-                            </Link>
-                            <button type="button" className="text-white" >글쓰기</button>
-                            <button type="button" className="text-white" >로그아웃</button>
+                        {
+                            data.loginState===false
+                            ?
+                            <>
+                                <Link href={"/login"}>
+                                    <a className="text-white">로그인</a>
+                                </Link>
+                                <Link href={"/signup"}>
+                                    <a className="text-white">회원가입</a>
+                                </Link>
+                            </>
+                            :
+                            <>
+                                <button type="button" className="text-white" >글쓰기</button>
+                                <button type="button" className="text-white" >로그아웃</button>
+                            </>
+                        }
                         
                     </div>
                 </div>

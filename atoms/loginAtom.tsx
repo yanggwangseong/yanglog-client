@@ -1,6 +1,13 @@
 import { atom } from "recoil";
-
-export const loginAtom = atom<boolean | false>({
-    default: false,
-    key: "loginState"
+import { v1 } from "uuid";
+export interface Login{
+    loginState : boolean;
+    accessToken : string;
+}
+export const loginAtom = atom<Login>({
+    default: {
+        loginState: false,
+        accessToken: "",
+    },
+    key: `loginState/${v1()}`
 });

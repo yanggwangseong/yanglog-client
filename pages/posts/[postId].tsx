@@ -106,7 +106,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     await queryClient.prefetchQuery<Post>(["post"], ()=> getPostById(postId ? postId : 1));
     
-    
     return {
         props: {
             dehydratedState: dehydrate(queryClient),
