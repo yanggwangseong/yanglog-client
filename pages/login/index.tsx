@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useMutation } from 'react-query';
 import { useRecoilState } from 'recoil';
-import { checkUser, loginUser, refreshToken, saveToStorage } from '../../api/userService';
+import { saveToStorage } from '../../api/axiosInstance';
+import { loginUser } from '../../api/userService';
 import { loginAtom } from '../../atoms/loginAtom';
 import { User } from '../../interfaces/user';
 
@@ -39,7 +40,7 @@ const Login: NextPage = () => {
         //}
         // 로그인 성공 했을때 토큰은 로컬 스토리지에 저장.
         saveToStorage("accessToken",data.accessToken);
-        setLoginState({loginState:true,accessToken:data.accessToken});
+        setLoginState({loginState:true});
         // accessToken으로 해당 회원 조회해서 recoil에 담자.
         
         router.push("/");
@@ -85,9 +86,6 @@ const Login: NextPage = () => {
             </div>
             <div>
               <button className='bg-blue-500 text-white p-2' type="submit">로그인</button>
-            </div>
-            <div>
-              <button type="button" onClick={()=>refreshToken()}>테스트</button>
             </div>
           </div>
         </form>
