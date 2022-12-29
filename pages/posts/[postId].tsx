@@ -4,7 +4,7 @@ import Format from '../../layout/format';
 import Author from '../../components/_child/author';
 import Ralated from "../../components/_child/ralated"
 import { ParsedUrlQuery } from 'querystring';
-import { dehydrate, QueryClient, useQuery } from 'react-query';
+import { dehydrate, QueryClient, useQuery, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import Error from '../../components/_child/error';
 import Spinner from '../../components/_child/spinner';
@@ -105,7 +105,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const { postId } = context.params as IParams;
 
     await queryClient.prefetchQuery<Post>(["post"], ()=> getPostById(postId ? postId : 1));
-    
     return {
         props: {
             dehydratedState: dehydrate(queryClient),

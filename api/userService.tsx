@@ -12,6 +12,11 @@ export const loginUser = async ({email, password}:User) => {
     return response.data;
 };
 
+export const logoutUser = async () => {
+    apiClient.defaults.headers.common.Authorization = `Bearer ${getFromStorage("accessToken")}`;
+    const response = await apiClient.post(`/users/logout`);
+}
+
 export const checkUser = async(accessToken:string) => {
     
     const response = await AuthApiClient.get(`/users/checkUser`);

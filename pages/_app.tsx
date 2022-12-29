@@ -1,10 +1,8 @@
 import '../styles/globals.css';
-import React, { useEffect, useState } from 'react'; 
+import React from 'react'; 
 import type { AppProps } from 'next/app';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
-import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
-import { getFromStorage, checkUser } from '../api/userService';
-import { loginAtom } from '../atoms/loginAtom';
+import { RecoilRoot } from 'recoil';
 import Root from '../layout/root';
 
 function MyApp({ Component, pageProps }: AppProps) {

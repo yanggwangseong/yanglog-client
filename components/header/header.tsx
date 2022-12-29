@@ -1,10 +1,10 @@
-import type { GetStaticProps} from 'next'
-import { ImFacebook, ImTwitter, ImYoutube } from "react-icons/im";
 import Link from 'next/link';
 import React,{ Dispatch, SetStateAction, useState } from "react";
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { loginAtom } from '../../atoms/loginAtom'
 import { useMutation } from 'react-query';
+import { logoutUser } from '../../api/userService';
+import { removeToStorage } from '../../api/axiosInstance';
 
 interface MobileNavProps {
     setOpen: Dispatch<SetStateAction<boolean>>;
@@ -33,9 +33,21 @@ const header = () => {
     //const data = useRecoilValue(loginAtom);
     const [LoginState, SetLoginState] = useRecoilState(loginAtom);
 
-    const logoutMutation = useMutation
+    const logoutMutation = useMutation(()=>logoutUser(),{
+        onMutate: (variable) => {
+          
+        },
+        onSuccess: (data) => {
+            removeToStorage("accessToken");
+            SetLoginState({loginState:false});
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+    });
+
     const handleLogout = () => {
-        SetLoginState({loginState:false});
+        logoutMutation.mutate();
     }
     
     return (
