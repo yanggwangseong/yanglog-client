@@ -6,7 +6,7 @@ import Ralated from "../../components/_child/ralated"
 
 const page: NextPage = () => {
     return (
-        <Format>
+        <Format title="YangLog">
           <section className=" container mx-auto md:px-2 py-16 w-1/2">
             <div className=" flex justify-center ">
                 {/* <Author ></Author> */}

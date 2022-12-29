@@ -52,13 +52,11 @@ export const AuthApiClient = axios.create({
     },
     transformRequest:[
         (data) => {
-            console.log("1");
             return JSON.stringify(data);
         },
     ],
     transformResponse: [
         (data) => {
-            console.log("2");
             return JSON.parse(data);
         },
     ],

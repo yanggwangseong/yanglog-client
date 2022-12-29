@@ -19,7 +19,9 @@ const Root = ({children}:AppLayoutProps) => {
           const data =  checkUser(accessToken ? accessToken : "");
           return data;
         }
-        refreshData().then((response)=> SetLoginState({loginState:response.loginState}));
+        if(accessToken){
+            refreshData().then((response)=> SetLoginState({loginState:response.loginState}));
+        }
         
     },[]);
     

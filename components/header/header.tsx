@@ -2,8 +2,9 @@ import type { GetStaticProps} from 'next'
 import { ImFacebook, ImTwitter, ImYoutube } from "react-icons/im";
 import Link from 'next/link';
 import React,{ Dispatch, SetStateAction, useState } from "react";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { loginAtom } from '../../atoms/loginAtom'
+import { useMutation } from 'react-query';
 
 interface MobileNavProps {
     setOpen: Dispatch<SetStateAction<boolean>>;
@@ -29,10 +30,16 @@ const MobileNav:React.FunctionComponent<MobileNavProps> = ({open, setOpen}) => {
 const header = () => {
 
     const [open, setOpen] = useState(false);
-    const data = useRecoilValue(loginAtom);
+    //const data = useRecoilValue(loginAtom);
+    const [LoginState, SetLoginState] = useRecoilState(loginAtom);
+
+    const logoutMutation = useMutation
+    const handleLogout = () => {
+        SetLoginState({loginState:false});
+    }
     
     return (
-        <header className="bg-violet-600 ">
+        <header className="bg-violet-600 sticky top-0 z-50">
             <MobileNav open={open} setOpen={setOpen}/>
             <div className="xl:container xl:mx-auto flex items-center flex-row justify-between text-center py-4 px-4 md:px-0">
                 <div className="hidden md:flex md:w-96 order1 justify-center py-4 sm:py-0">
@@ -65,7 +72,7 @@ const header = () => {
                             <a><ImYoutube color="#ffffff"/></a>
                         </Link> */}
                         {
-                            data.loginState===false
+                            LoginState.loginState===false
                             ?
                             <>
                                 <Link href={"/login"}>
@@ -77,11 +84,14 @@ const header = () => {
                             </>
                             :
                             <>
-                                <button type="button" className="text-white" >글쓰기</button>
-                                <button type="button" className="text-white" >로그아웃</button>
+                                <Link href={"/posts/new"}>
+                                    <a className="text-white">글쓰기</a>
+                                </Link>
+                                <button type="button" className="text-white" 
+                                onClick={()=>handleLogout()}
+                                >로그아웃</button>
                             </>
                         }
-                        
                     </div>
                 </div>
             </div>
