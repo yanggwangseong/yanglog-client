@@ -1,10 +1,10 @@
 interface User {
-    email: string;
-    password: string;
+	email: string;
+	password: string;
 }
 
-interface LoginToken{
-    accessToken:string;
+interface LoginToken {
+	accessToken: string;
 }
 
-export type { User , LoginToken};
+export type { User, LoginToken };

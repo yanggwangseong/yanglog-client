@@ -1,6 +1,6 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const todoAtom = atom<string>({
-    default: 'empty',
-    key: "todo"
+	default: 'empty',
+	key: 'todo',
 });

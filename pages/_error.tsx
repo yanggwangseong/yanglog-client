@@ -1,23 +1,22 @@
-import type { NextPage, NextPageContext } from 'next'
-
+import type { NextPage, NextPageContext } from 'next';
 
 interface Props {
-    statusCode?: number
+	statusCode?: number;
 }
 
 const Error: NextPage<Props> = ({ statusCode }) => {
-    return (
-        <p>
-          {statusCode
-            ? `An error ${statusCode} occurred on server`
-            : 'An error occurred on client'}
-        </p>
-      )
-}
+	return (
+		<p>
+			{statusCode
+				? `An error ${statusCode} occurred on server`
+				: 'An error occurred on client'}
+		</p>
+	);
+};
 
-Error.getInitialProps = ({ res, err }:NextPageContext) => {
-    const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-    return { statusCode }
-}
+Error.getInitialProps = ({ res, err }: NextPageContext) => {
+	const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
+	return { statusCode };
+};
 
 export default Error;

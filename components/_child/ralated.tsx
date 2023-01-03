@@ -1,70 +1,86 @@
-import Image from "next/image";
-import Link from 'next/link'
-import React from 'react'
-import Author from "./author";
-import fetcher from "../../lib/fetcher";
-import Spinner from "./spinner";
-import Error from "./error";
-
-
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import Author from './author';
+import fetcher from '../../lib/fetcher';
+import Spinner from './spinner';
+import Error from './error';
 
 interface PostsProps {
-    id:Number;
-    title:string;
-    subtitle:string;
-    category:string;
-    img:string;
-    description:string;
-    published:string;
-    author:{
-        name:string;
-        img:string;
-        designation:string;
-    }
+	id: Number;
+	title: string;
+	subtitle: string;
+	category: string;
+	img: string;
+	description: string;
+	published: string;
+	author: {
+		name: string;
+		img: string;
+		designation: string;
+	};
 }
 
 const ralated = () => {
+	const { data, isLoading, error } = fetcher('api/posts');
+	if (isLoading) return <Spinner></Spinner>;
+	if (error) return <Error></Error>;
 
-    const { data, isLoading, error } = fetcher("api/posts");
-    if(isLoading) return <Spinner></Spinner>;
-    if(error) return <Error></Error>
-    
-    return (
-        <section className="pt-20">
-            <h1 className="font-bold text-3xl py-10">Related</h1>
-            <div className="flex flex-col gap-10">
-                {
-                    data&&
-                    data.map((value:PostsProps,index:number) =>(
-                        <Post data={value} key={index}></Post>
-                    ))
-                }
-            </div>
-        </section>
-    )
+	return (
+		<section className="pt-20">
+			<h1 className="font-bold text-3xl py-10">Related</h1>
+			<div className="flex flex-col gap-10">
+				{data &&
+					data.map((value: PostsProps, index: number) => (
+						<Post data={value} key={index}></Post>
+					))}
+			</div>
+		</section>
+	);
+};
+
+function Post({ data }: { data: PostsProps }) {
+	const { id, title, subtitle, description, category, img, published, author } =
+		data;
+
+	return (
+		<div className="flex gap-5">
+			<div className="image flex flex-col justify-start">
+				<Link href={`/posts/${id}`}>
+					<a>
+						<Image
+							src={img || '/'}
+							className="rounded"
+							width={300}
+							height={200}
+						></Image>
+					</a>
+				</Link>
+			</div>
+			<div className="info flex justify-center flex-col">
+				<div className="cat">
+					<Link href={`/posts/${id}`}>
+						<a className=" text-orange-600 hover:text-orange-800">
+							{category || null}
+						</a>
+					</Link>
+					<Link href={`/posts/${id}`}>
+						<a className=" text-gray-800 hover:text-gray-600">
+							- {published || null}
+						</a>
+					</Link>
+				</div>
+				<div className="title">
+					<Link href={`/posts/${id}`}>
+						<a className=" text-xl font-bold text-gray-800 hover:text-gray-600">
+							{title || null}
+						</a>
+					</Link>
+				</div>
+				{author ? <Author author={author}></Author> : null}
+			</div>
+		</div>
+	);
 }
 
-function Post({data}:{data:PostsProps}){
-
-    const {id, title, subtitle, description, category, img, published, author } = data;
-
-    return(
-        <div className="flex gap-5">
-            <div className="image flex flex-col justify-start">
-                <Link href={`/posts/${id}`}><a><Image src={img || "/"} className="rounded" width={300} height={200}></Image></a></Link>
-            </div>
-            <div className="info flex justify-center flex-col">
-                <div className="cat">
-                    <Link href={`/posts/${id}`}><a className=" text-orange-600 hover:text-orange-800">{category || null}</a></Link>
-                    <Link href={`/posts/${id}`}><a className=" text-gray-800 hover:text-gray-600">- {published || null}</a></Link>
-                </div>
-                <div className="title">
-                    <Link href={`/posts/${id}`}><a className=" text-xl font-bold text-gray-800 hover:text-gray-600">{title || null}</a></Link>
-                </div>
-                { author ? <Author author={author}></Author> : null }
-            </div>
-        </div>
-    )
-}
-
-export default ralated
+export default ralated;
