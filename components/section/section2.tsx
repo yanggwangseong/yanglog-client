@@ -52,6 +52,7 @@ const Post = ({ data }: { data: PostsProps }) => {
 							className=" rounded"
 							width={500}
 							height={350}
+							alt={'/'}
 						></Image>
 					</a>
 				</Link>

@@ -71,7 +71,7 @@ const Slide = ({ data }: { data: PostsProps }) => {
 			<div className="image">
 				<Link href={`/posts/${id}`}>
 					<a>
-						<Image src={img || '/'} width={600} height={600}></Image>
+						<Image src={img || '/'} width={600} height={600} alt={'/'}></Image>
 					</a>
 				</Link>
 			</div>

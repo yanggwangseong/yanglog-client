@@ -39,11 +39,11 @@ const Login: NextPage = () => {
 	const loginMutation = useMutation<LoginToken, AxiosError, User>(
 		({ email, password }) => loginUser({ email, password }),
 		{
-			onMutate: (variable) => {
+			onMutate: variable => {
 				//console.log("onMutate", variable);
 				//variable : {loginId: 'xxx', password; 'xxx'}
 			},
-			onSuccess: (data) => {
+			onSuccess: data => {
 				//console.log("onsuccess",data);
 				//if(typeof window !== 'undefined') {
 				//    return window.localStorage.setItem("accessToken",data.accessToken);
@@ -55,7 +55,7 @@ const Login: NextPage = () => {
 
 				router.push('/');
 			},
-			onError: (error) => {
+			onError: error => {
 				if (error.response?.status === 404) {
 					notify('error', '유저가 존재하지 않습니다');
 				}

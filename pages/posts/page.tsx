@@ -18,7 +18,12 @@ const page: NextPage = () => {
 						Vokalia and Consonantia, there live the blind texts.
 					</p>
 					<div className="py-10">
-						<Image src={'/images/img1.jpg'} width={900} height={600}></Image>
+						<Image
+							src={'/images/img1.jpg'}
+							width={900}
+							height={600}
+							alt={'/'}
+						></Image>
 					</div>
 					<div className="content text-gray-600 text-lg flex flex-col gap-4">
 						<p>

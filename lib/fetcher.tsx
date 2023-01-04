@@ -18,9 +18,9 @@ interface PostsProps {
 const baseURL = 'http://localhost:3000/';
 
 const response = async (...args: Parameters<typeof fetch>) =>
-	await fetch(...args).then(async (res) => await res.json());
+	await fetch(...args).then(async res => await res.json());
 
-const fetcher = (endpoint: string) => {
+const Fetcher = (endpoint: string) => {
 	const { data, isLoading, error } = useSWR<PostsProps[], Error>(
 		`${baseURL}${endpoint}`,
 		response,
@@ -33,4 +33,4 @@ const fetcher = (endpoint: string) => {
 	};
 };
 
-export default fetcher;
+export default Fetcher;

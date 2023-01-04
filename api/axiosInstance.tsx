@@ -32,15 +32,18 @@ export const apiClient = axios.create({
 		'Content-type': 'application/json',
 	},
 	transformRequest: [
-		(data) => {
+		data => {
 			return JSON.stringify(data);
 		},
 	],
 	transformResponse: [
-		(data) => {
+		data => {
 			return JSON.parse(data);
 		},
 	],
+	// validateStatus: function (status) {
+	// 	return status >= 200 && status <= 503;
+	// },
 });
 
 export const AuthApiClient = axios.create({
@@ -51,12 +54,12 @@ export const AuthApiClient = axios.create({
 		//'Authorization': 'Bearer '+getFromStorage('accessToken')
 	},
 	transformRequest: [
-		(data) => {
+		data => {
 			return JSON.stringify(data);
 		},
 	],
 	transformResponse: [
-		(data) => {
+		data => {
 			return JSON.parse(data);
 		},
 	],
@@ -70,7 +73,7 @@ AuthApiClient.interceptors.request.use(
 		)}`;
 		return config;
 	},
-	(err) => {
+	err => {
 		return Promise.reject(err);
 	},
 );
@@ -79,7 +82,7 @@ AuthApiClient.interceptors.response.use(
 		//AccessToken 유효함.
 		return response;
 	},
-	async (error) => {
+	async error => {
 		// const { config, response: {status}} = error;
 		// if(status === 401){
 		//     if(error.response.data.message === "Unauthorized"){

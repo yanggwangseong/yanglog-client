@@ -17,6 +17,7 @@ const author = ({ author }: { author: authorType }) => {
 				width={60}
 				height={60}
 				className="rounded-full"
+				alt={'/'}
 			></Image>
 			<div className="flex flex-col justify-center px-4">
 				<Link href={'/'}>

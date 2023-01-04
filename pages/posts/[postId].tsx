@@ -17,11 +17,11 @@ import Spinner from '../../components/_child/spinner';
 import { getPostById, getPostAll } from '../../api/postService';
 import { Post } from '../../interfaces/post';
 
-const page = () => {
+const Page = () => {
 	const router = useRouter();
 	const { postId } = router.query;
 	//const { data, isLoading, isError } = useQuery(["post"], () => getPost(postId ? postId : 1));
-	const { data, isLoading, isError } = useQuery<Post>(['post'], () =>
+	const { data, isLoading, isError } = useQuery<Post>(['post', postId], () =>
 		getPostById(postId ? postId : 1),
 	);
 
@@ -56,7 +56,7 @@ const page = () => {
 						{subtitle || null}
 					</p>
 					<div className="py-10">
-						<Image src={img || '/'} width={900} height={600}></Image>
+						<Image src={img || '/'} width={900} height={600} alt={'/'}></Image>
 					</div>
 					<div className="content text-gray-600 text-lg flex flex-col gap-4">
 						{description || null}
@@ -68,28 +68,29 @@ const page = () => {
 	);
 };
 
-export default page;
+export default Page;
 
 interface IParams extends ParsedUrlQuery {
 	postId: string;
 }
 
-const getPost = async (postId: string | string[] | number) =>
-	await (await fetch(`http://localhost:3000/api/posts/${postId}`)).json();
+// const getPost = async (postId: string | string[] | number) =>
+// 	await (await fetch(`http://localhost:3000/api/posts/${postId}`)).json();
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
+	const queryClient = new QueryClient();
+	const { postId } = context.params as IParams;
 
-//     const queryClient = new QueryClient();
-//     const { postId } = context.params as IParams;
+	await queryClient.prefetchQuery<Post>(['post', postId], () =>
+		getPostById(postId ? postId : 1),
+	);
 
-//     await queryClient.prefetchQuery<Post>(["post", postId], () => getPost(postId ? postId : 1));
-
-//     return {
-//         props: {
-//             dehydratedState: dehydrate(queryClient),
-//         }
-//     }
-// }
+	return {
+		props: {
+			dehydratedState: dehydrate(queryClient),
+		},
+	};
+};
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {
 
@@ -105,40 +106,40 @@ const getPost = async (postId: string | string[] | number) =>
 //     }
 // }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-	const queryClient = new QueryClient();
-	const { postId } = context.params as IParams;
+// export const getStaticProps: GetStaticProps = async context => {
+// 	const queryClient = new QueryClient();
+// 	const { postId } = context.params as IParams;
 
-	await queryClient.prefetchQuery<Post>(['post'], () =>
-		getPostById(postId ? postId : 1),
-	);
-	return {
-		props: {
-			dehydratedState: dehydrate(queryClient),
-		},
-	};
-};
+// 	await queryClient.prefetchQuery<Post>(['post'], () =>
+// 		getPostById(postId ? postId : 1),
+// 	);
+// 	return {
+// 		props: {
+// 			dehydratedState: dehydrate(queryClient),
+// 		},
+// 	};
+// };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	//const baseURL = process.env.NEXT_PUBLIC_API_URL+"/posts";
+// export const getStaticPaths: GetStaticPaths = async () => {
+// 	//const baseURL = process.env.NEXT_PUBLIC_API_URL+"/posts";
 
-	//const res = await fetch(`${baseURL}`);
-	//const posts: Post[] = await res.json();
-	const posts: Post[] = await getPostAll();
+// 	//const res = await fetch(`${baseURL}`);
+// 	//const posts: Post[] = await res.json();
+// 	const posts: Post[] = await getPostAll();
 
-	const paths = posts.map((value) => {
-		return {
-			params: {
-				postId: value.id.toString(),
-			},
-		};
-	});
+// 	const paths = posts.map(value => {
+// 		return {
+// 			params: {
+// 				postId: value.id.toString(),
+// 			},
+// 		};
+// 	});
 
-	return {
-		paths,
-		fallback: false,
-	};
-};
+// 	return {
+// 		paths,
+// 		fallback: false,
+// 	};
+// };
 
 // export const getStaticProps: GetStaticProps<{ posts: Post }> = async (context) => {
 // // export async function getStaticProps: GetStaticProps<{posts:Post[]}>(){

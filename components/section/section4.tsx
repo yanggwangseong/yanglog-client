@@ -64,6 +64,7 @@ const Post = ({ data }: { data: PostsProps }) => {
 							className="rounded"
 							width={300}
 							height={250}
+							alt={'/'}
 						></Image>
 					</a>
 				</Link>

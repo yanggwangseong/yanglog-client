@@ -65,7 +65,7 @@ const Post = ({ data }: { data: PostsProps }) => {
 			<div className="images">
 				<Link href={`/posts/${id}`}>
 					<a>
-						<Image src={img || '/'} width={600} height={400}></Image>
+						<Image src={img || '/'} width={600} height={400} alt={'/'}></Image>
 					</a>
 				</Link>
 			</div>

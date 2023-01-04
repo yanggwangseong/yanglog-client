@@ -27,9 +27,9 @@ const MobileNav: React.FunctionComponent<MobileNavProps> = ({
 			} transition-transform duration-300 ease-in-out filter drop-shadow-md `}
 		>
 			<div className="flex items-center justify-center filter drop-shadow-md bg-white h-20">
-				<a className="text-xl font-semibold" href="/">
-					LOGO
-				</a>
+				<Link href="/">
+					<a className="text-xl font-semibold">LOGO</a>
+				</Link>
 			</div>
 			<div className="flex flex-col ml-4">
 				<Link href={'/login'}>
@@ -40,18 +40,18 @@ const MobileNav: React.FunctionComponent<MobileNavProps> = ({
 	);
 };
 
-const header = () => {
+const Header = () => {
 	const [open, setOpen] = useState(false);
 	//const data = useRecoilValue(loginAtom);
 	const [LoginState, SetLoginState] = useRecoilState(loginAtom);
 
 	const logoutMutation = useMutation(() => logoutUser(), {
-		onMutate: (variable) => {},
-		onSuccess: (data) => {
+		onMutate: variable => {},
+		onSuccess: data => {
 			removeToStorage('accessToken');
 			SetLoginState({ loginState: false });
 		},
-		onError: (error) => {
+		onError: error => {
 			console.log(error);
 		},
 	});
@@ -120,10 +120,10 @@ const header = () => {
                         </Link> */}
 						{LoginState.loginState === false ? (
 							<>
-								<Link href={'/login'}>
+								<Link href={'/login'} legacyBehavior>
 									<a className="text-white">로그인</a>
 								</Link>
-								<Link href={'/signup'}>
+								<Link href={'/signup'} legacyBehavior>
 									<a className="text-white">회원가입</a>
 								</Link>
 								{/* <a className="text-white" onClick={() => notify("success","success!")}>성공</a>
@@ -152,4 +152,4 @@ const header = () => {
 	);
 };
 
-export default header;
+export default Header;

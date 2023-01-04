@@ -7,7 +7,7 @@ export const apiClient = axios.create({
 		'Content-type': 'application/json',
 	},
 	transformResponse: [
-		(data) => {
+		data => {
 			return JSON.parse(data);
 		},
 	],
