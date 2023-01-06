@@ -73,7 +73,7 @@ const Header = () => {
 				</div>
 				<div className="shrink md:w-80 w-3/12 order-2 md:order1 flex items-center md:block">
 					<Link href={'/'}>
-						<a className="font-bold uppercase text-3xl text-white">YangLog</a>
+						<a className="font-bold uppercase text-5xl text-white">YangLog</a>
 					</Link>
 				</div>
 				<div className="md:hidden w-9/12 order-2 flex justify-end items-center">
@@ -121,10 +121,10 @@ const Header = () => {
 						{LoginState.loginState === false ? (
 							<>
 								<Link href={'/login'} legacyBehavior>
-									<a className="text-white">로그인</a>
+									<a className="text-white text-4xl">로그인</a>
 								</Link>
 								<Link href={'/signup'} legacyBehavior>
-									<a className="text-white">회원가입</a>
+									<a className="text-white text-4xl">회원가입</a>
 								</Link>
 								{/* <a className="text-white" onClick={() => notify("success","success!")}>성공</a>
                                     <a className="text-white" onClick={() => notify("error","error!")}>에러</a>

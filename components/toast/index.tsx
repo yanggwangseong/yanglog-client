@@ -31,7 +31,7 @@ export interface toast {
 const ToastMessage = ({ type, message }: toast) =>
 	toast[type](
 		<div style={{ display: 'flex' }}>
-			<div style={{ flexGrow: 1, fontSize: 15, padding: '8px 12px' }}>
+			<div style={{ flexGrow: 1, fontSize: 30, padding: '8px 12px' }}>
 				{message}
 			</div>
 		</div>,

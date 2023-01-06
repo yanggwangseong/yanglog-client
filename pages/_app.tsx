@@ -17,16 +17,18 @@ function MyApp({ Component, pageProps }: AppProps) {
 			<Hydrate state={pageProps.dehydratedState}>
 				<RecoilRoot>
 					<Root>
-						<Component {...pageProps} />
-						<ToastContainer
-							position="top-right"
-							autoClose={3000}
-							hideProgressBar={false}
-							newestOnTop={false}
-							draggable={false}
-							pauseOnHover
-							closeOnClick
-						/>
+						<main>
+							<Component {...pageProps} />
+							<ToastContainer
+								position="top-right"
+								autoClose={3000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								draggable={false}
+								pauseOnHover
+								closeOnClick
+							/>
+						</main>
 					</Root>
 				</RecoilRoot>
 			</Hydrate>

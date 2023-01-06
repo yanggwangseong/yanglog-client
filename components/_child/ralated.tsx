@@ -47,13 +47,15 @@ function Post({ data }: { data: PostsProps }) {
 		<div className="flex gap-5">
 			<div className="image flex flex-col justify-start">
 				<Link href={`/posts/${id}`}>
-					<Image
-						src={img || '/'}
-						className="rounded"
-						width={300}
-						height={200}
-						alt={''}
-					></Image>
+					<a>
+						<Image
+							src={img || '/'}
+							className="rounded"
+							width={300}
+							height={200}
+							alt={''}
+						></Image>
+					</a>
 				</Link>
 			</div>
 			<div className="info flex justify-center flex-col">

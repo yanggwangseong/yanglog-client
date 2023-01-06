@@ -16,7 +16,9 @@ const About: NextPage = () => {
 			<input type="text" onChange={handleChange}></input>
 			<h1>{todo}</h1>
 			<Listabout></Listabout>
-			<Link href={'/'}>홈</Link>
+			<Link href={'/'}>
+				<a>홈</a>
+			</Link>
 		</div>
 	);
 };
