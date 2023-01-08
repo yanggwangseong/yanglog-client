@@ -6,7 +6,7 @@
 
 * > * {
 	font-family: 'Dongle', sans-serif;
-	/* @apply text-3xl; */
+	@apply text-3xl;
 }
 
 .input-text {

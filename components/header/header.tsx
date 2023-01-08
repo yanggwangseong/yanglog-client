@@ -121,10 +121,10 @@ const Header = () => {
 						{LoginState.loginState === false ? (
 							<>
 								<Link href={'/login'} legacyBehavior>
-									<a className="text-white text-4xl">로그인</a>
+									<a className="text-white text-3xl">로그인</a>
 								</Link>
 								<Link href={'/signup'} legacyBehavior>
-									<a className="text-white text-4xl">회원가입</a>
+									<a className="text-white text-3xl">회원가입</a>
 								</Link>
 								{/* <a className="text-white" onClick={() => notify("success","success!")}>성공</a>
                                     <a className="text-white" onClick={() => notify("error","error!")}>에러</a>

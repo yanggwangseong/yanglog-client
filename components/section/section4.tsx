@@ -29,7 +29,7 @@ const section4 = () => {
 		<section className="container mx-auto md:px-20 py-16">
 			<div className="grid lg:grid-cols-2">
 				<div className="item">
-					<h1 className="font-bold text-4xl py-12 text-center">Business</h1>
+					<h1 className="font-bold text-5xl py-12 text-center">Business</h1>
 					<div className="flex flex-col gap-6">
 						{/* { Post() } */}
 						{data && data[0] ? <Post data={data[0]}></Post> : null}
@@ -38,7 +38,7 @@ const section4 = () => {
 					</div>
 				</div>
 				<div className="item">
-					<h1 className="font-bold text-4xl py-12 text-center">Travel</h1>
+					<h1 className="font-bold text-5xl py-12 text-center">Travel</h1>
 					<div className="flex flex-col gap-6">
 						{/* { Post() } */}
 						{data && data[3] ? <Post data={data[3]}></Post> : null}

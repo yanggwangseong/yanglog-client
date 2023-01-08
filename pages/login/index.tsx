@@ -13,6 +13,7 @@ import { LoginToken, User } from '../../interfaces/user';
 const Login: NextPage = () => {
 	const router = useRouter();
 	const [loginState, setLoginState] = useRecoilState(loginAtom);
+
 	const [inputs, setInputs] = React.useState<User>({
 		email: '',
 		password: '',

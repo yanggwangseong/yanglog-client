@@ -21,7 +21,7 @@ const Page = () => {
 	const router = useRouter();
 	const { postId } = router.query;
 	//const { data, isLoading, isError } = useQuery(["post"], () => getPost(postId ? postId : 1));
-	const { data, isLoading, isError } = useQuery<Post>(['post', postId], () =>
+	const { data, isLoading, isError } = useQuery(['post', postId], () =>
 		getPostById(postId ? postId : 1),
 	);
 
