@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import Format from '../../layout/format';
+import Format from '../../components/ui/layout/format';
 import Author from '../../components/_child/author';
 import Ralated from '../../components/_child/ralated';
 

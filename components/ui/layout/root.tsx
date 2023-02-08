@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { getFromStorage } from '../api/axiosInstance';
-import { checkUser } from '../api/userService';
-import { loginAtom } from '../atoms/loginAtom';
+import { getFromStorage } from '../../../api/axiosInstance';
+import { checkUser } from '../../../api/userService';
+import { loginAtom } from '../../../atoms/loginAtom';
 
 type AppLayoutProps = {
 	children: React.ReactNode;
@@ -24,7 +24,7 @@ const Root = ({ children }: AppLayoutProps) => {
 			return data;
 		}
 		if (accessToken) {
-			refreshData().then((response) =>
+			refreshData().then(response =>
 				SetLoginState({ loginState: response.loginState }),
 			);
 		}

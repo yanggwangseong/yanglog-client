@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { LoginToken, User } from '../interfaces/user';
+import { LoginToken, User } from '../shared/interfaces/user';
 import {
 	AuthApiClient,
 	apiClient,

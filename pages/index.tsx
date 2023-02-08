@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import Format from '../layout/format';
+import Format from '../components/ui/layout/format';
 
 //components
 import Section1 from '../components/section/section1';

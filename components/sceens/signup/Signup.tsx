@@ -1,11 +1,12 @@
-import Format from 'layout/format';
+import Format from '@/components/ui/layout/format';
 import React, { FC } from 'react';
+import styles from './Sinup.module.scss';
 
 const Signup: FC = () => {
 	return (
 		<Format title="회원가입">
 			<form>
-				<div className="container">
+				<div className={styles.container}>
 					<div>이메일</div>
 					<div>
 						<input

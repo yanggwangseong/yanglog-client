@@ -6,7 +6,7 @@ import type {
 	NextPage,
 } from 'next';
 import Image from 'next/image';
-import Format from '../../layout/format';
+import Format from '../../components/ui/layout/format';
 import Author from '../../components/_child/author';
 import Ralated from '../../components/_child/ralated';
 import { ParsedUrlQuery } from 'querystring';
@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import Error from '../../components/_child/error';
 import Spinner from '../../components/_child/spinner';
 import { getPostById, getPostAll } from '../../api/postService';
-import { Post } from '../../interfaces/post';
+import { Post } from '../../shared/interfaces/post';
 
 const Page = () => {
 	const router = useRouter();

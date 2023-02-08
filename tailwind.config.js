@@ -5,7 +5,18 @@ module.exports = {
 		'./components/**/*.{js,ts,jsx,tsx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				primary: '#4e60ff',
+				black: '#2b2b43',
+			},
+			transitionTimingFunction: {
+				DEFAULT: 'ease',
+			},
+			transitionDuration: {
+				DEFAULT: '250ms',
+			},
+		},
 	},
 	plugins: [],
 };
