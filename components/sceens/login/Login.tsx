@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, FormEvent } from 'react';
 import styles from './Login.module.scss';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
@@ -66,7 +66,7 @@ const Login: FC = () => {
 		},
 	);
 
-	const handleSubmit = (e: React.SyntheticEvent) => {
+	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		const target = e.target as typeof e.target & {
 			email: { value: string };
@@ -79,7 +79,7 @@ const Login: FC = () => {
 	};
 
 	return (
-		<Format title="회원가입">
+		<Format title="로그인">
 			<form onSubmit={handleSubmit}>
 				<div className={styles.login_container}>
 					<div className={styles.login_form_title_wrap}>

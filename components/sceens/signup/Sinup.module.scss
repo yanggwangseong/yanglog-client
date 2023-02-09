@@ -1,3 +1,39 @@
-.container {
-	@apply relative;
+.register_container {
+	@apply px-4;
+}
+
+.register_form_title_wrap {
+	@apply mt-5;
+
+	.register_form_title {
+		@apply text-4xl h-6 text-black;
+	}
+	.register_form_subtitle {
+		@apply text-4xl text-primary;
+	}
+}
+.register_form_subject {
+	@apply text-8xl mt-14 text-black;
+}
+
+.register_description {
+	@apply font-light text-2xl mt-4;
+	color: #545563;
+}
+
+.register_wrap {
+	@apply mt-8 font-light;
+	color: #545563;
+
+	> label {
+		@apply block text-2xl;
+	}
+	> input[type='text'] {
+		@apply rounded-lg w-full p-2 text-black;
+		border: solid 1px #c7c8d2;
+	}
+}
+
+.register_btn_wrap {
+	@apply mt-10;
 }
