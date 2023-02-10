@@ -23,6 +23,15 @@ export const logoutUser = async () => {
 	const response = await apiClient.post(`/users/logout`);
 };
 
+export const register = async ({ email, password, name }: User) => {
+	const response = await apiClient.post(`/users`, {
+		email,
+		password,
+		name,
+	});
+	return response;
+};
+
 export const checkUser = async (accessToken: string) => {
 	const response = await AuthApiClient.get(`/users/checkUser`);
 

@@ -3,6 +3,10 @@ import React, { FC, FormEvent } from 'react';
 import styles from './Sinup.module.scss';
 import Button from '@/components/ui/button/Button';
 import { User } from '@/shared/interfaces/user';
+import { useMutation } from 'react-query';
+import { register } from 'api/userService';
+import ToastMessage from '@/components/toast';
+import axios from 'axios';
 
 const Signup: FC = () => {
 	const [inputs, setInputs] = React.useState<User>({
@@ -21,13 +25,39 @@ const Signup: FC = () => {
 		});
 	};
 
+	const registerMutation = useMutation(
+		['register'],
+		(data: User) => register(data),
+		{
+			onSuccess: data => {
+				console.log(data);
+			},
+			onError: error => {
+				if (axios.isAxiosError(error)) {
+					notify('error', error.response?.data.message);
+				} else {
+					console.error(error);
+				}
+			},
+		},
+	);
+
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
 		console.log('email', email);
 		console.log('name', name);
 		console.log('password', password);
+		registerMutation.mutate({ email, password, name });
 	};
+
+	interface toastFunc {
+		(type: 'success' | 'error' | 'info' | 'warning', message: string): void;
+	}
+
+	const notify: toastFunc = React.useCallback((type, message) => {
+		ToastMessage({ type, message });
+	}, []);
 
 	return (
 		<Format title="회원가입">

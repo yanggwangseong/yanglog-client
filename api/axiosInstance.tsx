@@ -38,7 +38,7 @@ export const apiClient = axios.create({
 	],
 	transformResponse: [
 		data => {
-			return JSON.parse(data);
+			if (data) return JSON.parse(data);
 		},
 	],
 	// validateStatus: function (status) {
