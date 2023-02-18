@@ -16,18 +16,21 @@ const Root = ({ children }: AppLayoutProps) => {
 	// useQueryClient와 getQueryData를 이용해서 /posts/[postId].tsx에서 useQuery에 저장된 데이터 가져와짐. 만약 post 에 방문 헀으면
 	// 새로고침해서 메인페이지로 오면 당연히 사라짐.
 
+	const accessToken = getFromStorage('accessToken');
+	const refreshData = async () => {
+		const data = await checkUser(accessToken ? accessToken : '');
+		return data;
+	};
 	useEffect(() => {
-		const accessToken = getFromStorage('accessToken');
-		async function refreshData() {
-			const data = checkUser(accessToken ? accessToken : '');
-			console.log(data);
-			return data;
-		}
-		if (accessToken) {
-			refreshData().then(response =>
-				SetLoginState({ loginState: response.loginState }),
-			);
-		}
+		const fetchData = async () => {
+			if (accessToken) {
+				const response = await refreshData();
+				SetLoginState({ loginState: response.loginState });
+			} else {
+				SetLoginState({ loginState: false });
+			}
+		};
+		fetchData();
 	}, []);
 
 	return <>{children}</>;

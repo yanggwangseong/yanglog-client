@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { loginAtom } from '../../atoms/loginAtom';
 import { useMutation } from 'react-query';
 import { logoutUser } from '../../api/userService';
 import { removeToStorage } from '../../api/axiosInstance';
-import ToastMessage from '../toast';
+import Spinner from '@/components/_child/spinner';
 
 interface MobileNavProps {
 	setOpen: Dispatch<SetStateAction<boolean>>;
@@ -44,6 +44,7 @@ const Header = () => {
 	const [open, setOpen] = useState(false);
 	//const data = useRecoilValue(loginAtom);
 	const [LoginState, SetLoginState] = useRecoilState(loginAtom);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const logoutMutation = useMutation(() => logoutUser(), {
 		onMutate: variable => {},
@@ -60,9 +61,13 @@ const Header = () => {
 		logoutMutation.mutate();
 	};
 
-	// const notify:toastFunc = React.useCallback((type, message) => {
-	//     ToastMessage({ type, message });
-	// },[]);
+	useEffect(() => {
+		setIsLoading(false);
+	}, []);
+
+	if (isLoading) {
+		return <Spinner></Spinner>;
+	}
 
 	return (
 		<header className="bg-violet-600 sticky top-0 z-50">
@@ -109,15 +114,6 @@ const Header = () => {
 				</div>
 				<div className="hidden md:flex md:w-96 order-3 justify-center ">
 					<div className="flex gap-6">
-						{/* <Link href={"/"}>
-                            <a><ImFacebook color="#ffffff"/></a>
-                        </Link>
-                        <Link href={"/"}>
-                            <a><ImTwitter color="#ffffff"/></a>
-                        </Link>
-                        <Link href={"/"}>
-                            <a><ImYoutube color="#ffffff"/></a>
-                        </Link> */}
 						{LoginState.loginState === false ? (
 							<>
 								<Link href={'/login'} legacyBehavior>
@@ -126,10 +122,6 @@ const Header = () => {
 								<Link href={'/signup'} legacyBehavior>
 									<a className="text-white text-3xl">회원가입</a>
 								</Link>
-								{/* <a className="text-white" onClick={() => notify("success","success!")}>성공</a>
-                                    <a className="text-white" onClick={() => notify("error","error!")}>에러</a>
-                                    <a className="text-white" onClick={() => notify("info","info!")}>정보</a>
-                                    <a className="text-white" onClick={() => notify("warning","warning!")}>위험</a> */}
 							</>
 						) : (
 							<>

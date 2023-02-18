@@ -24,7 +24,7 @@ const CategoryPage: NextPage = () => {
 		return null;
 	}
 
-	return <Category {...data}></Category>;
+	return <Category categories={data}></Category>;
 };
 
 export default CategoryPage;
