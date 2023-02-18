@@ -1,0 +1,57 @@
+.title {
+	@apply font-light text-3xl;
+	color: #2b2b43;
+}
+
+.sidebar_card {
+	@apply flex p-4 border border-solid rounded-2xl font-light mt-4 cursor-pointer;
+	min-width: 350px;
+	border-color: #edeef2;
+	background-color: #ffffff;
+
+	&:hover {
+		@apply border;
+		border-color: #4e60ff;
+		background-color: #f3f4ff;
+		.sidebar_icon_container {
+			background-color: #4e60ff;
+			> svg {
+				fill: white;
+			}
+		}
+	}
+	&.active {
+		@apply border-2;
+		border-color: #4e60ff;
+		background-color: #f3f4ff;
+	}
+
+	.sidebar_icon_container {
+		@apply rounded-xl text-center flex items-center justify-center;
+		min-width: 40px;
+		min-height: 40px;
+		background-color: #edeef2;
+		> svg {
+			fill: #83859c;
+		}
+
+		&.active {
+			background-color: #4e60ff;
+			> svg {
+				fill: white;
+			}
+		}
+	}
+
+	.sidebar_card_contents_wrap {
+		@apply ml-3;
+		.sidebar_card_title {
+			@apply text-xl font-normal h-5;
+			color: #2b2b43;
+		}
+		.sidebar_card_subtitle {
+			@apply text-lg h-5;
+			color: #545563;
+		}
+	}
+}

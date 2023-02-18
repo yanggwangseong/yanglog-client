@@ -1,0 +1,19 @@
+.container {
+	@apply flex justify-center mt-6;
+	color: #2b2b43;
+}
+
+.contents_container {
+	@apply ml-7;
+	.contents_title {
+		@apply font-light text-3xl;
+	}
+
+	.contents_card {
+		@apply mt-4 border border-solid rounded-2xl;
+		border-color: #edeef2;
+		padding: 24px 0 20px;
+		min-width: 730px;
+		min-height: 700px;
+	}
+}
