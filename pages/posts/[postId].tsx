@@ -17,12 +17,13 @@ import Spinner from '../../components/_child/spinner';
 import { getPostById, getPostAll } from '../../api/postService';
 import { Post } from '../../shared/interfaces/post';
 
-const Page = () => {
-	const router = useRouter();
-	const { postId } = router.query;
+const Page: NextPage<{ postId: string }> = ({ postId }) => {
+	//const router = useRouter();
+	//const { postId } = router.query;
+	//if (!postId) return null;
 	//const { data, isLoading, isError } = useQuery(["post"], () => getPost(postId ? postId : 1));
 	const { data, isLoading, isError } = useQuery(['post', postId], () =>
-		getPostById(postId ? postId : 1),
+		getPostById(postId),
 	);
 
 	//const {id, title, subtitle, description, category, img, published, author } = posts;
@@ -34,13 +35,18 @@ const Page = () => {
 		return <Error></Error>;
 	}
 
-	//const {id, title, subtitle, description, category, img, published, author } = data;
+	if (!data) {
+		return null;
+	}
+
+	const { id, title, subtitle, description, category, img, published, author } =
+		data;
 	//const {id, title, subtitle, description, category, img, published, author }:Post = data;
-	const title = data?.title;
-	const author = data?.author;
-	const subtitle = data?.subtitle;
-	const img = data?.img;
-	const description = data?.description;
+	//const title = data?.title;
+	//const author = data?.author;
+	//const subtitle = data?.subtitle;
+	//const img = data?.img;
+	//const description = data?.description;
 
 	return (
 		<Format title={title}>
@@ -82,12 +88,13 @@ export const getServerSideProps: GetServerSideProps = async context => {
 	const { postId } = context.params as IParams;
 
 	await queryClient.prefetchQuery<Post>(['post', postId], () =>
-		getPostById(postId ? postId : 1),
+		getPostById(postId),
 	);
 
 	return {
 		props: {
 			dehydratedState: dehydrate(queryClient),
+			postId,
 		},
 	};
 };

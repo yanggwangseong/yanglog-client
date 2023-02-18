@@ -18,7 +18,7 @@ export const getPostAll = async () => {
 	return data;
 };
 
-export const getPostById = async (postId: string | string[] | number) => {
+export const getPostById = async (postId: string) => {
 	const { data } = await apiClient.get<Post>(`/posts/${postId}`);
 	return data;
 };
