@@ -70,7 +70,7 @@ const Header = () => {
 	}
 
 	return (
-		<header className="bg-violet-600 sticky top-0 z-50">
+		<header className="bg-white sticky top-0 z-50 border border-b-gray-200">
 			<MobileNav open={open} setOpen={setOpen} />
 			<div className="xl:container xl:mx-auto flex items-center flex-row justify-between text-center py-4 px-4 md:px-0">
 				<div className="hidden md:flex md:w-96 order1 justify-center py-4 sm:py-0">
@@ -78,7 +78,7 @@ const Header = () => {
 				</div>
 				<div className="shrink md:w-80 w-3/12 order-2 md:order1 flex items-center md:block">
 					<Link href={'/'}>
-						<a className="font-bold uppercase text-5xl text-white">YangLog</a>
+						<a className="font-bold uppercase text-5xl text-black">YangLog</a>
 					</Link>
 				</div>
 				<div className="md:hidden w-9/12 order-2 flex justify-end items-center">
@@ -117,20 +117,20 @@ const Header = () => {
 						{LoginState.loginState === false ? (
 							<>
 								<Link href={'/login'} legacyBehavior>
-									<a className="text-white text-3xl">로그인</a>
+									<a className="text-black text-3xl">로그인</a>
 								</Link>
 								<Link href={'/signup'} legacyBehavior>
-									<a className="text-white text-3xl">회원가입</a>
+									<a className="text-black text-3xl">회원가입</a>
 								</Link>
 							</>
 						) : (
 							<>
 								<Link href={'/posts/new'}>
-									<a className="text-white">글쓰기</a>
+									<a className="text-black">글쓰기</a>
 								</Link>
 								<button
 									type="button"
-									className="text-white"
+									className="text-black"
 									onClick={() => handleLogout()}
 								>
 									로그아웃

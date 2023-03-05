@@ -16,6 +16,7 @@ import Error from '../../components/_child/error';
 import Spinner from '../../components/_child/spinner';
 import { getPostById, getPostAll } from '../../api/postService';
 import { Post } from '../../shared/interfaces/post';
+import Comment from '@/components/ui/comment/Comment';
 
 const Page: NextPage<{ postId: string }> = ({ postId }) => {
 	//const router = useRouter();
@@ -69,6 +70,7 @@ const Page: NextPage<{ postId: string }> = ({ postId }) => {
 					</div>
 				</div>
 				<Ralated></Ralated>
+				<Comment></Comment>
 			</section>
 		</Format>
 	);
