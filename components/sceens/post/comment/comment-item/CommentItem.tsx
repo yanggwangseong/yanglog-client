@@ -24,7 +24,7 @@ const CommentItem: FC<CommentItemProps> = ({
 		onReplyContentChange(e.target.value);
 	};
 
-	return (
+	return comment ? (
 		<>
 			<div className={styles.comment__container}>
 				<div className={styles.vote_container}>
@@ -67,8 +67,12 @@ const CommentItem: FC<CommentItemProps> = ({
 			</div>
 			{/* 답글 작성 폼 */}
 			{comment.id === openReplyFormId && (
-				<form onSubmit={event => onReplySubmit(event, 'reply')}>
+				<form
+					onSubmit={event => onReplySubmit(event, 'reply', comment.parentId)}
+				>
 					<div className={styles.reply_comment_form}>
+						{/* <p>{comment.parentId}</p> */}
+						<p>{openReplyFormId}</p>
 						<div>
 							<Image
 								className={styles.comment_avatar_img}
@@ -117,6 +121,8 @@ const CommentItem: FC<CommentItemProps> = ({
 				</div>
 			)}
 		</>
+	) : (
+		<div>Not found Comments!</div>
 	);
 };
 

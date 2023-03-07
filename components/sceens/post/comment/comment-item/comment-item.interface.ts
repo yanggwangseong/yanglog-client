@@ -7,6 +7,6 @@ export interface CommentItemProps {
 	replyContent: string;
 	openReplyFormId: string;
 	onReplyToggle: (commentId: string) => void;
-	onReplySubmit: (e: FormEvent, type: string) => void;
+	onReplySubmit: (e: FormEvent, type: string, parentId?: string | null) => void;
 	onReplyContentChange: (content: string) => void;
 }

@@ -27,7 +27,11 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 		);
 	};
 
-	const handleReplySubmit = (e: FormEvent, type: string) => {
+	const handleReplySubmit = (
+		e: FormEvent,
+		type: string,
+		parentId?: string | null,
+	) => {
 		e.preventDefault();
 		if (type === 'send') {
 			const body: CommentDto = {
@@ -38,6 +42,15 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 			};
 			createCommentMutation.mutate(body);
 			setSendContent('');
+		} else if (type === 'reply') {
+			const body: CommentDto = {
+				comment_content: replyContent,
+				parentId: parentId,
+				replyId: openReplyFormId,
+				postId: postId,
+			};
+			createCommentMutation.mutate(body);
+			setReplyContent('');
 		}
 		setReplyContent('');
 		setOpenReplyFormId('');
@@ -48,7 +61,6 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 		(data: CommentDto) => CommentService.createComment(data),
 		{
 			onSuccess: data => {
-				console.log(data);
 				notify('success', '댓글이 작성 되었습니다.');
 				queryClient.invalidateQueries(['comment', postIdPram]);
 			},
