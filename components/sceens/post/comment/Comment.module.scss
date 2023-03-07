@@ -8,4 +8,31 @@
 		@apply p-16 rounded;
 		background-color: #f5f6fa;
 	}
+
+	// send comment
+	.send_comment_form {
+		@apply flex bg-white rounded-lg p-6 mt-5 w-full;
+		min-height: 144px;
+
+		.send_right_container {
+			@apply flex;
+			width: calc(100% - 40px);
+			.send_content_wrap {
+				@apply mx-4 w-full;
+				.send_content {
+					@apply w-full border rounded-lg py-3 px-6 text-lg focus:outline-none;
+					&:focus {
+						border-color: #5357b6;
+					}
+				}
+			}
+
+			.send_comment_btn {
+				@apply ml-auto text-xl;
+				&:hover {
+					@apply transition ease-in-out delay-150 scale-110 duration-300;
+				}
+			}
+		}
+	}
 }

@@ -12,6 +12,9 @@
 }
 
 .comment__container {
+	// @screen lg {
+	// 	@apply bg-red-500;
+	// }
 	@apply bg-white rounded-lg p-6 flex mt-5;
 	min-height: 167px;
 
@@ -21,6 +24,27 @@
 		border-radius: 10px;
 		height: 100px;
 		width: 40px;
+
+		.vote__plus_btn {
+			@apply text-center cursor-pointer;
+			color: #c5c6ef;
+			&:hover {
+				@apply transition ease-in-out delay-150 scale-110 duration-300;
+				color: #5357b6;
+			}
+		}
+		.vote__score {
+			@apply text-center;
+			color: #5357b6;
+		}
+		.vote__minus_btn {
+			@apply text-center cursor-pointer;
+			color: #c5c6ef;
+			&:hover {
+				@apply transition ease-in-out delay-150 scale-110 duration-300;
+				color: #5357b6;
+			}
+		}
 	}
 
 	.comment_contents_container {
@@ -29,9 +53,6 @@
 			@apply flex;
 			.comment_avatar_img_container {
 				@apply w-8 h-8;
-				.comment_avatar_img {
-					@apply object-contain;
-				}
 			}
 			.comment_name {
 				@apply text-lg font-bold ml-4;
@@ -44,7 +65,7 @@
 			.comment_reply_btn {
 				@apply ml-auto flex cursor-pointer;
 				&:hover {
-					@apply transition ease-in-out delay-150 scale-110 duration-300;
+					@apply transition ease-in-out delay-75 scale-110 duration-100;
 				}
 				.comment_reply_btn_text {
 					@apply text-lg ml-2 font-bold;
@@ -52,9 +73,46 @@
 				}
 			}
 		}
+		.reply_user_name {
+			@apply text-xl cursor-pointer mt-2 -mb-4;
+			color: #5357b6;
+		}
+
 		.comment_description {
 			@apply text-lg mt-4;
 			color: #67727e;
+		}
+	}
+}
+// profile img
+.comment_avatar_img {
+	@apply object-contain;
+}
+
+// reply comment
+.reply_comment_form {
+	@apply flex bg-white rounded-lg p-6 mt-5 w-full;
+	min-height: 144px;
+
+	.reply_right_container {
+		@apply flex;
+		width: calc(100% - 40px);
+		.reply_content_wrap {
+			@apply mx-4 w-full;
+
+			.reply_content {
+				@apply w-full border rounded-lg py-3 px-6 text-lg focus:outline-none;
+				&:focus {
+					border-color: #5357b6;
+				}
+			}
+		}
+	}
+
+	.reply_comment_btn {
+		@apply ml-auto text-xl;
+		&:hover {
+			@apply transition ease-in-out delay-150 scale-110 duration-300;
 		}
 	}
 }
