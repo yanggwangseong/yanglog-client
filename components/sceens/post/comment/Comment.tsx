@@ -4,15 +4,20 @@ import { CommentDto, CommentType } from '@/shared/interfaces/comment.interface';
 import Image from 'next/image';
 import CommentItem from './comment-item/CommentItem';
 import Button from '@/components/ui/button/Button';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { CommentService } from '@/services/comment/comment.service';
 import axios from 'axios';
 import ToastMessage from '@/components/toast';
+import { useRouter } from 'next/router';
 
 const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 	const [replyContent, setReplyContent] = useState<string>('');
 	const [sendContent, setSendContent] = useState<string>('');
 	const [openReplyFormId, setOpenReplyFormId] = useState<string>('');
+
+	const router = useRouter();
+	const { postId: postIdPram } = router.query;
+	const queryClient = useQueryClient();
 
 	const postId = '5b1d8ca1-0783-4d19-9905-d5241e3f8e16';
 
@@ -45,6 +50,7 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 			onSuccess: data => {
 				console.log(data);
 				notify('success', '댓글이 작성 되었습니다.');
+				queryClient.invalidateQueries(['comment', postIdPram]);
 			},
 			onError: error => {
 				if (axios.isAxiosError(error)) {

@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import React from 'react';
 import type { AppProps } from 'next/app';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 import Root from '../components/ui/layout/root';
 import { ToastContainer } from 'react-toastify';
@@ -29,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 								closeOnClick
 							/>
 						</main>
+						<ReactQueryDevtools initialIsOpen={false} />
 					</Root>
 				</RecoilRoot>
 			</Hydrate>
