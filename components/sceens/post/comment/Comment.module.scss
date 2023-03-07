@@ -1,0 +1,11 @@
+.container {
+	@apply mt-10;
+	.title {
+		@apply my-10 text-4xl font-bold;
+	}
+
+	.wrap {
+		@apply p-16 rounded;
+		background-color: #f5f6fa;
+	}
+}

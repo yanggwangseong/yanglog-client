@@ -5,20 +5,17 @@ import type {
 	InferGetStaticPropsType,
 	NextPage,
 } from 'next';
-import Image from 'next/image';
-import Format from '../../components/ui/layout/format';
-import Author from '../../components/_child/author';
-import Ralated from '../../components/_child/ralated';
 import { ParsedUrlQuery } from 'querystring';
 import { dehydrate, QueryClient, useQuery, useQueryClient } from 'react-query';
-import { useRouter } from 'next/router';
 import Error from '../../components/_child/error';
 import Spinner from '../../components/_child/spinner';
 import { getPostById, getPostAll } from '../../api/postService';
-import { Post } from '../../shared/interfaces/post';
-import Comment from '@/components/ui/comment/Comment';
+import { Post as PostType } from '../../shared/interfaces/post';
+import Post from '@/components/sceens/post/Post';
+import { CommentType } from '@/shared/interfaces/comment.interface';
+import { CommentService } from '@/services/comment/comment.service';
 
-const Page: NextPage<{ postId: string }> = ({ postId }) => {
+const PostsPage: NextPage<{ postId: string }> = ({ postId }) => {
 	//const router = useRouter();
 	//const { postId } = router.query;
 	//if (!postId) return null;
@@ -27,21 +24,30 @@ const Page: NextPage<{ postId: string }> = ({ postId }) => {
 		getPostById(postId),
 	);
 
+	const {
+		data: commentData,
+		isLoading: commentLoading,
+		isError: commentError,
+	} = useQuery(['comment', postId], () =>
+		CommentService.getComments('5b1d8ca1-0783-4d19-9905-d5241e3f8e16'),
+	);
+
 	//const {id, title, subtitle, description, category, img, published, author } = posts;
 
-	if (isLoading) {
+	if (isLoading || commentLoading) {
 		return <Spinner></Spinner>;
 	}
-	if (isError) {
+
+	if (isError || commentError) {
 		return <Error></Error>;
 	}
 
-	if (!data) {
+	if (!data || !commentData) {
 		return null;
 	}
 
-	const { id, title, subtitle, description, category, img, published, author } =
-		data;
+	// const { id, title, subtitle, description, category, img, published, author } =
+	// 	data;
 	//const {id, title, subtitle, description, category, img, published, author }:Post = data;
 	//const title = data?.title;
 	//const author = data?.author;
@@ -49,34 +55,10 @@ const Page: NextPage<{ postId: string }> = ({ postId }) => {
 	//const img = data?.img;
 	//const description = data?.description;
 
-	return (
-		<Format title={title}>
-			<section className=" container mx-auto md:px-2 py-16 lg:w-1/2">
-				<div className=" flex justify-center ">
-					{author ? <Author author={author}></Author> : null}
-				</div>
-				<div className="post py-10">
-					<h1 className=" font-bold text-4xl text-center pb-5">
-						{title || null}
-					</h1>
-					<p className=" text-gray-500 text-xl text-center">
-						{subtitle || null}
-					</p>
-					<div className="py-10">
-						<Image src={img || '/'} width={900} height={600} alt={'/'}></Image>
-					</div>
-					<div className="content text-gray-600 text-lg flex flex-col gap-4">
-						{description || null}
-					</div>
-				</div>
-				<Ralated></Ralated>
-				<Comment></Comment>
-			</section>
-		</Format>
-	);
+	return <Post posts={data} comments={commentData}></Post>;
 };
 
-export default Page;
+export default PostsPage;
 
 interface IParams extends ParsedUrlQuery {
 	postId: string;
@@ -89,8 +71,13 @@ export const getServerSideProps: GetServerSideProps = async context => {
 	const queryClient = new QueryClient();
 	const { postId } = context.params as IParams;
 
-	await queryClient.prefetchQuery<Post>(['post', postId], () =>
+	await queryClient.prefetchQuery<PostType>(['post', postId], () =>
 		getPostById(postId),
+	);
+
+	const tmp: string = '5b1d8ca1-0783-4d19-9905-d5241e3f8e16';
+	await queryClient.prefetchQuery<CommentType[]>(['comment', postId], () =>
+		CommentService.getComments(tmp),
 	);
 
 	return {
@@ -119,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 // 	const queryClient = new QueryClient();
 // 	const { postId } = context.params as IParams;
 
-// 	await queryClient.prefetchQuery<Post>(['post'], () =>
+// 	await queryClient.prefetchQuery<PostType>(['post'], () =>
 // 		getPostById(postId ? postId : 1),
 // 	);
 // 	return {
