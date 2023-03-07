@@ -3,7 +3,10 @@ export interface CommentType {
 	comment_content: string;
 	parentId?: string;
 	userId: string;
+	replyId: string;
+	replyUserName?: string;
+	writer?: string;
 	parentUserName?: string;
-	createdAt: string;
+	updatedAt: string;
 	children_comments?: CommentType[];
 }

@@ -8,7 +8,6 @@ const CommentItem: FC<{ comment: CommentType; depth: number }> = ({
 	comment,
 	depth,
 }) => {
-	console.log(comment.parentId);
 	return (
 		<>
 			<div className={styles.comment__container}>
@@ -34,7 +33,7 @@ const CommentItem: FC<{ comment: CommentType; depth: number }> = ({
 								height={32}
 							></Image>
 						</div>
-						<div className={styles.comment_name}>양광성</div>
+						<div className={styles.comment_name}>{comment.writer}</div>
 						<div className={styles.comment_date}>1 달전</div>
 						<div className={styles.comment_reply_btn}>
 							<div className="flex items-center justify-center">
@@ -43,6 +42,11 @@ const CommentItem: FC<{ comment: CommentType; depth: number }> = ({
 							<div className={styles.comment_reply_btn_text}>답글</div>
 						</div>
 					</div>
+					{comment.replyUserName && (
+						<div className="text-xl text-cyan-500 mt-4 cursor-pointer">
+							@{comment.replyUserName}
+						</div>
+					)}
 					<div className={styles.comment_description}>
 						{comment.comment_content}
 					</div>
