@@ -8,7 +8,12 @@ export const CommentService = {
 	},
 
 	async createComment(body: CommentDto) {
-		const { data } = await apiClient.post<void>(`/comments`, body);
+		const { data } = await AuthApiClient.post<void>(`/comments`, body);
+		return data;
+	},
+
+	async deleteComment(commentId: string) {
+		const { data } = await AuthApiClient.delete<void>(`/comments/${commentId}`);
 		return data;
 	},
 };

@@ -15,15 +15,33 @@ const CommentItem: FC<CommentItemProps> = ({
 	onReplyToggle,
 	onReplySubmit,
 	onReplyContentChange,
+	onCommentDelete,
 }) => {
 	const [LoginState] = useRecoilState(loginAtom);
+	const [editContent, setEditContent] = useState<string>(
+		comment.comment_content,
+	);
+	const [editState, setEditState] = useState<boolean>(false);
+
+	const handleEditContentChange = (
+		e: React.ChangeEvent<HTMLTextAreaElement>,
+	) => {
+		setEditContent(e.target.value);
+	};
+
+	const handleCommentEdit = () => {
+		setEditState(!editState);
+		//setEditContent(comment.comment_content);
+	};
 
 	const handleReplyToggle = () => {
 		onReplyToggle(comment.id);
 	};
 
-	const handleDelete = () => {
-		onReplyToggle(comment.id);
+	const handleCommentDelete = () => {
+		if (confirm('해당 댓글을 삭제 하겠습니까?')) {
+			onCommentDelete(comment.id);
+		}
 	};
 
 	const handleReplyContentChange = (
@@ -66,7 +84,7 @@ const CommentItem: FC<CommentItemProps> = ({
 							<div className={styles.comment_btn_container}>
 								<div
 									className={styles.comment_delete_btn}
-									onClick={handleDelete}
+									onClick={handleCommentDelete}
 								>
 									<div className="flex items-center justify-center">
 										<FaTrash size={12} color="#ed6368" />
@@ -75,7 +93,10 @@ const CommentItem: FC<CommentItemProps> = ({
 										<div className={styles.comment_delete_btn_text}>Delete</div>
 									</div>
 								</div>
-								<div className={styles.comment_edit_btn}>
+								<div
+									className={styles.comment_edit_btn}
+									onClick={handleCommentEdit}
+								>
 									<div className="flex items-center justify-center">
 										<FaPencilAlt size={12} color="#5357b6" />
 									</div>
@@ -100,6 +121,40 @@ const CommentItem: FC<CommentItemProps> = ({
 						<div className={styles.reply_user_name}>
 							@{comment.replyUserName}
 						</div>
+					)}
+					{LoginState.id === comment.userId && editState && (
+						<form>
+							<div className={styles.reply_comment_form}>
+								<div>
+									<Image
+										className={styles.comment_avatar_img}
+										src="/images/author/profile.jpeg"
+										alt="avatar"
+										width={40}
+										height={40}
+									></Image>
+								</div>
+								<div className={styles.reply_right_container}>
+									<div className={styles.reply_content_wrap}>
+										<textarea
+											className={styles.reply_content}
+											value={replyContent}
+											onChange={handleReplyContentChange}
+											placeholder="Write a reply..."
+										/>
+									</div>
+									<div className={styles.reply_comment_btn}>
+										<Button
+											type="submit"
+											className="text-white py-1 px-6 rounded-lg"
+											style={{ backgroundColor: '#5357b6' }}
+										>
+											Reply
+										</Button>
+									</div>
+								</div>
+							</div>
+						</form>
 					)}
 					<div className={styles.comment_description}>
 						{comment.comment_content}
@@ -155,6 +210,7 @@ const CommentItem: FC<CommentItemProps> = ({
 							onReplyToggle={onReplyToggle}
 							onReplySubmit={onReplySubmit}
 							onReplyContentChange={onReplyContentChange}
+							onCommentDelete={onCommentDelete}
 						/>
 					))}
 				</div>

@@ -9,8 +9,6 @@ import { CommentService } from '@/services/comment/comment.service';
 import axios from 'axios';
 import ToastMessage from '@/components/toast';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
-import { loginAtom } from 'atoms/loginAtom';
 
 const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 	const [replyContent, setReplyContent] = useState<string>('');
@@ -27,6 +25,10 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 		setOpenReplyFormId(prevOpenReplyFormId =>
 			prevOpenReplyFormId === commentId ? '' : commentId,
 		);
+	};
+
+	const handleCommentDelete = (commentId: string) => {
+		deleteCommentMutation.mutate(commentId);
 	};
 
 	const handleReplySubmit = (
@@ -76,6 +78,24 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 		},
 	);
 
+	const deleteCommentMutation = useMutation(
+		['deleteComment'],
+		(commentId: string) => CommentService.deleteComment(commentId),
+		{
+			onSuccess: data => {
+				notify('success', '댓글이 삭제 되었습니다.');
+				queryClient.invalidateQueries(['comment', postIdPram]);
+			},
+			onError: error => {
+				if (axios.isAxiosError(error)) {
+					notify('error', error.response?.data.message);
+				} else {
+					console.error(error);
+				}
+			},
+		},
+	);
+
 	const handleSendContentChange = (
 		e: React.ChangeEvent<HTMLTextAreaElement>,
 	) => {
@@ -105,6 +125,7 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 							onReplyToggle={handleReplyToggle}
 							onReplySubmit={handleReplySubmit}
 							onReplyContentChange={content => setReplyContent(content)}
+							onCommentDelete={handleCommentDelete}
 						></CommentItem>
 					))}
 				<form onSubmit={event => handleReplySubmit(event, 'send')}>

@@ -9,4 +9,5 @@ export interface CommentItemProps {
 	onReplyToggle: (commentId: string) => void;
 	onReplySubmit: (e: FormEvent, type: string, parentId?: string | null) => void;
 	onReplyContentChange: (content: string) => void;
+	onCommentDelete: (commentId: string) => void;
 }
