@@ -9,6 +9,8 @@ import { CommentService } from '@/services/comment/comment.service';
 import axios from 'axios';
 import ToastMessage from '@/components/toast';
 import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { loginAtom } from 'atoms/loginAtom';
 
 const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 	const [replyContent, setReplyContent] = useState<string>('');

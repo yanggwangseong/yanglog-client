@@ -1,11 +1,12 @@
-interface User {
+interface UserData {
+	id?: string;
 	email: string;
 	name?: string;
 	password: string;
 }
 
-interface LoginToken {
+interface LoginToken extends Pick<UserData, 'id' | 'email' | 'name'> {
 	accessToken: string;
 }
 
-export type { User, LoginToken };
+export type { UserData, LoginToken };

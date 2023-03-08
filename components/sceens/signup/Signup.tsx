@@ -2,14 +2,14 @@ import Format from '@/components/ui/layout/format';
 import React, { FC, FormEvent } from 'react';
 import styles from './Sinup.module.scss';
 import Button from '@/components/ui/button/Button';
-import { User } from '@/shared/interfaces/user';
+import { UserData } from '@/shared/interfaces/user';
 import { useMutation } from 'react-query';
 import { register } from 'api/userService';
 import ToastMessage from '@/components/toast';
 import axios from 'axios';
 
 const Signup: FC = () => {
-	const [inputs, setInputs] = React.useState<User>({
+	const [inputs, setInputs] = React.useState<UserData>({
 		email: '',
 		name: '',
 		password: '',
@@ -27,7 +27,7 @@ const Signup: FC = () => {
 
 	const registerMutation = useMutation(
 		['register'],
-		(data: User) => register(data),
+		(data: UserData) => register(data),
 		{
 			onSuccess: data => {
 				console.log(data);

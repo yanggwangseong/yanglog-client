@@ -62,6 +62,27 @@
 				@apply text-lg ml-4;
 				color: #67727e;
 			}
+			.comment_you_tag {
+				@apply w-6 text-white text-sm text-center ml-2 h-4 rounded-sm flex justify-center items-center;
+				background-color: #5357b6;
+			}
+			.comment_btn_container {
+				@apply ml-auto flex;
+				.comment_delete_btn {
+					@apply flex cursor-pointer;
+					.comment_delete_btn_text {
+						@apply text-lg ml-2 font-bold;
+						color: #ed6368;
+					}
+				}
+				.comment_edit_btn {
+					@apply flex cursor-pointer ml-6;
+					.comment_edit_btn_text {
+						@apply text-lg ml-2 font-bold;
+						color: #5357b6;
+					}
+				}
+			}
 			.comment_reply_btn {
 				@apply ml-auto flex cursor-pointer;
 				&:hover {

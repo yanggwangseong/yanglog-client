@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { LoginToken, User } from '../shared/interfaces/user';
+import { LoginToken, UserData } from '../shared/interfaces/user';
 import {
 	AuthApiClient,
 	apiClient,
@@ -7,7 +7,7 @@ import {
 	saveToStorage,
 } from './axiosInstance';
 
-export const loginUser = async ({ email, password }: User) => {
+export const loginUser = async ({ email, password }: UserData) => {
 	const response = await apiClient.post<LoginToken>(`/users/signin`, {
 		email,
 		password,
@@ -23,7 +23,7 @@ export const logoutUser = async () => {
 	const response = await apiClient.post(`/users/logout`);
 };
 
-export const register = async ({ email, password, name }: User) => {
+export const register = async ({ email, password, name }: UserData) => {
 	const response = await apiClient.post(`/users`, {
 		email,
 		password,
@@ -32,7 +32,14 @@ export const register = async ({ email, password, name }: User) => {
 	return response;
 };
 
-export const checkUser = async (accessToken: string) => {
+export const checkUser = async (
+	accessToken: string,
+): Promise<{
+	loginState: boolean;
+	email: string;
+	id: string;
+	name: string;
+}> => {
 	const response = await AuthApiClient.get(`/users/checkUser`);
 
 	return {

@@ -3,7 +3,7 @@ import styles from './Login.module.scss';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { loginAtom } from 'atoms/loginAtom';
-import { LoginToken, User } from '@/shared/interfaces/user';
+import { LoginToken, UserData } from '@/shared/interfaces/user';
 import ToastMessage from '@/components/toast';
 import { useMutation } from 'react-query';
 import { AxiosError } from 'axios';
@@ -16,7 +16,7 @@ const Login: FC = () => {
 	const router = useRouter();
 	const [loginState, setLoginState] = useRecoilState(loginAtom);
 
-	const [inputs, setInputs] = React.useState<User>({
+	const [inputs, setInputs] = React.useState<UserData>({
 		email: '',
 		password: '',
 	});
@@ -39,7 +39,7 @@ const Login: FC = () => {
 		ToastMessage({ type, message });
 	}, []);
 
-	const loginMutation = useMutation<LoginToken, AxiosError, User>(
+	const loginMutation = useMutation<LoginToken, AxiosError, UserData>(
 		({ email, password }) => loginUser({ email, password }),
 		{
 			onMutate: variable => {
@@ -53,7 +53,12 @@ const Login: FC = () => {
 				//}
 				// 로그인 성공 했을때 토큰은 로컬 스토리지에 저장.
 				saveToStorage('accessToken', data.accessToken);
-				setLoginState({ loginState: true });
+				setLoginState({
+					loginState: true,
+					id: data.id,
+					email: data.email,
+					name: data.name,
+				});
 				// accessToken으로 해당 회원 조회해서 recoil에 담자.
 
 				router.push('/');

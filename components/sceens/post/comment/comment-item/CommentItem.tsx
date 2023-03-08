@@ -1,9 +1,11 @@
 import React, { FC, useState } from 'react';
 import Image from 'next/image';
-import { FaReply } from 'react-icons/fa';
+import { FaPencilAlt, FaReply, FaTrash } from 'react-icons/fa';
 import styles from './CommentItem.module.scss';
 import Button from '@/components/ui/button/Button';
 import { CommentItemProps } from './comment-item.interface';
+import { useRecoilState } from 'recoil';
+import { loginAtom } from 'atoms/loginAtom';
 
 const CommentItem: FC<CommentItemProps> = ({
 	comment,
@@ -14,7 +16,13 @@ const CommentItem: FC<CommentItemProps> = ({
 	onReplySubmit,
 	onReplyContentChange,
 }) => {
+	const [LoginState] = useRecoilState(loginAtom);
+
 	const handleReplyToggle = () => {
+		onReplyToggle(comment.id);
+	};
+
+	const handleDelete = () => {
 		onReplyToggle(comment.id);
 	};
 
@@ -43,17 +51,50 @@ const CommentItem: FC<CommentItemProps> = ({
 								height={32}
 							></Image>
 						</div>
-						<div className={styles.comment_name}>{comment.writer}</div>
-						<div className={styles.comment_date}>1 달전</div>
-						<div
-							className={styles.comment_reply_btn}
-							onClick={handleReplyToggle}
-						>
-							<div className="flex items-center justify-center">
-								<FaReply size={14} color="#5357b6" />
-							</div>
-							<div className={styles.comment_reply_btn_text}>답글</div>
+						<div className="flex items-center justify-center">
+							<div className={styles.comment_name}>{comment.writer}</div>
 						</div>
+						{LoginState.id === comment.userId && (
+							<div className="flex items-center justify-center">
+								<div className={styles.comment_you_tag}>you</div>
+							</div>
+						)}
+						<div className="flex items-center justify-center">
+							<div className={styles.comment_date}>1 달전</div>
+						</div>
+						{LoginState.id === comment.userId ? (
+							<div className={styles.comment_btn_container}>
+								<div
+									className={styles.comment_delete_btn}
+									onClick={handleDelete}
+								>
+									<div className="flex items-center justify-center">
+										<FaTrash size={12} color="#ed6368" />
+									</div>
+									<div className="flex items-center justify-center">
+										<div className={styles.comment_delete_btn_text}>Delete</div>
+									</div>
+								</div>
+								<div className={styles.comment_edit_btn}>
+									<div className="flex items-center justify-center">
+										<FaPencilAlt size={12} color="#5357b6" />
+									</div>
+									<div className="flex items-center justify-center">
+										<div className={styles.comment_edit_btn_text}>Edit</div>
+									</div>
+								</div>
+							</div>
+						) : (
+							<div
+								className={styles.comment_reply_btn}
+								onClick={handleReplyToggle}
+							>
+								<div className="flex items-center justify-center">
+									<FaReply size={14} color="#5357b6" />
+								</div>
+								<div className={styles.comment_reply_btn_text}>답글</div>
+							</div>
+						)}
 					</div>
 					{comment.replyUserName && (
 						<div className={styles.reply_user_name}>
@@ -71,8 +112,6 @@ const CommentItem: FC<CommentItemProps> = ({
 					onSubmit={event => onReplySubmit(event, 'reply', comment.parentId)}
 				>
 					<div className={styles.reply_comment_form}>
-						{/* <p>{comment.parentId}</p> */}
-						<p>{openReplyFormId}</p>
 						<div>
 							<Image
 								className={styles.comment_avatar_img}

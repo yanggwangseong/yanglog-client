@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { loginAtom } from '../../atoms/loginAtom';
+import { loginAtom, resetOptionsLoginAtom } from '../../atoms/loginAtom';
 import { useMutation } from 'react-query';
 import { logoutUser } from '../../api/userService';
 import { removeToStorage } from '../../api/axiosInstance';
@@ -50,7 +50,7 @@ const Header = () => {
 		onMutate: variable => {},
 		onSuccess: data => {
 			removeToStorage('accessToken');
-			SetLoginState({ loginState: false });
+			SetLoginState(resetOptionsLoginAtom);
 		},
 		onError: error => {
 			console.log(error);
