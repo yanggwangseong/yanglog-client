@@ -10,10 +10,11 @@ import { dehydrate, QueryClient, useQuery, useQueryClient } from 'react-query';
 import Error from '../../components/_child/error';
 import Spinner from '../../components/_child/spinner';
 import { getPostById, getPostAll } from '../../api/postService';
-import { Post as PostType } from '../../shared/interfaces/post';
 import Post from '@/components/sceens/post/Post';
 import { CommentType } from '@/shared/interfaces/comment.interface';
 import { CommentService } from '@/services/comment/comment.service';
+import { PostType } from '@/shared/interfaces/home.interface';
+import { PostService } from '@/services/post/post.service';
 
 const PostsPage: NextPage<{ postId: string }> = ({ postId }) => {
 	//const router = useRouter();
@@ -21,7 +22,7 @@ const PostsPage: NextPage<{ postId: string }> = ({ postId }) => {
 	//if (!postId) return null;
 	//const { data, isLoading, isError } = useQuery(["post"], () => getPost(postId ? postId : 1));
 	const { data, isLoading, isError } = useQuery(['post', postId], () =>
-		getPostById(postId),
+		PostService.getPostById(postId),
 	);
 
 	const {
@@ -68,9 +69,9 @@ interface IParams extends ParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps = async context => {
 	const queryClient = new QueryClient();
 	const { postId } = context.params as IParams;
-	console.log(postId);
+
 	await queryClient.prefetchQuery<PostType>(['post', postId], () =>
-		getPostById(postId),
+		PostService.getPostById(postId),
 	);
 
 	await queryClient.prefetchQuery<CommentType[]>(['comment', postId], () =>

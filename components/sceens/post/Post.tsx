@@ -4,10 +4,10 @@ import React, { FC } from 'react';
 import Image from 'next/image';
 import Ralated from '@/components/_child/ralated';
 import Comment from './comment/Comment';
-import { Post } from '@/shared/interfaces/post';
 import { CommentType } from '@/shared/interfaces/comment.interface';
+import { PostType } from '@/shared/interfaces/home.interface';
 
-const Post: FC<{ posts: Post; comments: CommentType[] }> = ({
+const Post: FC<{ posts: PostType; comments: CommentType[] }> = ({
 	posts,
 	comments,
 }) => {
