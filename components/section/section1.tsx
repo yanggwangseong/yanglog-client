@@ -4,31 +4,12 @@ import Author from '../_child/author';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay } from 'swiper';
 import 'swiper/css';
-import Spinner from '../_child/spinner';
-import Error from '../_child/error';
-import fetcher from '../../lib/fetcher';
+import { FC } from 'react';
+import { PostType } from '@/shared/interfaces/home.interface';
 
-interface PostsProps {
-	id: Number;
-	title: string;
-	subtitle: string;
-	category: string;
-	img: string;
-	description: string;
-	published: string;
-	author: {
-		name: string;
-		img: string;
-		designation: string;
-	};
-}
-
-const section1 = () => {
+const section1: FC<{ trending: PostType[] }> = trending => {
 	//SwiperCore.use([Autoplay]);
-
-	const { data, isLoading, error } = fetcher('api/trending');
-	if (isLoading) return <Spinner></Spinner>;
-	if (error) return <Error></Error>;
+	const { trending: data } = trending;
 
 	const bg = {
 		background: "url('/images/banner.jpg')no-repeat",
@@ -50,8 +31,8 @@ const section1 = () => {
                     <SwiperSlide>{Slide()}</SwiperSlide>
                     <SwiperSlide>{Slide()}</SwiperSlide>
                     <SwiperSlide>{Slide()}</SwiperSlide> */}
-					{data &&
-						data.map((value: PostsProps, index: number) => (
+					{trending &&
+						data.map((value: PostType, index: number) => (
 							<SwiperSlide key={index}>
 								<Slide data={value}></Slide>
 							</SwiperSlide>
@@ -62,7 +43,7 @@ const section1 = () => {
 	);
 };
 
-const Slide = ({ data }: { data: PostsProps }) => {
+const Slide: FC<{ data: PostType }> = ({ data }) => {
 	const { id, title, subtitle, description, category, img, published, author } =
 		data;
 
@@ -84,7 +65,7 @@ const Slide = ({ data }: { data: PostsProps }) => {
 					</Link>
 					<Link href={`/posts/${id}`}>
 						<a className=" text-gray-800 hover:text-gray-600">
-							- {published || null}
+							- {published.slice(0, 7) || null}
 						</a>
 					</Link>
 				</div>

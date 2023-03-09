@@ -4,6 +4,8 @@ import Author from '../_child/author';
 import Spinner from '../_child/spinner';
 import Error from '../_child/error';
 import fetcher from '../../lib/fetcher';
+import { FC } from 'react';
+import { PostType } from '@/shared/interfaces/home.interface';
 
 interface PostsProps {
 	id: Number;
@@ -20,10 +22,8 @@ interface PostsProps {
 	};
 }
 
-const section4 = () => {
-	const { data, isLoading, error } = fetcher('api/popular');
-	if (isLoading) return <Spinner></Spinner>;
-	if (error) return <Error></Error>;
+const section4: FC<{ popular: PostType[] }> = popular => {
+	const { popular: data } = popular;
 
 	return (
 		<section className="container mx-auto md:px-20 py-16">
@@ -50,7 +50,7 @@ const section4 = () => {
 		</section>
 	);
 };
-const Post = ({ data }: { data: PostsProps }) => {
+const Post: FC<{ data: PostType }> = ({ data }) => {
 	const { id, title, subtitle, description, category, img, published, author } =
 		data;
 
@@ -78,7 +78,7 @@ const Post = ({ data }: { data: PostsProps }) => {
 					</Link>
 					<Link href={`/posts/${id}`}>
 						<a className=" text-gray-800 hover:text-gray-600">
-							- {published || null}
+							- {published.slice(0, 7) || null}
 						</a>
 					</Link>
 				</div>

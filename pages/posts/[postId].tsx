@@ -28,9 +28,7 @@ const PostsPage: NextPage<{ postId: string }> = ({ postId }) => {
 		data: commentData,
 		isLoading: commentLoading,
 		isError: commentError,
-	} = useQuery(['comment', postId], () =>
-		CommentService.getComments('5b1d8ca1-0783-4d19-9905-d5241e3f8e16'),
-	);
+	} = useQuery(['comment', postId], () => CommentService.getComments(postId));
 
 	//const {id, title, subtitle, description, category, img, published, author } = posts;
 
@@ -70,14 +68,13 @@ interface IParams extends ParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps = async context => {
 	const queryClient = new QueryClient();
 	const { postId } = context.params as IParams;
-
+	console.log(postId);
 	await queryClient.prefetchQuery<PostType>(['post', postId], () =>
 		getPostById(postId),
 	);
 
-	const tmp: string = '5b1d8ca1-0783-4d19-9905-d5241e3f8e16';
 	await queryClient.prefetchQuery<CommentType[]>(['comment', postId], () =>
-		CommentService.getComments(tmp),
+		CommentService.getComments(postId),
 	);
 
 	return {

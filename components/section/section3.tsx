@@ -4,31 +4,12 @@ import Author from '../_child/author';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay } from 'swiper';
 import 'swiper/css';
-import Spinner from '../_child/spinner';
-import Error from '../_child/error';
-import fetcher from '../../lib/fetcher';
+import { FC } from 'react';
+import { PostType } from '@/shared/interfaces/home.interface';
 
-interface PostsProps {
-	id: Number;
-	title: string;
-	subtitle: string;
-	category: string;
-	img: string;
-	description: string;
-	published: string;
-	author: {
-		name: string;
-		img: string;
-		designation: string;
-	};
-}
-
-const section3 = () => {
+const section3: FC<{ popular: PostType[] }> = popular => {
+	const { popular: data } = popular;
 	SwiperCore.use([Autoplay]);
-
-	const { data, isLoading, error } = fetcher('api/popular');
-	if (isLoading) return <Spinner></Spinner>;
-	if (error) return <Error></Error>;
 
 	return (
 		<div className="container mx-auto md:px-20 py-10">
@@ -46,7 +27,7 @@ const section3 = () => {
                 <SwiperSlide>{Post()}</SwiperSlide>
                 <SwiperSlide>{Post()}</SwiperSlide> */}
 				{data &&
-					data.map((value: PostsProps, index: number) => (
+					data.map((value: PostType, index: number) => (
 						<SwiperSlide key={index}>
 							<Post data={value}></Post>
 						</SwiperSlide>
@@ -56,7 +37,7 @@ const section3 = () => {
 	);
 };
 
-const Post = ({ data }: { data: PostsProps }) => {
+const Post: FC<{ data: PostType }> = ({ data }) => {
 	const { id, title, subtitle, description, category, img, published, author } =
 		data;
 
@@ -78,7 +59,7 @@ const Post = ({ data }: { data: PostsProps }) => {
 					</Link>
 					<Link href={`/posts/${id}`}>
 						<a className=" text-gray-800 hover:text-gray-600">
-							- {published || null}
+							- {published.slice(0, 7) || null}
 						</a>
 					</Link>
 				</div>
