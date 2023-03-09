@@ -1,13 +1,19 @@
 import { CommentType } from '@/shared/interfaces/comment.interface';
 import { FormEvent } from 'react';
+import { CommentFormState } from '../comment.interface';
 
 export interface CommentItemProps {
 	comment: CommentType;
 	depth: number;
 	replyContent: string;
-	openReplyFormId: string;
-	onReplyToggle: (commentId: string) => void;
-	onReplySubmit: (e: FormEvent, type: string, parentId?: string | null) => void;
+	openFormId: CommentFormState;
+	onToggle: (commentId: string, formType: 'reply' | 'edit') => void;
+	onReplySubmit: (
+		e: FormEvent,
+		type: string,
+		commentId: string,
+		parentId?: string | null,
+	) => void;
 	onReplyContentChange: (content: string) => void;
 	onCommentDelete: (commentId: string) => void;
 }

@@ -15,3 +15,7 @@ export interface CommentDto
 	extends Pick<CommentType, 'comment_content' | 'parentId' | 'replyId'> {
 	postId: string;
 }
+
+export interface UpdateCommentDto extends Pick<CommentType, 'comment_content'> {
+	commentId?: string;
+}

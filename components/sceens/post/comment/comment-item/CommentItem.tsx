@@ -5,37 +5,28 @@ import styles from './CommentItem.module.scss';
 import Button from '@/components/ui/button/Button';
 import { CommentItemProps } from './comment-item.interface';
 import { useRecoilState } from 'recoil';
-import { loginAtom } from 'atoms/loginAtom';
+import { Login, loginAtom } from 'atoms/loginAtom';
 
 const CommentItem: FC<CommentItemProps> = ({
 	comment,
 	depth,
 	replyContent,
-	openReplyFormId,
-	onReplyToggle,
+	openFormId,
+	onToggle,
 	onReplySubmit,
 	onReplyContentChange,
 	onCommentDelete,
 }) => {
-	const [LoginState] = useRecoilState(loginAtom);
-	const [editContent, setEditContent] = useState<string>(
-		comment.comment_content,
-	);
-	const [editState, setEditState] = useState<boolean>(false);
+	const [LoginState] = useRecoilState<Login>(loginAtom);
 
-	const handleEditContentChange = (
-		e: React.ChangeEvent<HTMLTextAreaElement>,
-	) => {
-		setEditContent(e.target.value);
-	};
-
-	const handleCommentEdit = () => {
-		setEditState(!editState);
-		//setEditContent(comment.comment_content);
+	const handleEditToggle = () => {
+		onReplyContentChange(comment.comment_content);
+		onToggle(comment.id, 'edit');
 	};
 
 	const handleReplyToggle = () => {
-		onReplyToggle(comment.id);
+		onReplyContentChange('');
+		onToggle(comment.id, 'reply');
 	};
 
 	const handleCommentDelete = () => {
@@ -95,7 +86,7 @@ const CommentItem: FC<CommentItemProps> = ({
 								</div>
 								<div
 									className={styles.comment_edit_btn}
-									onClick={handleCommentEdit}
+									onClick={handleEditToggle}
 								>
 									<div className="flex items-center justify-center">
 										<FaPencilAlt size={12} color="#5357b6" />
@@ -122,18 +113,10 @@ const CommentItem: FC<CommentItemProps> = ({
 							@{comment.replyUserName}
 						</div>
 					)}
-					{LoginState.id === comment.userId && editState && (
-						<form>
+					{/* 수정댓글작성폼 */}
+					{comment.id === openFormId.editCommentId ? (
+						<form onSubmit={event => onReplySubmit(event, 'edit', comment.id)}>
 							<div className={styles.reply_comment_form}>
-								<div>
-									<Image
-										className={styles.comment_avatar_img}
-										src="/images/author/profile.jpeg"
-										alt="avatar"
-										width={40}
-										height={40}
-									></Image>
-								</div>
 								<div className={styles.reply_right_container}>
 									<div className={styles.reply_content_wrap}>
 										<textarea
@@ -143,28 +126,31 @@ const CommentItem: FC<CommentItemProps> = ({
 											placeholder="Write a reply..."
 										/>
 									</div>
-									<div className={styles.reply_comment_btn}>
-										<Button
-											type="submit"
-											className="text-white py-1 px-6 rounded-lg"
-											style={{ backgroundColor: '#5357b6' }}
-										>
-											Reply
-										</Button>
-									</div>
 								</div>
 							</div>
+							<div className={styles.reply_comment_btn}>
+								<Button
+									type="submit"
+									className="text-white py-1 px-6 rounded-lg"
+									style={{ backgroundColor: '#5357b6' }}
+								>
+									Update
+								</Button>
+							</div>
 						</form>
+					) : (
+						<div className={styles.comment_description}>
+							{comment.comment_content}
+						</div>
 					)}
-					<div className={styles.comment_description}>
-						{comment.comment_content}
-					</div>
 				</div>
 			</div>
 			{/* 답글 작성 폼 */}
-			{comment.id === openReplyFormId && (
+			{comment.id === openFormId.replyCommentId && (
 				<form
-					onSubmit={event => onReplySubmit(event, 'reply', comment.parentId)}
+					onSubmit={event =>
+						onReplySubmit(event, 'reply', '', comment.parentId)
+					}
 				>
 					<div className={styles.reply_comment_form}>
 						<div>
@@ -206,8 +192,8 @@ const CommentItem: FC<CommentItemProps> = ({
 							comment={childComment}
 							depth={depth + 1}
 							replyContent={replyContent}
-							openReplyFormId={openReplyFormId}
-							onReplyToggle={onReplyToggle}
+							openFormId={openFormId}
+							onToggle={onToggle}
 							onReplySubmit={onReplySubmit}
 							onReplyContentChange={onReplyContentChange}
 							onCommentDelete={onCommentDelete}

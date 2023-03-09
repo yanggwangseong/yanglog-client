@@ -1,6 +1,10 @@
-import React, { FC, FormEvent, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 import styles from './Comment.module.scss';
-import { CommentDto, CommentType } from '@/shared/interfaces/comment.interface';
+import {
+	CommentDto,
+	CommentType,
+	UpdateCommentDto,
+} from '@/shared/interfaces/comment.interface';
 import Image from 'next/image';
 import CommentItem from './comment-item/CommentItem';
 import Button from '@/components/ui/button/Button';
@@ -9,11 +13,16 @@ import { CommentService } from '@/services/comment/comment.service';
 import axios from 'axios';
 import ToastMessage from '@/components/toast';
 import { useRouter } from 'next/router';
+import { CommentFormState } from './comment.interface';
 
 const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 	const [replyContent, setReplyContent] = useState<string>('');
 	const [sendContent, setSendContent] = useState<string>('');
-	const [openReplyFormId, setOpenReplyFormId] = useState<string>('');
+
+	const [openFormId, setOpenFormId] = useState<CommentFormState>({
+		replyCommentId: '',
+		editCommentId: '',
+	});
 
 	const router = useRouter();
 	const { postId: postIdPram } = router.query;
@@ -21,10 +30,23 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 
 	const postId = '5b1d8ca1-0783-4d19-9905-d5241e3f8e16';
 
-	const handleReplyToggle = (commentId: string) => {
-		setOpenReplyFormId(prevOpenReplyFormId =>
-			prevOpenReplyFormId === commentId ? '' : commentId,
-		);
+	const handleToggle = (commentId: string, formType: 'reply' | 'edit') => {
+		setOpenFormId(prevOpenFormId => {
+			if (formType === 'reply') {
+				return {
+					replyCommentId:
+						prevOpenFormId.replyCommentId === commentId ? '' : commentId,
+					editCommentId: prevOpenFormId.editCommentId,
+				};
+			} else if (formType === 'edit') {
+				return {
+					replyCommentId: prevOpenFormId.replyCommentId,
+					editCommentId:
+						prevOpenFormId.editCommentId === commentId ? '' : commentId,
+				};
+			}
+			return prevOpenFormId;
+		});
 	};
 
 	const handleCommentDelete = (commentId: string) => {
@@ -34,6 +56,7 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 	const handleReplySubmit = (
 		e: FormEvent,
 		type: string,
+		commentId?: string,
 		parentId?: string | null,
 	) => {
 		e.preventDefault();
@@ -45,23 +68,55 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 				postId: postId,
 			};
 			createCommentMutation.mutate(body);
+			queryClient.invalidateQueries(['comment', postIdPram]);
 			setSendContent('');
 		} else if (type === 'reply') {
 			const body: CommentDto = {
 				comment_content: replyContent,
 				parentId: parentId,
-				replyId: openReplyFormId,
+				replyId: openFormId.replyCommentId,
 				postId: postId,
 			};
-			createCommentMutation.mutate(body);
+			replyCommentMutation.mutate(body);
+			setOpenFormId(prev => {
+				prev.replyCommentId = '';
+				return prev;
+			});
+			setReplyContent('');
+		} else if (type === 'edit') {
+			const body: UpdateCommentDto = {
+				commentId: commentId,
+				comment_content: replyContent,
+			};
+			updateCommentMutation.mutate(body);
+			setOpenFormId(prev => {
+				prev.editCommentId = '';
+				return prev;
+			});
 			setReplyContent('');
 		}
-		setReplyContent('');
-		setOpenReplyFormId('');
 	};
 
 	const createCommentMutation = useMutation(
 		['createComment'],
+		(data: CommentDto) => CommentService.createComment(data),
+		{
+			onSuccess: data => {
+				notify('success', '댓글이 작성 되었습니다.');
+			},
+			onError: error => {
+				if (axios.isAxiosError(error)) {
+					notify('error', error.response?.data.message);
+				} else {
+					console.error(error);
+				}
+			},
+		},
+	);
+
+	//수정 따로 만들어야함
+	const replyCommentMutation = useMutation(
+		['replyComment'],
 		(data: CommentDto) => CommentService.createComment(data),
 		{
 			onSuccess: data => {
@@ -84,6 +139,24 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 		{
 			onSuccess: data => {
 				notify('success', '댓글이 삭제 되었습니다.');
+				queryClient.invalidateQueries(['comment', postIdPram]);
+			},
+			onError: error => {
+				if (axios.isAxiosError(error)) {
+					notify('error', error.response?.data.message);
+				} else {
+					console.error(error);
+				}
+			},
+		},
+	);
+
+	const updateCommentMutation = useMutation(
+		['updateComemnt'],
+		(body: UpdateCommentDto) => CommentService.updateComment(body),
+		{
+			onSuccess: data => {
+				notify('success', '댓글이 수정 되었습니다');
 				queryClient.invalidateQueries(['comment', postIdPram]);
 			},
 			onError: error => {
@@ -121,8 +194,8 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 							comment={comment}
 							depth={0}
 							replyContent={replyContent}
-							openReplyFormId={openReplyFormId}
-							onReplyToggle={handleReplyToggle}
+							openFormId={openFormId}
+							onToggle={handleToggle}
 							onReplySubmit={handleReplySubmit}
 							onReplyContentChange={content => setReplyContent(content)}
 							onCommentDelete={handleCommentDelete}
