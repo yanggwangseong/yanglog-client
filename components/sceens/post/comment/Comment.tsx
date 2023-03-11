@@ -14,6 +14,11 @@ import axios from 'axios';
 import ToastMessage from '@/components/toast';
 import { useRouter } from 'next/router';
 import { CommentFormState } from './comment.interface';
+import { ParsedUrlQuery } from 'querystring';
+
+export interface Param extends ParsedUrlQuery {
+	postId: string;
+}
 
 const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 	const [replyContent, setReplyContent] = useState<string>('');
@@ -25,10 +30,11 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 	});
 
 	const router = useRouter();
-	const { postId: postIdPram } = router.query;
+	const { postId } = router.query as Param;
+
 	const queryClient = useQueryClient();
 
-	const postId = '5b1d8ca1-0783-4d19-9905-d5241e3f8e16';
+	//const postId = '5b1d8ca1-0783-4d19-9905-d5241e3f8e16';
 
 	const handleToggle = (commentId: string, formType: 'reply' | 'edit') => {
 		setOpenFormId(prevOpenFormId => {
@@ -68,7 +74,7 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 				postId: postId,
 			};
 			createCommentMutation.mutate(body);
-			queryClient.invalidateQueries(['comment', postIdPram]);
+			queryClient.invalidateQueries(['comment', postId]);
 			setSendContent('');
 		} else if (type === 'reply') {
 			const body: CommentDto = {
@@ -99,7 +105,7 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 
 	const createCommentMutation = useMutation(
 		['createComment'],
-		(data: CommentDto) => CommentService.createComment(data),
+		(data: CommentDto) => CommentService.createComment(data, postId),
 		{
 			onSuccess: data => {
 				notify('success', '댓글이 작성 되었습니다.');
@@ -114,14 +120,13 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 		},
 	);
 
-	//수정 따로 만들어야함
 	const replyCommentMutation = useMutation(
 		['replyComment'],
-		(data: CommentDto) => CommentService.createComment(data),
+		(data: CommentDto) => CommentService.createComment(data, postId),
 		{
 			onSuccess: data => {
 				notify('success', '댓글이 작성 되었습니다.');
-				queryClient.invalidateQueries(['comment', postIdPram]);
+				queryClient.invalidateQueries(['comment', postId]);
 			},
 			onError: error => {
 				if (axios.isAxiosError(error)) {
@@ -135,11 +140,11 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 
 	const deleteCommentMutation = useMutation(
 		['deleteComment'],
-		(commentId: string) => CommentService.deleteComment(commentId),
+		(commentId: string) => CommentService.deleteComment(commentId, postId),
 		{
 			onSuccess: data => {
 				notify('success', '댓글이 삭제 되었습니다.');
-				queryClient.invalidateQueries(['comment', postIdPram]);
+				queryClient.invalidateQueries(['comment', postId]);
 			},
 			onError: error => {
 				if (axios.isAxiosError(error)) {
@@ -153,11 +158,11 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 
 	const updateCommentMutation = useMutation(
 		['updateComemnt'],
-		(body: UpdateCommentDto) => CommentService.updateComment(body),
+		(body: UpdateCommentDto) => CommentService.updateComment(body, postId),
 		{
 			onSuccess: data => {
 				notify('success', '댓글이 수정 되었습니다');
-				queryClient.invalidateQueries(['comment', postIdPram]);
+				queryClient.invalidateQueries(['comment', postId]);
 			},
 			onError: error => {
 				if (axios.isAxiosError(error)) {

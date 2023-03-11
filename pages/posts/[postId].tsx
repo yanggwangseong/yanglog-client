@@ -9,7 +9,6 @@ import { ParsedUrlQuery } from 'querystring';
 import { dehydrate, QueryClient, useQuery, useQueryClient } from 'react-query';
 import Error from '../../components/_child/error';
 import Spinner from '../../components/_child/spinner';
-import { getPostById, getPostAll } from '../../api/postService';
 import Post from '@/components/sceens/post/Post';
 import { CommentType } from '@/shared/interfaces/comment.interface';
 import { CommentService } from '@/services/comment/comment.service';
@@ -21,15 +20,23 @@ const PostsPage: NextPage<{ postId: string }> = ({ postId }) => {
 	//const { postId } = router.query;
 	//if (!postId) return null;
 	//const { data, isLoading, isError } = useQuery(["post"], () => getPost(postId ? postId : 1));
-	const { data, isLoading, isError } = useQuery(['post', postId], () =>
-		PostService.getPostById(postId),
+
+	//[TODO 비로그인일 때]
+	const { data, isLoading, isError } = useQuery(
+		['post', postId],
+		async () => await PostService.getPostById(postId),
 	);
 
 	const {
 		data: commentData,
 		isLoading: commentLoading,
 		isError: commentError,
-	} = useQuery(['comment', postId], () => CommentService.getComments(postId));
+	} = useQuery(
+		['comment', postId],
+		async () => await CommentService.getComments(postId),
+	);
+
+	//[TODO 로그인일 때]
 
 	//const {id, title, subtitle, description, category, img, published, author } = posts;
 
@@ -66,17 +73,22 @@ interface IParams extends ParsedUrlQuery {
 // const getPost = async (postId: string | string[] | number) =>
 // 	await (await fetch(`http://localhost:3000/api/posts/${postId}`)).json();
 
+// 쿠키로 token 넣어야 할것 같다.
 export const getServerSideProps: GetServerSideProps = async context => {
 	const queryClient = new QueryClient();
 	const { postId } = context.params as IParams;
 
-	await queryClient.prefetchQuery<PostType>(['post', postId], () =>
-		PostService.getPostById(postId),
+	//TODO[비로그인 일 때 가져오기]
+	await queryClient.prefetchQuery<PostType>(
+		['post', postId],
+		async () => await PostService.getPostById(postId),
 	);
 
-	await queryClient.prefetchQuery<CommentType[]>(['comment', postId], () =>
-		CommentService.getComments(postId),
+	await queryClient.prefetchQuery<CommentType[]>(
+		['comment', postId],
+		async () => await CommentService.getComments(postId),
 	);
+	//TODO[로그인 일 때 가져오기]
 
 	return {
 		props: {
