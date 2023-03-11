@@ -6,11 +6,12 @@ import { loginAtom } from 'atoms/loginAtom';
 import { LoginToken, UserData } from '@/shared/interfaces/user';
 import ToastMessage from '@/components/toast';
 import { useMutation } from 'react-query';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { loginUser } from 'api/userService';
-import { saveToStorage } from 'api/axiosInstance';
+import { AuthApiClient, saveToStorage } from 'api/axiosInstance';
 import Format from '@/components/ui/layout/format';
 import Button from '@/components/ui/button/Button';
+import Link from 'next/link';
 
 const Login: FC = () => {
 	const router = useRouter();
@@ -52,7 +53,7 @@ const Login: FC = () => {
 				//    return window.localStorage.setItem("accessToken",data.accessToken);
 				//}
 				// 로그인 성공 했을때 토큰은 로컬 스토리지에 저장.
-				saveToStorage('accessToken', data.accessToken);
+				//saveToStorage('accessToken', data.accessToken);
 				setLoginState({
 					loginState: true,
 					id: data.id,
@@ -60,7 +61,9 @@ const Login: FC = () => {
 					name: data.name,
 				});
 				// accessToken으로 해당 회원 조회해서 recoil에 담자.
-
+				AuthApiClient.defaults.headers.common[
+					'Authorization'
+				] = `Bearer ${data.accessToken}`;
 				router.push('/');
 			},
 			onError: error => {
@@ -128,6 +131,13 @@ const Login: FC = () => {
 						>
 							Login
 						</Button>
+					</div>
+					<div className={styles.login_btn_wrap}>
+						<div className="bg-primary w-full text-white text-2xl px-3 py-2 font-medium rounded-lg">
+							<Link href="http://localhost:3001/users/google/signin">
+								GoogleLogin
+							</Link>
+						</div>
 					</div>
 				</div>
 			</form>

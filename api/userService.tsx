@@ -17,10 +17,10 @@ export const loginUser = async ({ email, password }: UserData) => {
 };
 
 export const logoutUser = async () => {
-	apiClient.defaults.headers.common.Authorization = `Bearer ${getFromStorage(
-		'accessToken',
-	)}`;
-	const response = await apiClient.post(`/users/logout`);
+	// apiClient.defaults.headers.common.Authorization = `Bearer ${getFromStorage(
+	// 	'accessToken',
+	// )}`;
+	const response = await AuthApiClient.post(`/users/logout`);
 };
 
 export const register = async ({ email, password, name }: UserData) => {

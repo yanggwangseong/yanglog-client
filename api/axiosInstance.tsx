@@ -68,9 +68,9 @@ export const AuthApiClient = axios.create({
 AuthApiClient.interceptors.request.use(
 	//accessToekn 유효한지 체크, 백엔드에서 토큰 유효 확인.
 	async (config: AxiosRequestConfig) => {
-		config.headers!['Authorization'] = `Bearer ${getFromStorage(
-			'accessToken',
-		)}`;
+		// config.headers!['Authorization'] = `Bearer ${getFromStorage(
+		// 	'accessToken',
+		// )}`;
 		return config;
 	},
 	err => {
@@ -117,7 +117,10 @@ AuthApiClient.interceptors.response.use(
 			try {
 				const response = await refreshToken();
 				const { accessToken } = response;
-				saveToStorage('accessToken', accessToken);
+
+				//스토리지 일딴 지우자.
+				//saveToStorage('accessToken', accessToken);
+
 				AuthApiClient.defaults.headers.common[
 					'Authorization'
 				] = `Bearer ${accessToken}`;
@@ -125,8 +128,11 @@ AuthApiClient.interceptors.response.use(
 				return AuthApiClient(originalConfig);
 			} catch (_error: any) {
 				//refresh token 만료
+				//스토리지 일딴 지우자.
+				//localStorage.removeItem('accessToken');
 
-				localStorage.removeItem('accessToken');
+				AuthApiClient.defaults.headers.common['Authorization'] = '';
+				originalConfig.headers.Authorization = '';
 				//로그아웃 호출 하면 될듯?
 				if (_error.response && _error.response.data) {
 					return Promise.reject(_error.response.data);
