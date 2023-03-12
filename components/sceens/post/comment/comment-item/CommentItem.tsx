@@ -46,7 +46,7 @@ const CommentItem: FC<CommentItemProps> = ({
 			<div className={styles.comment__container}>
 				<div className={styles.vote_container}>
 					<div className={styles.vote__plus_btn}>+</div>
-					<div className={styles.vote__score}>5</div>
+					<div className={styles.vote__score}>{comment.likes}</div>
 					<div className={styles.vote__minus_btn}>-</div>
 				</div>
 				<div className={styles.comment_contents_container}>
@@ -149,7 +149,12 @@ const CommentItem: FC<CommentItemProps> = ({
 			{comment.id === openFormId.replyCommentId && (
 				<form
 					onSubmit={event =>
-						onReplySubmit(event, 'reply', '', comment.parentId)
+						onReplySubmit(
+							event,
+							'reply',
+							'',
+							comment.parentId ? comment.parentId : openFormId.replyCommentId,
+						)
 					}
 				>
 					<div className={styles.reply_comment_form}>

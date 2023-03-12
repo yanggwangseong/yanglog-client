@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { loginAtom, resetOptionsLoginAtom } from '../../atoms/loginAtom';
 import { useMutation } from 'react-query';
 import { logoutUser } from '../../api/userService';
-import { removeToStorage } from '../../api/axiosInstance';
+import { AuthApiClient, removeToStorage } from '../../api/axiosInstance';
 import Spinner from '@/components/_child/spinner';
 
 interface MobileNavProps {
@@ -49,7 +49,8 @@ const Header = () => {
 	const logoutMutation = useMutation(() => logoutUser(), {
 		onMutate: variable => {},
 		onSuccess: data => {
-			removeToStorage('accessToken');
+			//removeToStorage('accessToken');
+			AuthApiClient.defaults.headers.common['Authorization'] = '';
 			SetLoginState(resetOptionsLoginAtom);
 		},
 		onError: error => {

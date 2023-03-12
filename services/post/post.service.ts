@@ -6,4 +6,9 @@ export const PostService = {
 		const { data } = await AuthApiClient.get<PostType>(`/posts/${postId}`);
 		return data;
 	},
+
+	async updateLikesPostId(postId: string) {
+		const { data } = await AuthApiClient.put<boolean>(`/posts/${postId}/likes`);
+		return data;
+	},
 };

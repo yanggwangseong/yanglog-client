@@ -14,6 +14,8 @@ export interface PostType {
 	description: string;
 	published: string;
 	author: ProfileType;
+	likes?: number;
+	mylike?: number;
 }
 
 export interface ProfileType {

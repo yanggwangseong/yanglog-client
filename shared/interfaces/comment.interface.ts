@@ -6,6 +6,7 @@ export interface CommentType {
 	replyId?: string | null;
 	replyUserName?: string;
 	writer?: string;
+	likes: number;
 	parentUserName?: string;
 	updatedAt: string;
 	children_comments?: CommentType[];
