@@ -9,6 +9,8 @@ import { AuthApiClient, removeToStorage } from '../../api/axiosInstance';
 import Spinner from '@/components/_child/spinner';
 import styles from './Header.module.scss';
 import { FaRegBell } from 'react-icons/fa';
+import { IoSearchOutline } from 'react-icons/io5';
+import Field from '@/ui/field/Field';
 
 interface MobileNavProps {
 	setOpen: Dispatch<SetStateAction<boolean>>;
@@ -77,12 +79,22 @@ const Header = () => {
 		<header className="bg-white sticky top-0 z-50 border border-b-gray-200">
 			<MobileNav open={open} setOpen={setOpen} />
 			<div className="xl:container xl:mx-auto flex items-center flex-row justify-between text-center py-4 px-4 md:px-0 h-20">
-				<div className="shrink md:w-80 w-3/12 order-1 md:order1 flex items-center">
+				<div className="shrink order-1 md:order1 flex items-center">
 					<Link href={'/'}>
 						<a className="font-bold uppercase text-4xl text-black">YangLog</a>
 					</Link>
 					<div className="hidden md:block ml-12">
-						<input type="text" className="input-text" placeholder="Search..." />
+						{/* <input type="text" className="input-text" placeholder="Search..." /> */}
+						<label>
+							<Field
+								className="rounded-xl px-3 h-10 text-xl w-56"
+								placeholder="Search"
+								Icon={IoSearchOutline}
+								style={{
+									backgroundColor: '#edeef2',
+								}}
+							/>
+						</label>
 					</div>
 				</div>
 

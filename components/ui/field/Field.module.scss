@@ -1,0 +1,25 @@
+.input {
+	@apply relative;
+
+	> input {
+		@apply border border-solid text-black;
+
+		&::placeholder {
+			@apply font-light text-2xl;
+			color: #83859c;
+		}
+
+		&:focus-visible {
+			@apply outline-none;
+		}
+	}
+
+	> .icon {
+		@apply absolute top-2.5 right-3;
+		color: #83859c;
+
+		> svg {
+			font-size: 18px;
+		}
+	}
+}
