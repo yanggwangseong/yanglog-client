@@ -21,7 +21,6 @@ const PostsPage: NextPage<{ postId: string }> = ({ postId }) => {
 	//if (!postId) return null;
 	//const { data, isLoading, isError } = useQuery(["post"], () => getPost(postId ? postId : 1));
 
-	//[TODO 비로그인일 때]
 	const { data, isLoading, isError } = useQuery(
 		['post', postId],
 		async () => await PostService.getPostById(postId),
@@ -35,8 +34,6 @@ const PostsPage: NextPage<{ postId: string }> = ({ postId }) => {
 		['comment', postId],
 		async () => await CommentService.getComments(postId),
 	);
-
-	//[TODO 로그인일 때]
 
 	//const {id, title, subtitle, description, category, img, published, author } = posts;
 
@@ -78,7 +75,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
 	const queryClient = new QueryClient();
 	const { postId } = context.params as IParams;
 
-	//TODO[비로그인 일 때 가져오기]
 	await queryClient.prefetchQuery<PostType>(
 		['post', postId],
 		async () => await PostService.getPostById(postId),
@@ -88,7 +84,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
 		['comment', postId],
 		async () => await CommentService.getComments(postId),
 	);
-	//TODO[로그인 일 때 가져오기]
 
 	return {
 		props: {

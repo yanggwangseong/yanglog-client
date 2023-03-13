@@ -6,6 +6,7 @@ import Button from '@/components/ui/button/Button';
 import { CommentItemProps } from './comment-item.interface';
 import { useRecoilState } from 'recoil';
 import { Login, loginAtom } from 'atoms/loginAtom';
+import cn from 'classnames';
 
 const CommentItem: FC<CommentItemProps> = ({
 	comment,
@@ -45,9 +46,24 @@ const CommentItem: FC<CommentItemProps> = ({
 		<>
 			<div className={styles.comment__container}>
 				<div className={styles.vote_container}>
-					<div className={styles.vote__plus_btn}>+</div>
+					<div
+						className={cn(styles.vote__plus_btn, {
+							[styles.active]:
+								LoginState.loginState === true && comment.mylike === 1,
+						})}
+					>
+						+
+					</div>
 					<div className={styles.vote__score}>{comment.likes}</div>
-					<div className={styles.vote__minus_btn}>-</div>
+
+					<div
+						className={cn(styles.vote__minus_btn, {
+							[styles.active]:
+								LoginState.loginState === true && comment.mylike === -1,
+						})}
+					>
+						-
+					</div>
 				</div>
 				<div className={styles.comment_contents_container}>
 					<div className={styles.comment_header_container}>

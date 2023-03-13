@@ -7,7 +7,7 @@ import { AuthApiClient, apiClient } from 'api/axiosInstance';
 
 export const CommentService = {
 	async getComments(postId: string): Promise<CommentType[]> {
-		const { data } = await apiClient.get<CommentType[]>(
+		const { data } = await AuthApiClient.get<CommentType[]>(
 			`/posts/${postId}/comments`,
 		);
 		return data;

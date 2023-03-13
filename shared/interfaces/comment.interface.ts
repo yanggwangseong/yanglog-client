@@ -3,10 +3,11 @@ export interface CommentType {
 	comment_content: string;
 	parentId?: string | null;
 	userId: string;
-	replyId?: string | null;
-	replyUserName?: string;
 	writer?: string;
+	replyId?: string | null;
 	likes: number;
+	mylike?: number;
+	replyUserName?: string;
 	parentUserName?: string;
 	updatedAt: string;
 	children_comments?: CommentType[];

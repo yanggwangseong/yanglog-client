@@ -32,6 +32,9 @@
 				@apply transition ease-in-out delay-150 scale-110 duration-300;
 				color: #5357b6;
 			}
+			&.active {
+				color: #5357b6;
+			}
 		}
 		.vote__score {
 			@apply text-center;
@@ -42,6 +45,9 @@
 			color: #c5c6ef;
 			&:hover {
 				@apply transition ease-in-out delay-150 scale-110 duration-300;
+				color: #5357b6;
+			}
+			&.active {
 				color: #5357b6;
 			}
 		}
