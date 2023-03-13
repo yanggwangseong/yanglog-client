@@ -4,6 +4,7 @@ import {
 	CommentDto,
 	CommentType,
 	UpdateCommentDto,
+	UpdateLikesCommentDto,
 } from '@/shared/interfaces/comment.interface';
 import Image from 'next/image';
 import CommentItem from './comment-item/CommentItem';
@@ -174,10 +175,41 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 		},
 	);
 
+	const updateLikesCommentMutation = useMutation(
+		['updateLikesComment'],
+		(body: UpdateLikesCommentDto) => CommentService.updateLikesCommentId(body),
+		{
+			onSuccess: data => {
+				if (data) {
+					notify('success', '댓글 좋아요 하였습니다.');
+				} else {
+					notify('success', '댓글 좋아요 취소되었습니다.');
+				}
+				queryClient.invalidateQueries(['comment', postId]);
+			},
+			onError: error => {
+				if (axios.isAxiosError(error)) {
+					notify('error', error.response?.data.message);
+				} else {
+					console.error(error);
+				}
+			},
+		},
+	);
+
 	const handleSendContentChange = (
 		e: React.ChangeEvent<HTMLTextAreaElement>,
 	) => {
 		setSendContent(e.target.value);
+	};
+
+	const handleCommentLikes = (value: number, commentId: string) => {
+		const body: UpdateLikesCommentDto = {
+			value: value,
+			commentId: commentId,
+			postId: postId,
+		};
+		updateLikesCommentMutation.mutate(body);
 	};
 
 	interface toastFunc {
@@ -204,6 +236,7 @@ const Comment: FC<{ comments: CommentType[] }> = ({ comments }) => {
 							onReplySubmit={handleReplySubmit}
 							onReplyContentChange={content => setReplyContent(content)}
 							onCommentDelete={handleCommentDelete}
+							onCommentLikes={handleCommentLikes}
 						></CommentItem>
 					))}
 				<form onSubmit={event => handleReplySubmit(event, 'send')}>

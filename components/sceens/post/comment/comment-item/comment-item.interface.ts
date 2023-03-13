@@ -16,4 +16,5 @@ export interface CommentItemProps {
 	) => void;
 	onReplyContentChange: (content: string) => void;
 	onCommentDelete: (commentId: string) => void;
+	onCommentLikes: (value: number, commentId: string) => void;
 }

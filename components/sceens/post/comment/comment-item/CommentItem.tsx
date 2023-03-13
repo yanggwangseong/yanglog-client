@@ -17,6 +17,7 @@ const CommentItem: FC<CommentItemProps> = ({
 	onReplySubmit,
 	onReplyContentChange,
 	onCommentDelete,
+	onCommentLikes,
 }) => {
 	const [LoginState] = useRecoilState<Login>(loginAtom);
 
@@ -42,6 +43,10 @@ const CommentItem: FC<CommentItemProps> = ({
 		onReplyContentChange(e.target.value);
 	};
 
+	const handleCommentLikes = (value: number) => {
+		onCommentLikes(value, comment.id);
+	};
+
 	return comment ? (
 		<>
 			<div className={styles.comment__container}>
@@ -51,6 +56,11 @@ const CommentItem: FC<CommentItemProps> = ({
 							[styles.active]:
 								LoginState.loginState === true && comment.mylike === 1,
 						})}
+						onClick={() =>
+							LoginState.loginState === true &&
+							comment.mylike !== 1 &&
+							handleCommentLikes(1)
+						}
 					>
 						+
 					</div>
@@ -61,6 +71,11 @@ const CommentItem: FC<CommentItemProps> = ({
 							[styles.active]:
 								LoginState.loginState === true && comment.mylike === -1,
 						})}
+						onClick={() =>
+							LoginState.loginState === true &&
+							comment.mylike !== -1 &&
+							handleCommentLikes(-1)
+						}
 					>
 						-
 					</div>
@@ -218,6 +233,7 @@ const CommentItem: FC<CommentItemProps> = ({
 							onReplySubmit={onReplySubmit}
 							onReplyContentChange={onReplyContentChange}
 							onCommentDelete={onCommentDelete}
+							onCommentLikes={onCommentLikes}
 						/>
 					))}
 				</div>

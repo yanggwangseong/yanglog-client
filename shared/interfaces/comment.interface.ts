@@ -21,3 +21,9 @@ export interface CommentDto
 export interface UpdateCommentDto extends Pick<CommentType, 'comment_content'> {
 	commentId?: string;
 }
+
+export interface UpdateLikesCommentDto {
+	value: number;
+	commentId: string;
+	postId: string;
+}

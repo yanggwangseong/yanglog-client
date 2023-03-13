@@ -2,6 +2,7 @@ import {
 	CommentDto,
 	CommentType,
 	UpdateCommentDto,
+	UpdateLikesCommentDto,
 } from '@/shared/interfaces/comment.interface';
 import { AuthApiClient, apiClient } from 'api/axiosInstance';
 
@@ -32,6 +33,14 @@ export const CommentService = {
 		const { data } = await AuthApiClient.put<void>(
 			`/posts/${postId}/comments/${body.commentId}`,
 			body,
+		);
+		return data;
+	},
+
+	async updateLikesCommentId(body: UpdateLikesCommentDto) {
+		const { data } = await AuthApiClient.put<boolean>(
+			`/posts/${body.postId}/comments/${body.commentId}/likes`,
+			{ value: body.value },
 		);
 		return data;
 	},
