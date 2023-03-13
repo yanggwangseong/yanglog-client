@@ -9,6 +9,7 @@ const SearchPage: NextPage = () => {
 export default SearchPage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
+	console.log(context.params);
 	return {
 		props: {},
 	};

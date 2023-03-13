@@ -1,6 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, {
+	Dispatch,
+	FormEvent,
+	SetStateAction,
+	useEffect,
+	useState,
+} from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { loginAtom, resetOptionsLoginAtom } from '../../atoms/loginAtom';
 import { useMutation } from 'react-query';
@@ -11,6 +17,8 @@ import styles from './Header.module.scss';
 import { FaRegBell } from 'react-icons/fa';
 import { IoSearchOutline } from 'react-icons/io5';
 import Field from '@/ui/field/Field';
+import { useRouter } from 'next/router';
+import { useSearch } from '@/hooks/useSearch';
 
 interface MobileNavProps {
 	setOpen: Dispatch<SetStateAction<boolean>>;
@@ -50,6 +58,8 @@ const Header = () => {
 	//const data = useRecoilValue(loginAtom);
 	const [LoginState, SetLoginState] = useRecoilState(loginAtom);
 	const [isLoading, setIsLoading] = useState(true);
+
+	const { handleKeyDown, handleSearch } = useSearch();
 
 	const logoutMutation = useMutation(() => logoutUser(), {
 		onMutate: variable => {},
@@ -91,6 +101,8 @@ const Header = () => {
 								placeholder="Search"
 								Icon={IoSearchOutline}
 								IconSize={18}
+								onKeyDown={handleKeyDown}
+								onChange={handleSearch}
 								style={{
 									backgroundColor: '#edeef2',
 								}}
