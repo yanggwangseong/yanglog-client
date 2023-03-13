@@ -4,7 +4,7 @@ import styles from './Field.module.scss';
 import { Field as IField } from './field.interface';
 
 const Field = forwardRef<HTMLInputElement, IField>(
-	({ type = 'text', size, style, Icon, ...rest }, ref) => {
+	({ type = 'text', style, Icon, IconSize, ...rest }, ref) => {
 		return (
 			<>
 				<div
@@ -14,7 +14,7 @@ const Field = forwardRef<HTMLInputElement, IField>(
 				>
 					{Icon && (
 						<div className={styles.icon}>
-							<Icon size={size} />
+							<Icon size={IconSize} />
 						</div>
 					)}
 					<input ref={ref} type={type} style={style} {...rest} />

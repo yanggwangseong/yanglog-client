@@ -72,25 +72,31 @@ interface IParams extends ParsedUrlQuery {
 
 // 쿠키로 token 넣어야 할것 같다.
 export const getServerSideProps: GetServerSideProps = async context => {
-	const queryClient = new QueryClient();
-	const { postId } = context.params as IParams;
+	try {
+		const queryClient = new QueryClient();
+		const { postId } = context.params as IParams;
 
-	await queryClient.prefetchQuery<PostType>(
-		['post', postId],
-		async () => await PostService.getPostById(postId),
-	);
+		await queryClient.prefetchQuery<PostType>(
+			['post', postId],
+			async () => await PostService.getPostById(postId),
+		);
 
-	await queryClient.prefetchQuery<CommentType[]>(
-		['comment', postId],
-		async () => await CommentService.getComments(postId),
-	);
+		await queryClient.prefetchQuery<CommentType[]>(
+			['comment', postId],
+			async () => await CommentService.getComments(postId),
+		);
 
-	return {
-		props: {
-			dehydratedState: dehydrate(queryClient),
-			postId,
-		},
-	};
+		return {
+			props: {
+				dehydratedState: dehydrate(queryClient),
+				postId,
+			},
+		};
+	} catch (error) {
+		return {
+			props: {},
+		};
+	}
 };
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {

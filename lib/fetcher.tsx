@@ -33,4 +33,15 @@ const Fetcher = (endpoint: string) => {
 	};
 };
 
+export const chunk = <T extends unknown>(
+	arr: T[],
+	chunkSize: number = 1,
+	cache: T[][] = [],
+) => {
+	const tmp = [...arr];
+	if (chunkSize <= 0) return cache;
+	while (tmp.length) cache.push(tmp.splice(0, chunkSize));
+	return cache;
+};
+
 export default Fetcher;

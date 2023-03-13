@@ -90,6 +90,7 @@ const Header = () => {
 								className="rounded-xl px-3 h-10 text-xl w-56"
 								placeholder="Search"
 								Icon={IoSearchOutline}
+								IconSize={18}
 								style={{
 									backgroundColor: '#edeef2',
 								}}
