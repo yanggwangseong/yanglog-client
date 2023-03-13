@@ -65,8 +65,9 @@ const Post: FC<{ posts: PostType; comments: CommentType[] }> = ({
 			if (confirm('로그인이 필요합니다.')) {
 				router.push('/login');
 			}
+		} else {
+			postLikes.mutate();
 		}
-		postLikes.mutate();
 	};
 
 	interface toastFunc {

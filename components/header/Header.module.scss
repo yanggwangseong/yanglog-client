@@ -1,0 +1,37 @@
+.header__right_techblog {
+	@apply text-black relative mr-3 flex items-center justify-center cursor-pointer;
+}
+
+.header__right_techblog::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: -20px;
+	width: 1px;
+	height: 100%;
+	background-color: #edeef2;
+}
+
+.header__right_box {
+	@apply w-12 h-12 rounded-2xl relative flex items-center justify-center cursor-pointer;
+	background-color: #f3f4ff;
+	.header__right_box_notification {
+		@apply absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-white rounded-lg;
+		font-size: 16px;
+		background-color: #4e60ff;
+		padding: 2px;
+	}
+}
+
+.header__right_profile {
+	@apply rounded-2xl relative flex items-center justify-center cursor-pointer border-2 border-solid;
+	padding: 1px;
+	width: 50px;
+	height: 50px;
+	border-color: #4e60ff;
+	background-color: #f3f4ff;
+
+	.header__avatar_img {
+		@apply object-contain rounded-2xl;
+	}
+}

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { loginAtom, resetOptionsLoginAtom } from '../../atoms/loginAtom';
@@ -6,6 +7,8 @@ import { useMutation } from 'react-query';
 import { logoutUser } from '../../api/userService';
 import { AuthApiClient, removeToStorage } from '../../api/axiosInstance';
 import Spinner from '@/components/_child/spinner';
+import styles from './Header.module.scss';
+import { FaRegBell } from 'react-icons/fa';
 
 interface MobileNavProps {
 	setOpen: Dispatch<SetStateAction<boolean>>;
@@ -28,7 +31,7 @@ const MobileNav: React.FunctionComponent<MobileNavProps> = ({
 		>
 			<div className="flex items-center justify-center filter drop-shadow-md bg-white h-20">
 				<Link href="/">
-					<a className="text-xl font-semibold">LOGO</a>
+					<a className="font-bold uppercase text-4xl text-black">YangLog</a>
 				</Link>
 			</div>
 			<div className="flex flex-col ml-4">
@@ -73,15 +76,16 @@ const Header = () => {
 	return (
 		<header className="bg-white sticky top-0 z-50 border border-b-gray-200">
 			<MobileNav open={open} setOpen={setOpen} />
-			<div className="xl:container xl:mx-auto flex items-center flex-row justify-between text-center py-4 px-4 md:px-0">
-				<div className="hidden md:flex md:w-96 order1 justify-center py-4 sm:py-0">
-					<input type="text" className="input-text" placeholder="Search..." />
-				</div>
-				<div className="shrink md:w-80 w-3/12 order-2 md:order1 flex items-center md:block">
+			<div className="xl:container xl:mx-auto flex items-center flex-row justify-between text-center py-4 px-4 md:px-0 h-20">
+				<div className="shrink md:w-80 w-3/12 order-1 md:order1 flex items-center">
 					<Link href={'/'}>
-						<a className="font-bold uppercase text-5xl text-black">YangLog</a>
+						<a className="font-bold uppercase text-4xl text-black">YangLog</a>
 					</Link>
+					<div className="hidden md:block ml-12">
+						<input type="text" className="input-text" placeholder="Search..." />
+					</div>
 				</div>
+
 				<div className="md:hidden w-9/12 order-2 flex justify-end items-center">
 					<div
 						className="z-50 flex relative w-8 h-8 flex-col justify-between items-center md:hidden"
@@ -92,28 +96,28 @@ const Header = () => {
 						{/* hamburger button */}
 						<span
 							className={`h-1 w-full ${
-								open ? 'bg-black' : 'bg-white'
+								open ? 'bg-black' : 'bg-black'
 							} rounded-lg transform transition duration-300 ease-in-out ${
 								open ? 'rotate-45 translate-y-3.5' : ''
 							}`}
 						/>
 						<span
 							className={`h-1 w-full ${
-								open ? 'bg-black' : 'bg-white'
+								open ? 'bg-black' : 'bg-black'
 							} rounded-lg transition-all duration-300 ease-in-out ${
 								open ? 'w-0' : 'w-full'
 							}`}
 						/>
 						<span
 							className={`h-1 w-full ${
-								open ? 'bg-black' : 'bg-white'
+								open ? 'bg-black' : 'bg-black'
 							} rounded-lg transform transition duration-300 ease-in-out ${
 								open ? '-rotate-45 -translate-y-3.5' : ''
 							}`}
 						/>
 					</div>
 				</div>
-				<div className="hidden md:flex md:w-96 order-3 justify-center ">
+				<div className="hidden md:flex  order-3 justify-center">
 					<div className="flex gap-6">
 						{LoginState.loginState === false ? (
 							<>
@@ -126,16 +130,39 @@ const Header = () => {
 							</>
 						) : (
 							<>
-								<Link href={'/posts/new'}>
-									<a className="text-black">글쓰기</a>
+								<Link href={'/'}>
+									<div className={styles.header__right_techblog}>TechBlog</div>
 								</Link>
+
+								<Link href={'/posts/new'}>
+									<div className="flex items-center justify-center text-black cursor-pointer">
+										new Post
+									</div>
+								</Link>
+
 								<button
 									type="button"
 									className="text-black"
 									onClick={() => handleLogout()}
 								>
-									로그아웃
+									LogOut
 								</button>
+
+								<div className={styles.header__right_box}>
+									<FaRegBell size={20} color="#4e60ff"></FaRegBell>
+									<div className={styles.header__right_box_notification}>4</div>
+								</div>
+								<Link href={'/mypage'}>
+									<div className={styles.header__right_profile}>
+										<Image
+											className={styles.header__avatar_img}
+											src="/images/author/dev-jeans 8.png"
+											alt="avatar"
+											width={48}
+											height={48}
+										></Image>
+									</div>
+								</Link>
 							</>
 						)}
 					</div>
