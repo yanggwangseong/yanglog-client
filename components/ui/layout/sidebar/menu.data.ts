@@ -4,6 +4,9 @@ import {
 	BiCommentDetail,
 	BiCreditCard,
 	BiMap,
+	BiUser,
+	BiNotification,
+	BiBell,
 } from 'react-icons/bi';
 
 export interface MenuItem {
@@ -15,27 +18,27 @@ export interface MenuItem {
 
 export const menu: MenuItem[] = [
 	{
+		link: '/mypage',
+		Icon: BiUser,
+		title: 'Account',
+		subtitle: 'Personal information',
+	},
+	{
 		link: '/manage/category',
 		Icon: BiCategory,
 		title: 'Category',
 		subtitle: 'Category management',
 	},
 	{
-		link: '/manage/blank1',
-		Icon: BiMap,
-		title: 'Category',
-		subtitle: 'Category management',
+		link: '/manage/tech-blog',
+		Icon: BiNotification,
+		title: 'TechBlog',
+		subtitle: 'TechBlog notification',
 	},
 	{
-		link: '/manage/blank2',
-		Icon: BiCreditCard,
-		title: 'Category',
-		subtitle: 'Category management',
-	},
-	{
-		link: '/manage/blank3',
-		Icon: BiCommentDetail,
-		title: 'Category',
-		subtitle: 'Category management',
+		link: '/manage/notification',
+		Icon: BiBell,
+		title: 'Notification',
+		subtitle: 'Notification history',
 	},
 ];
