@@ -14,7 +14,7 @@ const Search: FC = () => {
 		useSearch();
 
 	return (
-		<Format title="검색페이지">
+		<Format title={'search'}>
 			{isSuccess && (
 				<div className={styles.search_container}>
 					<div>

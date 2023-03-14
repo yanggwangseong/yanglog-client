@@ -33,7 +33,7 @@ export const register = async ({ email, password, name }: UserData) => {
 };
 
 export const checkUser = async (
-	accessToken: string,
+	accessToken?: string,
 ): Promise<{
 	loginState: boolean;
 	email: string;
