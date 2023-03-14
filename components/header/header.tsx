@@ -59,7 +59,7 @@ const Header = () => {
 	const [LoginState, SetLoginState] = useRecoilState(loginAtom);
 	const [isLoading, setIsLoading] = useState(true);
 
-	const { handleKeyDown, handleSearch } = useSearch();
+	const { handleKeyDown, handleSearch, searchTerm } = useSearch();
 
 	const logoutMutation = useMutation(() => logoutUser(), {
 		onMutate: variable => {},
@@ -103,6 +103,7 @@ const Header = () => {
 								IconSize={18}
 								onKeyDown={handleKeyDown}
 								onChange={handleSearch}
+								value={searchTerm}
 								style={{
 									backgroundColor: '#edeef2',
 								}}

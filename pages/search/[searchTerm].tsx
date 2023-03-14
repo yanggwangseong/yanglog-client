@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 		const { searchTerm } = context.params as IParams;
 
 		await queryClient.prefetchQuery<SearchType>(
-			['search', searchTerm],
+			['search'],
 			async () => await PostService.searchPosts(searchTerm),
 		);
 

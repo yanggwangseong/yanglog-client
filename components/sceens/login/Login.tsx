@@ -12,6 +12,7 @@ import { AuthApiClient, saveToStorage } from 'api/axiosInstance';
 import Format from '@/components/ui/layout/format';
 import Button from '@/components/ui/button/Button';
 import Link from 'next/link';
+import { FaGoogle } from 'react-icons/fa';
 
 const Login: FC = () => {
 	const router = useRouter();
@@ -132,13 +133,18 @@ const Login: FC = () => {
 							Login
 						</Button>
 					</div>
-					<div className={styles.login_btn_wrap}>
-						<div className="bg-primary w-full text-white text-2xl px-3 py-2 font-medium rounded-lg">
-							<Link href="http://localhost:3001/users/google/signin">
-								GoogleLogin
-							</Link>
+					<Link href="http://localhost:3001/users/google/signin">
+						<div className={styles.login_btn_wrap}>
+							<div className="bg-white w-full flex justify-center text-black text-2xl px-3 py-2 font-medium rounded-lg border border-solid border-gray-200 cursor-pointer">
+								<div className="flex items-center justify-center">
+									<FaGoogle color="#4285F4" size={24}></FaGoogle>
+								</div>
+								<div className="ml-5 flex items-center justify-center">
+									구글로 시작하기
+								</div>
+							</div>
 						</div>
-					</div>
+					</Link>
 				</div>
 			</form>
 		</Format>

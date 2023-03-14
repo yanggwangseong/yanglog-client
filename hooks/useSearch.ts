@@ -12,9 +12,13 @@ interface toastFunc {
 export const useSearch = () => {
 	const [searchTerm, setSearchTerm] = useState<string>('');
 
-	const { data, isSuccess } = useQuery(
-		['search', searchTerm],
+	const { data, isSuccess, refetch } = useQuery(
+		['search'],
 		async () => await PostService.searchPosts(searchTerm),
+		{
+			enabled: false,
+			refetchOnMount: false, // 변경: 첫 렌더링 시 쿼리를 실행하지 않도록 변경
+		},
 	);
 
 	const router = useRouter();
@@ -28,11 +32,13 @@ export const useSearch = () => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
+
 		if (!searchTerm) {
 			notify('error', '검색어를 입력 해주세요!');
 			return;
 		}
 		router.push(`/search/${searchTerm}`);
+		refetch();
 	};
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

@@ -1,7 +1,7 @@
 import Field from '@/components/ui/field/Field';
 import Format from '@/components/ui/layout/format';
 import { useRouter } from 'next/router';
-import React, { FC, FormEvent } from 'react';
+import React, { FC, FormEvent, useEffect } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import styles from './Search.module.scss';
 import { useSearch } from '@/hooks/useSearch';
@@ -10,7 +10,8 @@ import Image from 'next/image';
 import Author from '@/components/_child/author';
 
 const Search: FC = () => {
-	const { handleKeyDown, handleSearch, isSuccess, data } = useSearch();
+	const { handleKeyDown, handleSearch, isSuccess, data, searchTerm } =
+		useSearch();
 
 	return (
 		<Format title="검색페이지">
@@ -24,6 +25,7 @@ const Search: FC = () => {
 								IconSize={30}
 								onKeyDown={handleKeyDown}
 								onChange={handleSearch}
+								value={searchTerm}
 							></Field>
 						</label>
 					</div>
