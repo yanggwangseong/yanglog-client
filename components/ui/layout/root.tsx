@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { getFromStorage } from '../../../api/axiosInstance';
 import { checkUser } from '../../../api/userService';
@@ -17,10 +17,10 @@ const Root = ({ children }: AppLayoutProps) => {
 	// 새로고침해서 메인페이지로 오면 당연히 사라짐.
 
 	const accessToken = getFromStorage('accessToken');
-	const refreshData = async () => {
+	const refreshData = useCallback(async () => {
 		const data = await checkUser(accessToken ? accessToken : '');
 		return data;
-	};
+	}, [accessToken]);
 	useEffect(() => {
 		const fetchData = async () => {
 			if (accessToken) {
@@ -36,7 +36,7 @@ const Root = ({ children }: AppLayoutProps) => {
 			}
 		};
 		fetchData();
-	}, []);
+	}, [SetLoginState, refreshData, accessToken]);
 
 	return <>{children}</>;
 };

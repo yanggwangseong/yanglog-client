@@ -40,7 +40,7 @@ const RedirectPage: NextPage = () => {
 			};
 			fetchData();
 		}
-	}, [token]);
+	}, [token, setLoginState, router]);
 
 	return (
 		<div>
