@@ -23,3 +23,8 @@ export interface ProfileType {
 	img: string;
 	designation: string;
 }
+
+export interface SearchType {
+	list: PostType[];
+	count: number;
+}

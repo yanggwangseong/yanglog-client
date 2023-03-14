@@ -1,4 +1,5 @@
 import ToastMessage from '@/components/toast';
+import { PostService } from '@/services/post/post.service';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { ChangeEvent, FormEvent, useState } from 'react';
@@ -11,14 +12,10 @@ interface toastFunc {
 export const useSearch = () => {
 	const [searchTerm, setSearchTerm] = useState<string>('');
 
-	// const { isSuccess, data } = useQuery(
-	// 	['search movies', debounceSearch],
-	// 	() => MovieService.getAllMovie(debounceSearch),
-	// 	{
-	// 		select: ({ data }) => data.slice(0, 4),
-	// 		enabled: !!debounceSearch,
-	// 	},
-	// );
+	const { data, isSuccess } = useQuery(
+		['search', searchTerm],
+		async () => await PostService.searchPosts(searchTerm),
+	);
 
 	const router = useRouter();
 	const notify: toastFunc = React.useCallback((type, message) => {
@@ -48,8 +45,8 @@ export const useSearch = () => {
 		handleSearch,
 		handleSubmit,
 		handleKeyDown,
-		//isSuccess,
-		//data,
+		isSuccess,
+		data,
 		setSearchTerm,
 		searchTerm,
 	};

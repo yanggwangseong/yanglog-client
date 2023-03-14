@@ -1,4 +1,4 @@
-import { PostType } from '@/shared/interfaces/home.interface';
+import { PostType, SearchType } from '@/shared/interfaces/home.interface';
 import { AuthApiClient, apiClient } from 'api/axiosInstance';
 
 export const PostService = {
@@ -9,6 +9,13 @@ export const PostService = {
 
 	async updateLikesPostId(postId: string) {
 		const { data } = await AuthApiClient.put<boolean>(`/posts/${postId}/likes`);
+		return data;
+	},
+
+	async searchPosts(keyword: string) {
+		const { data } = await apiClient.get<SearchType>(
+			`/posts/search?keyword=${keyword}`,
+		);
 		return data;
 	},
 };
