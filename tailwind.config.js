@@ -11,6 +11,7 @@ module.exports = {
 				black: '#2b2b43',
 				darkgray: '#83859c',
 				lightgray: '#545563',
+				warning: '#ff5c60',
 			},
 			transitionTimingFunction: {
 				DEFAULT: 'ease',

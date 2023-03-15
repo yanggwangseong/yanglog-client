@@ -17,7 +17,7 @@ const FieldStyle = {
 const Mypage: FC = () => {
 	const initialFormState = {
 		username: '',
-		phone_number: 0,
+		phone_number: '',
 		email: '',
 		role: '',
 	};
@@ -123,25 +123,70 @@ const Mypage: FC = () => {
 								<div className={styles.email_notification_container}>
 									<div>Email notifications</div>
 									<div className={styles.field_container}>
-										<div className="w-1/2 flex">
-											<div>
-												<label>
-													<input type="checkbox" className=" w-5 h-5" />
-												</label>
+										<div className={styles.field_checkbox_div}>
+											<div className={styles.field_checkbox_container}>
+												<input type="checkbox" className="w-5 h-5" checked />
 											</div>
-											<div>New Post</div>
+											<div className={styles.field_checkbox_description}>
+												New Post
+											</div>
 										</div>
-										<div className={styles.field_div}>
-											<label className={styles.field_label}>
-												Role
-												<Field style={FieldStyle}></Field>
-											</label>
+										<div className={styles.field_checkbox_div}>
+											<div className={styles.field_checkbox_container}>
+												<input type="checkbox" className="w-5 h-5" checked />
+											</div>
+											<div className={styles.field_checkbox_description}>
+												Password changes
+											</div>
+										</div>
+									</div>
+									<div className={styles.field_container}>
+										<div className={styles.field_checkbox_div}>
+											<div className={styles.field_checkbox_container}>
+												<input type="checkbox" className="w-5 h-5" checked />
+											</div>
+											<div className={styles.field_checkbox_description}>
+												MyComment of reply
+											</div>
+										</div>
+										<div className={styles.field_checkbox_div}>
+											<div className={styles.field_checkbox_container}>
+												<input type="checkbox" className="w-5 h-5" checked />
+											</div>
+											<div className={styles.field_checkbox_description}>
+												MyPost of comment
+											</div>
 										</div>
 									</div>
 								</div>
 							</form>
 						</div>
-						<div className=" py-4">Footer</div>
+
+						<div className={styles.footer_btn_wrap}>
+							<div>
+								<Button
+									type="button"
+									className="h-11 bg-white text-warning
+                                    border border-warning text-xl px-3 py-2 rounded-lg
+                                    font-normal
+                                    "
+									style={{ width: '83px' }}
+								>
+									Log Out
+								</Button>
+							</div>
+							<div className="flex ml-auto">
+								<Button
+									type="button"
+									className="h-11 bg-primary text-white
+                                    border border-primary text-xl px-3 py-2 rounded-lg
+                                    font-normal
+                                    "
+								>
+									Save Changes
+								</Button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

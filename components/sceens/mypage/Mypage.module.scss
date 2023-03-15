@@ -51,11 +51,29 @@
 				.field_label {
 					@apply text-lightgray font-light text-xl;
 				}
+
+				.field_checkbox_div {
+					@apply w-1/2 flex;
+
+					.field_checkbox_container {
+						@apply flex items-center justify-center;
+					}
+
+					.field_checkbox_description {
+						@apply text-black font-light text-2xl ml-3 flex items-center justify-center;
+					}
+				}
 			}
 
 			.email_notification_container {
 				@apply mt-16;
 			}
+		}
+
+		.footer_btn_wrap {
+			@apply flex pt-5;
+
+			border-top: 1px solid #edeef2;
 		}
 	}
 }
