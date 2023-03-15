@@ -1,27 +1,30 @@
 import { ChangeEvent, useState } from 'react';
 
-type FormState = {
-	[key: string]: string;
+/*
+T : string | number 밖에 못온다. 이유는 react type의 InputHTMLAttributes타입의 value값이 그렇게 선언 되어있음.
+*/
+type FormState<T> = {
+	[key: string]: T;
 };
 
 type FormEvent = ChangeEvent<HTMLInputElement>;
 
-type UseFormStateResult = {
-	formData: FormState;
+type UseFormStateResult<T> = {
+	formData: FormState<T>;
 	handleChange: (e: FormEvent) => void;
-	setValue: (key: string, value: string) => void;
+	setValue: (key: string, value: T) => void;
 	resetForm: () => void;
 };
 
-const useFormState = (initialState: FormState): UseFormStateResult => {
-	const [formData, setFormData] = useState<FormState>(initialState);
+const useFormState = <T>(initialState: FormState<T>): UseFormStateResult<T> => {
+	const [formData, setFormData] = useState<FormState<T>>(initialState);
 
 	const handleChange = (e: FormEvent) => {
 		const { name, value } = e.target;
-		setFormData(prevState => ({ ...prevState, [name]: value }));
+		setFormData(prevState => ({ ...prevState, [name]: value as T }));
 	};
 
-	const setValue = (key: string, value: string) => {
+	const setValue = (key: string, value: T) => {
 		setFormData(prevState => ({ ...prevState, [key]: value }));
 	};
 

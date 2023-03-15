@@ -17,8 +17,9 @@ const FieldStyle = {
 const Mypage: FC = () => {
 	const initialFormState = {
 		username: '',
+		phone_number: 0,
 		email: '',
-		password: '',
+		role: '',
 	};
 
 	const { formData, handleChange, setValue, resetForm } =
@@ -79,13 +80,21 @@ const Mypage: FC = () => {
 									<div className={styles.field_div}>
 										<label className={styles.field_label}>
 											Name
-											<Field style={FieldStyle}></Field>
+											<Field
+												value={formData.username}
+												onChange={handleChange}
+												style={FieldStyle}
+											></Field>
 										</label>
 									</div>
 									<div className={styles.field_div}>
 										<label className={styles.field_label}>
 											Phone number
-											<Field style={FieldStyle}></Field>
+											<Field
+												value={formData.phone_number}
+												onChange={handleChange}
+												style={FieldStyle}
+											></Field>
 										</label>
 									</div>
 								</div>
@@ -93,13 +102,21 @@ const Mypage: FC = () => {
 									<div className={styles.field_div}>
 										<label className={styles.field_label}>
 											Email
-											<Field style={FieldStyle}></Field>
+											<Field
+												value={formData.email}
+												onChange={handleChange}
+												style={FieldStyle}
+											></Field>
 										</label>
 									</div>
 									<div className={styles.field_div}>
 										<label className={styles.field_label}>
 											Role
-											<Field style={FieldStyle}></Field>
+											<Field
+												value={formData.role}
+												onChange={handleChange}
+												style={FieldStyle}
+											></Field>
 										</label>
 									</div>
 								</div>
