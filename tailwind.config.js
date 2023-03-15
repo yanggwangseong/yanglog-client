@@ -9,6 +9,8 @@ module.exports = {
 			colors: {
 				primary: '#4e60ff',
 				black: '#2b2b43',
+				darkgray: '#83859c',
+				lightgray: '#545563',
 			},
 			transitionTimingFunction: {
 				DEFAULT: 'ease',

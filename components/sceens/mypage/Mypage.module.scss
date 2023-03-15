@@ -13,10 +13,49 @@
 	}
 
 	.contents_card {
-		@apply mt-4 border border-solid rounded-2xl;
+		@apply mt-4 border border-solid rounded-2xl flex flex-col;
 		border-color: #edeef2;
 		padding: 24px 16px 20px;
 		min-width: 730px;
 		min-height: 700px;
+
+		.contents_main_container {
+			@apply flex-grow;
+
+			.avatar_label {
+				@apply font-light text-xl mt-4;
+				color: #545563;
+			}
+			.avatar_container {
+				@apply flex mt-2;
+
+				.avatar_img {
+					@apply rounded-xl;
+				}
+
+				.avatar_btn_wrap {
+					@apply ml-6 flex justify-center items-center;
+				}
+			}
+
+			.field_container {
+				@apply flex;
+
+				.field_div {
+					@apply w-1/2;
+				}
+				> div:nth-child(even) {
+					@apply ml-4;
+				}
+
+				.field_label {
+					@apply text-lightgray font-light text-xl;
+				}
+			}
+
+			.email_notification_container {
+				@apply mt-16;
+			}
+		}
 	}
 }

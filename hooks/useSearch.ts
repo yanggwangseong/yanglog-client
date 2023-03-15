@@ -1,5 +1,6 @@
 import ToastMessage from '@/components/toast';
 import { PostService } from '@/services/post/post.service';
+import { SearchType } from '@/shared/interfaces/home.interface';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { ChangeEvent, FormEvent, useState } from 'react';
@@ -9,7 +10,16 @@ interface toastFunc {
 	(type: 'success' | 'error' | 'info' | 'warning', message: string): void;
 }
 
-export const useSearch = () => {
+type useSearchResult = {
+	handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
+	handleSubmit: (e: FormEvent) => void;
+	handleKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+	isSuccess: boolean;
+	data: SearchType | undefined;
+	setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+	searchTerm: string;
+};
+export const useSearch = (): useSearchResult => {
 	const [searchTerm, setSearchTerm] = useState<string>('');
 
 	const { data, isSuccess, refetch } = useQuery(
