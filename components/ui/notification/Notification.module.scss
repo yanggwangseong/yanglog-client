@@ -1,8 +1,8 @@
 .notification_container {
-	@apply absolute top-24 right-20 w-96 h-96 rounded-lg px-3 py-4 overflow-y-auto;
-	background-color: #f5f5f5;
+	@apply absolute top-24 right-20 w-96 h-96 rounded-lg overflow-y-auto bg-white border border-solid;
+	box-shadow: 0 8px 20px 0 rgba(78, 96, 255, 0.16);
 
 	.notification_subject {
-		@apply text-left font-light text-2xl border-b-white border-b-2 pb-3;
+		@apply text-left font-light text-2xl border-b-gray-300 border-b px-5 py-2;
 	}
 }

@@ -1,5 +1,5 @@
 .notification_item_container {
-	@apply mt-4 border-b border-gray-300 pb-4 flex items-center hover:bg-white rounded-lg px-4 cursor-pointer;
+	@apply border-b border-gray-300 flex items-center hover:bg-gray-100 cursor-pointer px-5 py-2;
 
 	/* Avatar 스타일 */
 	.avatar {
@@ -10,17 +10,21 @@
 	}
 
 	/* Title 스타일 */
-	.title {
-		@apply text-xl font-medium text-gray-900;
+	.title_container {
+		@apply text-lg font-medium text-gray-900 flex w-full;
+
+		.title {
+			@apply text-2xl font-medium;
+		}
+
+		/* Date 스타일 */
+		.date {
+			@apply text-xl text-gray-400 ml-auto font-light;
+		}
 	}
 
 	/* Description 스타일 */
 	.description {
-		@apply text-gray-600 text-xl;
-	}
-
-	/* Date 스타일 */
-	.date {
-		@apply text-xl text-gray-400;
+		@apply text-gray-600 text-xl font-light;
 	}
 }

@@ -15,10 +15,12 @@ const NotificationItem: FC = () => {
 					height={44}
 				></Image>
 			</div>
-			<div className="text-left">
-				<div className={styles.title}>title</div>
+			<div className="text-left w-full">
+				<div className={styles.title_container}>
+					<div className={styles.title}>title</div>
+					<div className={styles.date}>2023-07-23 10:30</div>
+				</div>
 				<div className={styles.description}>description</div>
-				<div className={styles.date}>2023-07-23 10:30</div>
 			</div>
 		</div>
 	);

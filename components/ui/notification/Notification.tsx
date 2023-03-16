@@ -9,6 +9,7 @@ const Notification: FC = () => {
 		<div className={styles.notification_container}>
 			<div className={styles.notification_subject}>알림</div>
 			<NotificationItem></NotificationItem>
+			<NotificationItem></NotificationItem>
 		</div>
 	);
 };
