@@ -1,0 +1,35 @@
+.notification_container {
+	@apply absolute top-24 right-20 w-96 h-96 rounded-lg px-3 py-4 overflow-y-auto;
+	background-color: #f5f5f5;
+
+	.notification_subject {
+		@apply text-left font-light text-2xl border-b-white border-b-2 pb-3;
+	}
+
+	.notification_item_container {
+		@apply mt-4 border-b border-gray-300 pb-4 flex items-center hover:bg-white rounded-lg px-4 cursor-pointer;
+
+		/* Avatar 스타일 */
+		.avatar {
+			@apply h-12 w-12 rounded-full bg-white mr-4 flex items-center justify-center;
+			.avatar_img {
+				@apply rounded-full;
+			}
+		}
+
+		/* Title 스타일 */
+		.title {
+			@apply text-xl font-medium text-gray-900;
+		}
+
+		/* Description 스타일 */
+		.description {
+			@apply text-gray-600 text-xl;
+		}
+
+		/* Date 스타일 */
+		.date {
+			@apply text-xl text-gray-400;
+		}
+	}
+}

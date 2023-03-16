@@ -125,7 +125,11 @@ const Mypage: FC = () => {
 									<div className={styles.field_container}>
 										<div className={styles.field_checkbox_div}>
 											<div className={styles.field_checkbox_container}>
-												<input type="checkbox" className="w-5 h-5" checked />
+												<input
+													type="checkbox"
+													className="w-5 h-5"
+													defaultChecked
+												/>
 											</div>
 											<div className={styles.field_checkbox_description}>
 												New Post
@@ -133,7 +137,11 @@ const Mypage: FC = () => {
 										</div>
 										<div className={styles.field_checkbox_div}>
 											<div className={styles.field_checkbox_container}>
-												<input type="checkbox" className="w-5 h-5" checked />
+												<input
+													type="checkbox"
+													className="w-5 h-5"
+													defaultChecked
+												/>
 											</div>
 											<div className={styles.field_checkbox_description}>
 												Password changes
@@ -143,7 +151,11 @@ const Mypage: FC = () => {
 									<div className={styles.field_container}>
 										<div className={styles.field_checkbox_div}>
 											<div className={styles.field_checkbox_container}>
-												<input type="checkbox" className="w-5 h-5" checked />
+												<input
+													type="checkbox"
+													className="w-5 h-5"
+													defaultChecked
+												/>
 											</div>
 											<div className={styles.field_checkbox_description}>
 												MyComment of reply
@@ -151,7 +163,11 @@ const Mypage: FC = () => {
 										</div>
 										<div className={styles.field_checkbox_div}>
 											<div className={styles.field_checkbox_container}>
-												<input type="checkbox" className="w-5 h-5" checked />
+												<input
+													type="checkbox"
+													className="w-5 h-5"
+													defaultChecked
+												/>
 											</div>
 											<div className={styles.field_checkbox_description}>
 												MyPost of comment

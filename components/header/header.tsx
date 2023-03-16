@@ -19,6 +19,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 import Field from '@/ui/field/Field';
 import { useRouter } from 'next/router';
 import { useSearch } from '@/hooks/useSearch';
+import Notification from '../ui/notification/Notification';
 
 interface MobileNavProps {
 	setOpen: Dispatch<SetStateAction<boolean>>;
@@ -57,7 +58,8 @@ const Header = () => {
 	const [open, setOpen] = useState(false);
 	//const data = useRecoilValue(loginAtom);
 	const [LoginState, SetLoginState] = useRecoilState(loginAtom);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [isNotification, setNotification] = useState<boolean>(false);
 
 	const { handleKeyDown, handleSearch, searchTerm } = useSearch();
 
@@ -75,6 +77,11 @@ const Header = () => {
 
 	const handleLogout = () => {
 		logoutMutation.mutate();
+	};
+
+	const handleToggleNotification = () => {
+		console.log('토글!', isNotification);
+		setNotification(!isNotification);
 	};
 
 	useEffect(() => {
@@ -173,11 +180,18 @@ const Header = () => {
 								>
 									LogOut
 								</button>
-
-								<div className={styles.header__right_box}>
-									<FaRegBell size={20} color="#4e60ff"></FaRegBell>
+								<div
+									className={styles.header__right_box}
+									onClick={handleToggleNotification}
+								>
+									<FaRegBell
+										className="block"
+										size={20}
+										color="#4e60ff"
+									></FaRegBell>
 									<div className={styles.header__right_box_notification}>4</div>
 								</div>
+								{isNotification && <Notification></Notification>}
 								<Link href={'/mypage'}>
 									<div className={styles.header__right_profile}>
 										<Image
