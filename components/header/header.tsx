@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { loginAtom, resetOptionsLoginAtom } from '../../atoms/loginAtom';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { logoutUser } from '../../api/userService';
 import { AuthApiClient, removeToStorage } from '../../api/axiosInstance';
 import Spinner from '@/components/_child/spinner';
@@ -20,6 +20,8 @@ import Field from '@/ui/field/Field';
 import { useRouter } from 'next/router';
 import { useSearch } from '@/hooks/useSearch';
 import Notification from '../ui/notification/Notification';
+import Error from '@/components/_child/error';
+import { NotificationService } from '@/services/notification/notification.service';
 
 interface MobileNavProps {
 	setOpen: Dispatch<SetStateAction<boolean>>;
@@ -63,6 +65,15 @@ const Header = () => {
 
 	const { handleKeyDown, handleSearch, searchTerm } = useSearch();
 
+	const {
+		data,
+		isLoading: notificationLoding,
+		isError,
+	} = useQuery(
+		['notifications'],
+		async () => await NotificationService.getNotificationAll(),
+	);
+
 	const logoutMutation = useMutation(() => logoutUser(), {
 		onMutate: variable => {},
 		onSuccess: data => {
@@ -80,7 +91,6 @@ const Header = () => {
 	};
 
 	const handleToggleNotification = () => {
-		console.log('토글!', isNotification);
 		setNotification(!isNotification);
 	};
 
@@ -90,6 +100,18 @@ const Header = () => {
 
 	if (isLoading) {
 		return <Spinner></Spinner>;
+	}
+
+	if (notificationLoding) {
+		return <Spinner></Spinner>;
+	}
+
+	if (isError) {
+		return <Error></Error>;
+	}
+
+	if (!data) {
+		return null;
 	}
 
 	return (
@@ -189,9 +211,13 @@ const Header = () => {
 										size={20}
 										color="#4e60ff"
 									></FaRegBell>
-									<div className={styles.header__right_box_notification}>4</div>
+									<div className={styles.header__right_box_notification}>
+										{data.count}
+									</div>
 								</div>
-								{isNotification && <Notification></Notification>}
+								{isNotification && (
+									<Notification notifications={data.list}></Notification>
+								)}
 								<Link href={'/mypage'}>
 									<div className={styles.header__right_profile}>
 										<Image

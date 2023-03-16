@@ -6,6 +6,7 @@ $ npm i react-toastify
 $ npm i recoil
 $ npm i react-query
 $ npm i react-icons
+$ npm i dayjs
 ```
 
 ### pages - Nextpage SSR,SSG등 사용, 쿼리스트링 처리
