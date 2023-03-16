@@ -5,7 +5,7 @@ import styles from './Notification.module.scss';
 import NotificationItem from './notification-item/NotificationItem';
 import { NotificationItemType } from '@/shared/interfaces/notification.interface';
 
-const Notification: FC<{ notifications: NotificationItemType[] }> = ({
+const Notification: FC<{ notifications?: NotificationItemType[] }> = ({
 	notifications,
 }) => {
 	return (

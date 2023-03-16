@@ -72,6 +72,9 @@ const Header = () => {
 	} = useQuery(
 		['notifications'],
 		async () => await NotificationService.getNotificationAll(),
+		{
+			enabled: !!LoginState.loginState,
+		},
 	);
 
 	const logoutMutation = useMutation(() => logoutUser(), {
@@ -108,10 +111,6 @@ const Header = () => {
 
 	if (isError) {
 		return <Error></Error>;
-	}
-
-	if (!data) {
-		return null;
 	}
 
 	return (
@@ -212,11 +211,13 @@ const Header = () => {
 										color="#4e60ff"
 									></FaRegBell>
 									<div className={styles.header__right_box_notification}>
-										{data.count}
+										{data && data.count}
 									</div>
 								</div>
 								{isNotification && (
-									<Notification notifications={data.list}></Notification>
+									<Notification
+										notifications={data && data.list}
+									></Notification>
 								)}
 								<Link href={'/mypage'}>
 									<div className={styles.header__right_profile}>
