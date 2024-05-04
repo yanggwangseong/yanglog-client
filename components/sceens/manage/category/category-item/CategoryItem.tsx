@@ -1,7 +1,7 @@
 import Button from '@/components/ui/button/Button';
 import { CategoryInfo } from '@/shared/interfaces/category.interface';
 import React, { FC, useState } from 'react';
-import { FaAlignJustify } from 'react-icons/fa';
+import { FaAlignJustify, FaAngleDown, FaAngleRight } from 'react-icons/fa';
 
 const CategoryItem: FC<{
 	category: CategoryInfo;
@@ -97,50 +97,73 @@ const CategoryItem: FC<{
 	const draggableProps = depth ? childDraggableProps : parentDraggableProps;
 
 	return (
-		<div {...draggableProps} style={draggableProps.style}>
+		<div className="" {...draggableProps} style={draggableProps.style}>
 			<div
-				className="flex gap-5"
+				className="bg-white flex border border-solid"
 				onMouseEnter={() => setIsButton(true)}
 				onMouseLeave={() => setIsButton(false)}
 			>
-				<div className="cursor-move">
-					<FaAlignJustify></FaAlignJustify>
-				</div>
-				<div style={{ height: '100px' }}>{category.category_name}</div>
-				{isButton && (
-					<div className="flex gap-3">
-						<Button
-							type="button"
-							className="h-11 bg-white text-primary 
-                                    border border-primary text-xl px-3 py-2 rounded-lg
-                                    font-normal
-                                    "
-							style={{ width: '83px' }}
-						>
-							추가
-						</Button>
-						<Button
-							type="button"
-							className="h-11 bg-white text-primary 
-                                    border border-primary text-xl px-3 py-2 rounded-lg
-                                    font-normal
-                                    "
-							style={{ width: '83px' }}
-						>
-							수정
-						</Button>
-						<Button
-							type="button"
-							className="h-11 bg-white text-primary 
-                                    border border-primary text-xl px-3 py-2 rounded-lg
-                                    font-normal
-                                    "
-							style={{ width: '83px' }}
-						>
-							삭제
-						</Button>
+				{category.children ? (
+					<div
+						className="flex items-center justify-center w-7"
+						style={{
+							backgroundColor: '#FAFBFC',
+						}}
+					>
+						<FaAngleDown color="gray" size={14}></FaAngleDown>
+					</div>
+				) : (
+					<div
+						className="w-7 flex items-center justify-center text-center"
+						style={{
+							backgroundColor: '#FAFBFC',
+						}}
+					>
+						.
 					</div>
 				)}
+				<div className="flex gap-5 py-3 px-4 ">
+					<div className="cursor-move flex items-center justify-center">
+						<FaAlignJustify size={18}></FaAlignJustify>
+					</div>
+					<div className="flex items-center justify-center">
+						{category.category_name}
+					</div>
+					{isButton && (
+						<div className="flex gap-3 ml-auto">
+							<Button
+								type="button"
+								className=" bg-white text-primary 
+                                    border border-primary text-xl rounded-lg
+                                    font-normal
+                                    "
+								style={{ width: '83px' }}
+							>
+								추가
+							</Button>
+							<Button
+								type="button"
+								className=" bg-white text-primary 
+                                    border border-primary text-xl rounded-lg
+                                    font-normal
+                                    "
+								style={{ width: '83px' }}
+							>
+								수정
+							</Button>
+							<Button
+								type="button"
+								className=" bg-white text-primary 
+                                    border border-primary text-xl rounded-lg
+                                    font-normal
+                                    "
+								style={{ width: '83px' }}
+							>
+								삭제
+							</Button>
+						</div>
+					)}
+				</div>
 			</div>
 			{category.children?.map(childCategory => (
 				<CategoryItem

@@ -86,17 +86,22 @@ const Category: FC<{ categories: CategoryInfo[] }> = ({ categories }) => {
 				<div className={styles.contents_container}>
 					<div className={styles.contents_title}>Contents</div>
 					<div className={styles.contents_card}>
-						{categorys &&
-							categorys.map(category => (
-								<CategoryItem
-									key={category.id}
-									category={category}
-									depth={0}
-									handleDrag={handleDrag}
-									handleDrop={handleDrop}
-									handleDropChild={handleDropChild}
-								></CategoryItem>
-							))}
+						<div>
+							<div>Category management</div>
+						</div>
+						<div className={styles.contents_main_container}>
+							{categorys &&
+								categorys.map(category => (
+									<CategoryItem
+										key={category.id}
+										category={category}
+										depth={0}
+										handleDrag={handleDrag}
+										handleDrop={handleDrop}
+										handleDropChild={handleDropChild}
+									></CategoryItem>
+								))}
+						</div>
 					</div>
 					<div>
 						<div>

@@ -38,7 +38,7 @@ const Post: FC<{ posts: PostType; comments: CommentType[] }> = ({
 	const queryClient = useQueryClient();
 
 	const postLikes = useMutation(
-		['replyComment'],
+		['postLikes'],
 		() => PostService.updateLikesPostId(id),
 		{
 			onSuccess: data => {

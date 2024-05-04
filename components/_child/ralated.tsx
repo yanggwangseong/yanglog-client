@@ -36,7 +36,7 @@ const ralated = () => {
 					))}
 			</div>
 
-			<nav className="w-full" aria-label="Page navigation example">
+			{/* <nav className="w-full" aria-label="Page navigation example">
 				<ul className="flex items-center -space-x-px h-10 text-base">
 					<li>
 						<a
@@ -126,7 +126,7 @@ const ralated = () => {
 						</a>
 					</li>
 				</ul>
-			</nav>
+			</nav> */}
 		</section>
 	);
 };

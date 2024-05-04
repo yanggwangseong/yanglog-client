@@ -21,7 +21,7 @@ const useFormState = <T>(initialState: FormState<T>): UseFormStateResult<T> => {
 
 	const handleChange = (e: FormEvent) => {
 		const { name, value } = e.target;
-		setFormData(prevState => ({ ...prevState, [name]: value as T }));
+		setFormData(prevState => ({ ...prevState, [name]: value as unknown as T }));
 	};
 
 	const setValue = (key: string, value: T) => {

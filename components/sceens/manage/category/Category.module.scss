@@ -18,5 +18,11 @@
 		padding: 24px 16px 20px;
 		min-width: 730px;
 		min-height: 700px;
+
+		.contents_main_container {
+			@apply mt-8;
+			padding: 24px 16px 20px;
+			background-color: #e7edf3;
+		}
 	}
 }
